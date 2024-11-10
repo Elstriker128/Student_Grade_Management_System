@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Comment";
+}
+
+<h2>Atsiliepimų sąrašas</h2>
+<a asp-controller="Comment" asp-action="Add" class="btn btn-primary">Rašyti naują atsiliepimą</a>
+
+<div style="border-width: 2px; border-style: dotted; margin-top: 20px;">
+    <p>Atsiliepimas blah blah</p>
+    <a asp-controller="Comment" asp-action="Comment" class="btn btn-primary">Peržiureti atsiliepimą</a>
+    <a asp-controller="Comment" asp-action="Change" class="btn btn-primary">Redaguoti atsiliepimą</a>
+</div>
