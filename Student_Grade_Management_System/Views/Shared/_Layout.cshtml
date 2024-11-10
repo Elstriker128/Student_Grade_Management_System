@@ -25,23 +25,48 @@
                         @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li> *@
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="studentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Mokiniai
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="studentsDropdown">
-                                <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Mokinio paieška</a></li>
-                                <li><a class="dropdown-item" asp-controller="Students" asp-action="Add">Naujo mokinio pridėjimas</a></li>
-                                <li><a class="dropdown-item" asp-controller="Students" asp-action="Assign">Mokinio priskyrimas klasei</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
+                        
+                        @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="studentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Klasės
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="classesDropdown">
                                 <li><a class="dropdown-item" asp-controller="Classes" asp-action="Index">Klasių paieška</a></li>
                             </ul>
+                        </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Mokiniai</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">Klasės</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">Tvarkaraštis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="Index">Atsiliepimai</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Ataskaitos</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex" style="float: right;">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="studentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Mokinys
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="classesDropdown">
+                                <li><p>Mokinio vardas pavardė</p></li>
+                                <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index">Mokinio profilis</a></li>
+                                <li><a class="dropdown-item" asp-controller="Students" asp-action="History">Mokinio istorija</a></li>
+                            </ul>
+                        </li>
+                        <a asp-controller="Client" asp-action="Login" class="btn btn-primary">Prisijungti</a>
+                        <a asp-controller="Client" asp-action="Register" class="btn btn-primary">Registruotis</a>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="">Atsijungti</a>
                         </li>
                     </ul>
                 </div>
