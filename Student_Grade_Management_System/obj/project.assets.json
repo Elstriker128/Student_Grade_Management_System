@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\rugil\\.nuget\\packages\\": {},
+    "C:\\Users\\tooma\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj",
+      "projectUniqueName": "C:\\Users\\tooma\\coding\\csharp\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj",
       "projectName": "Student_Grade_Management_System",
-      "projectPath": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj",
-      "packagesPath": "C:\\Users\\rugil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System\\Student_Grade_Management_System\\obj\\",
+      "projectPath": "C:\\Users\\tooma\\coding\\csharp\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj",
+      "packagesPath": "C:\\Users\\tooma\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\tooma\\coding\\csharp\\Student_Grade_Management_System\\Student_Grade_Management_System\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\rugil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tooma\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -46,6 +46,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -70,7 +75,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

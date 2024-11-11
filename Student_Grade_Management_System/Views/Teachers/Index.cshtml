@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Teachers";
+}
+
+<h2>Mokytojai</h2>
+<a asp-controller="Teachers" asp-action="Find" class="btn btn-primary">Ieškoti mokytojo</a>
+<p>Administratorius:</p>
+<a asp-controller="Teachers" asp-action="Add" class="btn btn-primary">Įtraukti naują mokytoją į sistemą</a>
+<a asp-controller="Teachers" asp-action="Edit" class="btn btn-primary">Redaguoti mokytojo duomenis</a>
+<a asp-controller="Teachers" asp-action="AddQualification" class="btn btn-primary">Susieti mokytoją su dalyku</a>
+<a asp-controller="Teachers" asp-action="AssignToClass" class="btn btn-primary">Priskirti mokytoją klasei</a>
