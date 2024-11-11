@@ -8,16 +8,11 @@ namespace Student_Grade_Management_System.Controllers
         {
             return View();
         }
-        public IActionResult Add()
+        public IActionResult Export()
         {
             return View();
         }
-        public IActionResult Change()
-        {
-            // Code to create a new schedule for a class
-            return View();
-        }
-        public IActionResult Comment()
+        public IActionResult Report()
         {
             // Code to create a new schedule for a class
             return View();
