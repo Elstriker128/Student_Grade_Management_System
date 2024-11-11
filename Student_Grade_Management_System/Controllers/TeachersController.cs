@@ -44,9 +44,5 @@ namespace Student_Grade_Management_System.Controllers
         {
             return View();
         }
-        public IActionResult Profile()
-        {
-            return View();
-        }
     }
 }
