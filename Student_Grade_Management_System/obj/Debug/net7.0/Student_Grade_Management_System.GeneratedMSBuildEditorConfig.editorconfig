@@ -80,6 +80,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Profile/TProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxUUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Report/Export.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XEV4cG9ydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -130,6 +134,50 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Students/SpecificHistory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcU3BlY2lmaWNIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Subject/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViamVjdFxBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Subject/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViamVjdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Subject/Remove.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViamVjdFxSZW1vdmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/AddQualification.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcQWRkUXVhbGlmaWNhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/AssignToClass.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcQXNzaWduVG9DbGFzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/AutoAssign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcQXV0b0Fzc2lnbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Find.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcRmluZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/ManualAssign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlcnNcTWFudWFsQXNzaWduLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/rugil/Documents/GitHub/Student_Grade_Management_System/Student_Grade_Management_System/Views/_ViewImports.cshtml]
