@@ -28,5 +28,15 @@ namespace Student_Grade_Management_System.Controllers
             // Code to assign students to classes
             return View();
         }
+        public IActionResult History()
+        {
+            // Code to assign students to classes
+            return View();
+        }
+        public IActionResult SpecificHistory()
+        {
+            // Code to assign students to classes
+            return View();
+        }
     }
 }
