@@ -1,9 +1,41 @@
-﻿@{
+﻿@model IEnumerable<Student_Grade_Management_System.Models.Class>
+
+@{
     ViewData["Title"] = "Classes";
 }
+
+
+<h2>Klasės</h2>
 
 <h2>Klasių paieška</h2>
 <a asp-controller="Classes" asp-action="Add" class="btn btn-primary">Naujų klasių pridėjimo langas</a>
 <a asp-controller="Classes" asp-action="Create" class="btn btn-primary">Klasės tvarkaraščio sudarymo langas</a>
 <a asp-controller="Students" asp-action="Assign" class="btn btn-primary">Mokinio priskyrimo klasei langas</a>
 <a asp-controller="Teachers" asp-action="AssignToClass"class="btn btn-primary"> Mokytojo priskyrimo klasei langas</a>
+
+
+<div class="container mt-5">
+    <h2>Class List</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Klasės skaičius</th>
+                <th>Klasės raidė</th>
+                <th>Mokinių skaičius</th>
+                <th>Atsakingas mokytojas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var classObj in Model)
+            {
+                <tr>
+                    <td>@classObj.Number</td>
+                    <td>@classObj.Letter</td>
+                    <td>@classObj.StudentCount</td>
+                    <td>@classObj.Teacher_Username</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
