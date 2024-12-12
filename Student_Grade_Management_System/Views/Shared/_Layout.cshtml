@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Student_Grade_Management_System.styles.css" asp-append-version="true" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <header>
@@ -47,7 +48,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Marks" asp-action="Index">Įvertinimai</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="Index">Atsiliepimai</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Atsiliepimai</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Ataskaitos</a>
@@ -82,7 +83,6 @@
                             </ul>
                         </li>
                         <a asp-controller="Client" asp-action="Login" class="btn btn-primary">Prisijungti</a>
-                        <a asp-controller="Client" asp-action="Register" class="btn btn-primary">Registruotis</a>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="">Atsijungti</a>
                         </li>

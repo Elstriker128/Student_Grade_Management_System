@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Student_Grade_Management_System.Models.ReviewM>
+
+@{
+    ViewData["Title"] = "Review";
+}
+
+<h2>Atsiliepimų sąrašas</h2>
+<a asp-controller="Review" asp-action="Add" class="btn btn-primary">Rašyti naują atsiliepimą</a>
+
+<div class="mt-4">
+    @if (!Model.Any())
+    {
+        <p class="text-muted">Nėra atsiliepimų.</p>
+    }
+    else
+    {
+        foreach (var review in Model.OrderBy(r => r.Date))
+        {
+            <div class="border rounded p-3 mb-3 position-relative">
+                <div class="d-flex justify-content-between">
+                    <h5 class="mb-0">@review.Type</h5>
+                    <div>
+                        <a asp-controller="Review" asp-action="Review" asp-route-id="@review.ID" class="btn btn-info btn-sm me-2">Peržiūrėti</a>
+                        <a asp-controller="Review" asp-action="Edit" asp-route-id="@review.ID" class="btn btn-warning btn-sm">Redaguoti</a>
+                    </div>
+                </div>
+                <p class="mt-2 mb-1">
+                    <strong>Mokytojas:</strong> @review.Teacher_Username, 
+                    <strong>Mokinys:</strong> @review.Student_Username
+                </p>
+                <p class="text-muted mb-2">
+                    <strong>Data:</strong> @review.Date.ToString("yyyy-MM-dd")
+                </p>
+                <p>
+                    @review.Content
+                </p>
+            </div>
+        }
+    }
+</div>

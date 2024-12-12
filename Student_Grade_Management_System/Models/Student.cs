@@ -24,6 +24,8 @@ namespace Student_Grade_Management_System.Models
         public string Building { get; set; } // namas
         [Column("butas")]
         public string Apartment { get; set; }
+        //[Column("prisijungimai")]
+        //public int LoginCount { get; set; }
         [ForeignKey("fk_MOKYKLAmokyklos_id")]
         public int School_ID { get; set; }
         [ForeignKey("fk_KLASEraide")]
