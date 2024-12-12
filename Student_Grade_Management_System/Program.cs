@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Student_Grade_Management_System;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,17 @@ builder.Services.AddDbContext<SystemDbContext>(options =>
 });
 
 var app = builder.Build();
+
+// Konfigūruoti kalbą ir kultūrą
+var supportedCultures = new[] { new CultureInfo("lt-LT"), new CultureInfo("en-US") };
+
+// Nustatyti kalbos pasirinkimą
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("lt-LT"), // Nustatome, kad numatytoji kalba būtų lietuvių
+    SupportedCultures = supportedCultures, // Sąrašas su palaikomomis kalbomis
+    SupportedUICultures = supportedCultures // Palaikomos UI kultūros
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

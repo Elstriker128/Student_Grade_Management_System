@@ -2,4 +2,172 @@
     ViewData["Title"] = "Client";
 }
 
-<h2>Prisijungti</h2>
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            width: 400px; /* Didesnė forma */
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-control {
+            width: 100%; /* Pakeista, kad abu laukai būtų vienodo ilgio */
+            border: none;
+        }
+        .form-control:focus {
+            border-color: #007bff; /* Fokusavimo kontūras */
+        }
+        .input-group {
+            width: 100%;
+        }
+        .input-group-append {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding-bottom: 10px;
+        }
+        .input-group-text {
+            cursor: pointer;
+            width: 100%;
+            background-color: white; /* Baltas fonas akiai */
+            border: 1px solid #ccc; /* Kontūras tik akies ikonai */
+            padding: 0%;
+        }
+        .register-link {
+            text-align: right;
+            margin-top: 20px;
+        }
+        /* Atrodo kaip mygtukas su šviesiai mėlynu fonu */
+        .register-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e3f2fd; /* Šviesiai mėlynas fonas */
+            color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .register-link a:hover {
+            background-color: #bbdefb; /* Patamsėjimas užvedus */
+            text-decoration: none;
+        }
+
+        .line {
+            margin: 20px 0;
+            border-top: 1px solid #ccc;
+        }
+
+        .first-time-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .first-time-btn:hover {
+            background-color: #0056b3;
+        }
+
+        header {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="text-center">Prisijungti</h2>
+
+        <form method="post" action="@Url.Action("Login", "Client")">
+            <div class="form-group">
+                <label for="username">Vartotojo vardas</label>
+                <input type="text" id="username" name="username" class="form-control" style="border: 1px solid #ccc;" />
+            </div>
+            <div class="form-group">
+                <label for="password">Slaptažodis</label>
+                <div class="input-group">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="eye-icon" onclick="togglePassword()">
+                            <input type="password" id="password" name="password" class="form-control" />
+                            <i class="fas fa-eye-slash"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="width: 100%;">Prisijungti</button>
+        </form>
+
+        <!-- Linija ir mygtukas "Jungiantis pirma karta" -->
+        <div class="line"></div>
+        <button class="first-time-btn" onclick="window.location.href='@Url.Action("Register", "Client")'">Jungiantis pirma karta</button>
+
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.getElementById("eye-icon").querySelector("i");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            }
+        }
+
+        function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message, // Pranešimo tekstas čia
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(ViewData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(ViewData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
+    </script>
+</body>
+</html>
