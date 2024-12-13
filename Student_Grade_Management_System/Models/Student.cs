@@ -15,7 +15,7 @@ namespace Student_Grade_Management_System.Models
         [Column("gimimo_data")]
         public DateTime Birth_Date { get; set; }
         [Column("asmens_kodas")]
-        public int SSN { get; set; } // asmens kodas
+        public long SSN { get; set; } // asmens kodas
         [Column("miestas")]
         public string City { get; set; }
         [Column("gatve")]

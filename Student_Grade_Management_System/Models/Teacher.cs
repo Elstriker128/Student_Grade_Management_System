@@ -13,7 +13,7 @@ namespace Student_Grade_Management_System.Models
         [Column("pavarde")]
         public string Surname { get; set; }
         [Column("asmens_kodas")]
-        public int SSN { get; set; }
+        public long SSN { get; set; }
         [Column("telefono_nr")]
         public string PhoneNumber { get; set; }
         [Column("el_pastas")]
