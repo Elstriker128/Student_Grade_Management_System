@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Student_Grade_Management_System.Models;
 
 namespace Student_Grade_Management_System.Controllers
 {
@@ -19,10 +20,38 @@ namespace Student_Grade_Management_System.Controllers
             }
             return View(classes);
         }
+
+        [HttpGet]
         public IActionResult Add()
         {
-            // Code to add a new class
+            ViewBag.Teachers = _context.Teachers.ToList();
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(int classNumber, string classLetter, int studentCount, string Teacher_Username)
+        {
+            var newClass = new Class
+            {
+                Number = classNumber,
+                Letter = classLetter,
+                StudentCount = studentCount,
+                Teacher_Username = Teacher_Username
+            };
+
+            var classes = await _context.Classes.ToListAsync();
+            foreach (var c in classes)
+            {
+                if (c.Number == newClass.Number && c.Letter == newClass.Letter)
+                {
+                    return View("Error", new ErrorViewModel { RequestId = "Tokia klasė jau egzistuoja." });
+
+                }
+            }
+
+            await _context.Classes.AddAsync(newClass);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Create()
         {
