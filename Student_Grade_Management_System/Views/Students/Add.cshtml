@@ -1,5 +1,79 @@
-﻿@{
-    ViewData["Title"] = "Add";
+﻿@model Student_Grade_Management_System.Models.Student
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Add New Student";
 }
 
-<h2>Naujų mokinių pridėjimo langas</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">Naujo mokinio pridėjimas</h2>
+
+    @using (Html.BeginForm("Add", "Students", FormMethod.Post))
+    {
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Username, "Vartotojo vardas", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @required = "required" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Password, "Slaptažodis", new { @class = "form-label" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "required" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Name, "Vardas", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @required = "required" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Surname, "Pavardė", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control", @required = "required" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Birth_Date, "Gimimo data", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Birth_Date, new { @class = "form-control", @type = "date" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.SSN, "Asmens kodas", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.SSN, new { @class = "form-control", @type = "number" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.City, "Miestas", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Street, "Gatvė", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Street, new { @class = "form-control" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Building, "Pastato numeris", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Building, new { @class = "form-control" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Apartment, "Butas", new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Apartment, new { @class = "form-control" })
+        </div>
+
+        <!-- Dropdown for School_ID -->
+        <div class="mb-3">
+            <label class="form-label" for="combinedSchool">Mokykla</label>
+            <select name="combinedSchool" id="combinedSchool" class="form-control">
+                <option value="">Pasirinkitę mokyklą</option>
+                @foreach (var classItem in ViewBag.Schools)
+                {
+                    <option value="@classItem.CombinedOne">@classItem.CombinedOne</option>
+                }
+            </select>
+        </div>
+
+        @* <!-- Dropdown for Combined Class (Letter + Number) -->
+        <div class="mb-3">
+            <label class="form-label" for="combinedClass">Class (Letter + Number)</label>
+            <select name="combinedClass" id="combinedClass" class="form-control">
+                <option value="">Select a Class</option>
+                @foreach (var classItem in ViewBag.Classes)
+                {
+                    <option value="@classItem.Combined">@classItem.Combined</option>
+                }
+            </select>
+        </div> *@
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    
+    }

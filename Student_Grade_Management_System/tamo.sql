@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 09, 2024 at 11:40 PM
+-- Host: 127.0.0.1
+-- Generation Time: Dec 13, 2024 at 01:12 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -168,8 +168,7 @@ CREATE TABLE `klase` (
 --
 
 INSERT INTO `klase` (`kelinta`, `raide`, `mokiniu_skaicius`, `atsakingo_mokytojo_useris`) VALUES
-(5, 'a', 24, 'TeacherMan'),
-(5, 'b', 24, 'TeacherMan2');
+(1, 'A', 20, 'mokytojas');
 
 -- --------------------------------------------------------
 
@@ -200,9 +199,20 @@ CREATE TABLE `mokinys` (
   `namas` varchar(255) NOT NULL,
   `butas` varchar(255) NOT NULL,
   `fk_MOKYKLAmokyklos_id` int(20) NOT NULL,
-  `fk_KLASEraide` varchar(255) NOT NULL,
-  `fk_KLASEkelinta` int(10) NOT NULL
+  `fk_KLASEraide` varchar(255) DEFAULT NULL,
+  `fk_KLASEkelinta` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_lithuanian_ci;
+
+--
+-- Dumping data for table `mokinys`
+--
+
+INSERT INTO `mokinys` (`mokinio_useris`, `slaptazodis`, `vardas`, `pavarde`, `gimimo_data`, `asmens_kodas`, `miestas`, `gatve`, `namas`, `butas`, `fk_MOKYKLAmokyklos_id`, `fk_KLASEraide`, `fk_KLASEkelinta`) VALUES
+('naujas', 'naujas', 'naujas', 'naujas', '2024-12-03', 650606, 'kaunas', 'kaunas', 'kaunas', 'kaunas', 1, 'A', 1),
+('naujas1', 'naujas1', 'naujas1', 'naujas1', '2024-12-04', 650620, 'Kaunas', 'Kaunas', 'Kaunas', 'Kaunas', 1, 'A', 1),
+('naujas2', 'naujas2', 'naujas2', 'naujas2', '2024-12-08', 6564131, 'Kaunas', 'Kaunas', 'Kaunas', 'Kaunas', 1, 'A', 1),
+('naujas3', 'naujas3', 'naujas3', 'naujas3', '2024-12-19', 46565465, 'Kaunas', 'Kaunas', 'Kaunas', 'Kaunas', 1, 'A', 1),
+('naujas4', 'naujas4', 'naujas4', 'naujas4', '2024-12-19', 6215215, 'Kaunas', 'Kaunas', 'Kaunas', 'Kaunas', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -219,6 +229,13 @@ CREATE TABLE `mokykla` (
   `gatve` varchar(255) NOT NULL,
   `namas` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_lithuanian_ci;
+
+--
+-- Dumping data for table `mokykla`
+--
+
+INSERT INTO `mokykla` (`mokyklos_id`, `pavadinimas`, `telefono_nr`, `el_pastas`, `miestas`, `gatve`, `namas`) VALUES
+(1, 'mokykla', '37065556', 'sasasas', 'kaunas', 'kauno', 'kauno');
 
 -- --------------------------------------------------------
 

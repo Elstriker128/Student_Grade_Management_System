@@ -2,7 +2,52 @@
     ViewData["Title"] = "Students";
 }
 
-<h2>Mokinių sąrašas</h2>
-<a asp-controller="Profile" asp-action="Index" class="btn btn-primary">Mokinio profilis</a>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
 <p>Administratorius:</p>
 <a asp-controller="Students" asp-action="Add" class="btn btn-primary">Naujo mokinio pridėjimas</a>
+
+<div class="container mt-5">
+    <h2>Mokinių sąrašas</h2>
+
+    <!-- Search Form -->
+    <form asp-controller="Students" asp-action="Index" method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Ieškoti pagal vardą arba pavardę" value="@ViewData["Search"]" />
+            <button type="submit" class="btn btn-secondary">Ieškoti</button>
+        </div>
+    </form>
+
+    <!-- Students Table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mokinio vardas ir pavardė</th>
+                <th>Mokinio klasė</th>
+                <th>Peržiūrėti profilį</th>
+                <th>Redaguoti mokinio duomenis</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var classObj in Model)
+            {
+                <tr>
+                    <td>@classObj.Name @classObj.Surname</td>
+                    <td>@classObj.Class_Number @classObj.Class_Letter</td>
+                    <td>
+                        <a asp-controller="Profile" asp-action="Index" class="btn btn-primary">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Students" asp-action="Change" class="btn btn-primary">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
