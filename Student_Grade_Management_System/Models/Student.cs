@@ -13,7 +13,7 @@ namespace Student_Grade_Management_System.Models
         [Column("pavarde")]
         public string Surname { get; set; }
         [Column("gimimo_data")]
-        public DateOnly Birth_Date { get; set; }
+        public DateTime Birth_Date { get; set; }
         [Column("asmens_kodas")]
         public int SSN { get; set; } // asmens kodas
         [Column("miestas")]
@@ -27,10 +27,13 @@ namespace Student_Grade_Management_System.Models
         //[Column("prisijungimai")]
         //public int LoginCount { get; set; }
         [ForeignKey("fk_MOKYKLAmokyklos_id")]
-        public int School_ID { get; set; }
+		[Column("fk_MOKYKLAmokyklos_id")]
+		public int School_ID { get; set; }
         [ForeignKey("fk_KLASEraide")]
-        public string Class_Letter { get; set; }
+		[Column("fk_KLASEraide")]
+		public string? Class_Letter { get; set; }
         [ForeignKey("fk_KLASEkelinta")]
-        public int Class_Number { get; set; }
+		[Column("fk_KLASEkelinta")]
+		public int? Class_Number { get; set; }
     }
 }
