@@ -2,5 +2,202 @@
     ViewData["Title"] = "Report";
 }
 
-<h2>Ataskaitų sąrašas</h2>
-<a asp-controller="Report" asp-action="Report" class="btn btn-primary">Ataskaita</a>
+<h2>Generuoti ataskaitą</h2>
+
+<div class="d-flex flex-wrap justify-content-center mt-4">
+    <!-- Mokinio pasirinkimas -->
+    <div class="me-3 mb-3" style="width: 20%; display: flex; flex-direction: column; justify-content: center;">
+        <label for="filterStudent">Mokinys:</label>
+        <select id="filterStudent" class="form-select" style="width: 100%;">
+            <option value="">Pasirinkite mokinį</option>
+            @if (ViewData["Students"] != null)
+            {
+                var students = (SelectList)ViewData["Students"];
+                foreach (var student in students)
+                {
+                    <option value="@student.Text">@student.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <!-- Datos pasirinkimas -->
+    <div class="me-3 mb-3" style="width: 20%; display: flex; flex-direction: column; justify-content: center;">
+        <label for="filterStartDate">Pradžios data:</label>
+        <input type="date" id="filterStartDate" class="form-control">
+    </div>
+
+    <!-- Datos pasirinkimas -->
+    <div class="me-3 mb-3" style="width: 20%; display: flex; flex-direction: column; justify-content: center;">
+        <label for="filterEndDate">Pabaigos data:</label>
+        <input type="date" id="filterEndDate" class="form-control">
+    </div>
+
+    <!-- Mokytojo pasirinkimas -->
+    <div class="me-3 mb-3" style="width: 20%; display: flex; flex-direction: column; justify-content: center;">
+        <label for="filterSubject">Dalykas:</label>
+        <select id="filterSubject" class="form-select" style="width: 100%;">
+            <option value="">Pasirinkite dalyką</option>
+            @if (ViewData["Subjects"] != null)
+            {
+                var subjects = (SelectList)ViewData["Subjects"];
+                foreach (var subject in subjects)
+                {
+                    <option value="@subject.Value">@subject.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <!-- Įvertinimo intervalo pasirinkimas -->
+    <div class="me-3 mb-3" style="width: 40%; display: flex; flex-direction: column; justify-content: center;">
+        <label for="filterGradeMin">Įvertinimo intervalas:</label>
+        <input type="range" id="filterGradeMin" class="form-range" min="1" max="10" step="1" value="1">
+        <div class="mt-2">
+            <output id="gradeMinValue">1</output>
+        </div>
+
+        <!-- Antras slankiklis (maksimalus įvertinimas) -->
+        <input type="range" id="filterGradeMax" class="form-range" min="1" max="10" step="1" value="10">
+        <div class="mt-2">
+            <output id="gradeMaxValue">10</output>
+        </div>
+    </div>
+
+    <!-- Filtruoti mygtukas -->
+    <div class="d-flex align-items-center justify-content-center mb-3" style="width: 20%; display: flex; flex-direction: column; justify-content: center;">
+        <button class="btn btn-primary" onclick="generateReport()">Generuoti</button>
+        <button class="btn btn-secondary ms-2" style="margin-top: 10px;" onclick="clearFilters()">Išvalyti filtrus</button>
+    </div>
+</div>
+<!-- Ataskaitos lentele -->
+<table id="reportTable" class="table mt-4" style="display:none;">
+    <thead>
+        <tr>
+            <th>Studentas</th>
+            <th>Dalykas</th>
+            <th>Įvertinimas</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Dynamically populated rows will go here -->
+    </tbody>
+</table>
+<p id="noResultsMessage" class="text-muted mt-3" style="display: none;">Nerasta jokių atitikčių.</p>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message,
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(TempData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(TempData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
+
+        // Atnaujinti min ir max reikšmes
+        document.getElementById('filterGradeMin').addEventListener('input', function() {
+            var minValue = parseInt(this.value);
+            document.getElementById('gradeMinValue').textContent = minValue;
+
+            // Užtikrinti, kad max slankiklis neleistų pasirinkti mažesnės vertės nei min
+            var maxValue = parseInt(document.getElementById('filterGradeMax').value);
+            if (maxValue < minValue) {
+                document.getElementById('filterGradeMax').value = minValue;
+                document.getElementById('gradeMaxValue').textContent = minValue;
+            }
+
+            filterReviews(); // Filtruoti duomenis pagal pasirinktas reikšmes
+        });
+
+        document.getElementById('filterGradeMax').addEventListener('input', function() {
+            var maxValue = parseInt(this.value);
+            document.getElementById('gradeMaxValue').textContent = maxValue;
+
+            // Užtikrinti, kad max slankiklis neleistų pasirinkti mažesnės vertės nei min
+            var minValue = parseInt(document.getElementById('filterGradeMin').value);
+            if (maxValue < minValue) {
+                document.getElementById('filterGradeMin').value = maxValue;
+                document.getElementById('gradeMinValue').textContent = maxValue;
+            }
+
+            filterReviews(); // Filtruoti duomenis pagal pasirinktas reikšmes
+        });
+
+        function generateReport() {
+            var student = document.getElementById('filterStudent').value;
+            var startDate = document.getElementById('filterStartDate').value;
+            var endDate = document.getElementById('filterEndDate').value;
+            var subject = document.getElementById('filterSubject').value;
+            var gradeMin = document.getElementById('filterGradeMin').value;
+            var gradeMax = document.getElementById('filterGradeMax').value;
+
+            // Sukuriame objektą su filtrais
+            var filters = {
+                student: student,
+                startDate: startDate,
+                endDate: endDate,
+                subject: subject,
+                gradeMin: gradeMin,
+                gradeMax: gradeMax
+            };
+
+            // Atlikti POST užklausą
+            fetch('/Report/GenerateReport', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filters),
+            })
+            .then(response => response.json())
+            .then(data => {
+                var table = document.getElementById('reportTable');
+                var tbody = table.querySelector('tbody');
+                tbody.innerHTML = ''; // Išvalome senus duomenis
+
+                if (data.length > 0) {
+                    data.forEach(item => {
+                        var row = document.createElement('tr');
+                        row.innerHTML = `<td>${item.student}</td><td>${item.subject}</td><td>${item.grade}</td><td>${item.date}</td>`;
+                        tbody.appendChild(row);
+                    });
+                    table.style.display = 'table'; // Parodome lentelę
+                } else {
+                    showMessage("Nerasta jokių atitikčių.", 'error');
+                    table.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error generating report:', error);
+                showMessage("Įvyko klaida generuojant ataskaitą.", 'error');
+            });
+        }
+        
+        function clearFilters() {
+            document.getElementById('filterType').value = "";
+            document.getElementById('filterStudent').value = "";
+            document.getElementById('filterTeacher').value = "";
+            document.getElementById('filterDate').value = "";
+
+            // Pašalinti filtrų poveikį
+            //filterReviews(); 
+        }
+    </script>
+}

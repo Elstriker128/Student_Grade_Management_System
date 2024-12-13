@@ -34,13 +34,8 @@ namespace Student_Grade_Management_System.Models
         public DateTime Date { get; set; }
         [Column("turinys")]
         public string Content { get; set; }
-        [Column("tipas" )]
         public string Type { get; set; }
-        [ForeignKey("fk_MOKINYSmokinio_useris")]
-        [Column("fk_MOKINYSmokinio_useris")]
-        public string Student_Username { get; set; }
-        [ForeignKey("fk_MOKYTOJASmokytojo_useris")]
-        [Column("fk_MOKYTOJASmokytojo_useris")]
-        public string Teacher_Username { get; set; }
+        public string Student_Name { get; set; }
+        public string Teacher_Name { get; set; }
     }
 }

@@ -4,8 +4,80 @@
     ViewData["Title"] = "Review";
 }
 
+<head>
+    <style>
+        #searchBox:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+
 <h2>Atsiliepimų sąrašas</h2>
 <a asp-controller="Review" asp-action="Add" class="btn btn-primary">Rašyti naują atsiliepimą</a>
+
+<div class="d-flex justify-content-between mt-4">
+    <span class="input-group-text" style="width: 300px; background-color: white;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+        <input type="text" id="searchBox" class="form-control" placeholder="Ieškoti atsiliepimų..." style="border: none;" onkeyup="searchReviews()">
+    </span>
+</div>
+
+<div class="d-flex mt-4">
+    <!-- Tipas -->
+    <div class="me-3" style="width: 20%;">
+        <select id="filterType" class="form-select" style="width: 100%;">
+            <option value="">Pasirinkite tipą</option>
+            @foreach (var type in ViewData["ReviewTypes"] as SelectList)
+            {
+                <option value="@type.Text">@type.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Mokinio pasirinkimas -->
+    <div class="me-3" style="width: 20%;">
+        <select id="filterStudent" class="form-select" style="width: 100%;">
+            <option value="">Pasirinkite mokinį</option>
+            @if (ViewData["Students"] != null)
+            {
+                var students = (SelectList)ViewData["Students"];
+                foreach (var student in students)
+                {
+                    <option value="@student.Text">@student.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <!-- Mokytojo pasirinkimas -->
+    <div class="me-3" style="width: 20%;">
+        <select id="filterTeacher" class="form-select" style="width: 100%;">
+            <option value="">Pasirinkite mokytoją</option>
+            @if (ViewData["Teachers"] != null)
+            {
+                var teachers = (SelectList)ViewData["Teachers"];
+                foreach (var teacher in teachers)
+                {
+                    <option value="@teacher.Text">@teacher.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <!-- Datos pasirinkimas -->
+    <div class="me-3" style="width: 20%;">
+        <input type="date" id="filterDate" class="form-control">
+    </div>
+
+    <!-- Filtruoti mygtukas -->
+    <div class="d-flex align-items-end" style="width: 20%;">
+        <button class="btn btn-primary" onclick="filterReviews()">Filtruoti</button>
+        <button class="btn btn-secondary ms-2" onclick="clearFilters()">Išvalyti filtrus</button>
+    </div>
+</div>
 
 <div class="mt-4">
     @if (!Model.Any())
@@ -14,21 +86,27 @@
     }
     else
     {
-        foreach (var review in Model.OrderBy(r => r.Date))
+        foreach (var review in Model.OrderByDescending(r => r.Date))
         {
-            <div class="border rounded p-3 mb-3 position-relative">
+            <div class="border rounded p-3 mb-3 position-relative review-item">
                 <div class="d-flex justify-content-between">
-                    <h5 class="mb-0">@review.Type</h5>
+                    <h5 class="mb-0 review-type">@review.Type</h5>
                     <div>
                         <a asp-controller="Review" asp-action="Review" asp-route-id="@review.ID" class="btn btn-info btn-sm me-2">Peržiūrėti</a>
                         <a asp-controller="Review" asp-action="Edit" asp-route-id="@review.ID" class="btn btn-warning btn-sm">Redaguoti</a>
+                        <a asp-controller="Review" asp-action="Delete" 
+                            asp-route-id="@review.ID" 
+                            class="btn btn-danger btn-sm"
+                            onclick="confirmDelete(event, '@Url.Action("Delete", "Review", new { id = review.ID })')">
+                            Ištrinti
+                        </a>
                     </div>
                 </div>
                 <p class="mt-2 mb-1">
-                    <strong>Mokytojas:</strong> @review.Teacher_Username, 
-                    <strong>Mokinys:</strong> @review.Student_Username
+                    <strong>Mokytojas:</strong> <span class="review-teacher">@review.Teacher_Name</span>, 
+                    <strong>Mokinys:</strong> <span class="review-student">@review.Student_Name</span>
                 </p>
-                <p class="text-muted mb-2">
+                <p class="text-muted mb-2 review-date">
                     <strong>Data:</strong> @review.Date.ToString("yyyy-MM-dd")
                 </p>
                 <p>
@@ -38,3 +116,136 @@
         }
     }
 </div>
+
+<p id="noResultsMessage" class="text-muted mt-3" style="display: none;">Nerasta jokių atitikčių.</p>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+
+    <script>
+        function confirmDelete(event, deleteUrl) {
+            event.preventDefault(); // Neleisti vykdyti įprasto mygtuko veiksmo
+            Swal.fire({
+                title: 'Ar tikrai norite ištrinti?',
+                text: "Šio veiksmo negalėsite atšaukti!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Taip, ištrinti',
+                cancelButtonText: 'Atšaukti'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Vykdyti trynimą, jei patvirtinta
+                }
+            });
+        }
+
+        function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message,
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(TempData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(TempData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
+
+        function searchReviews() {
+            var input = document.getElementById('searchBox');
+            var filter = input.value.toLowerCase();
+            var reviewItems = document.getElementsByClassName('review-item');
+            var noResultsMessage = document.getElementById('noResultsMessage');
+
+            var found = false; // Kintamasis rezultatams sekti
+
+            for (var i = 0; i < reviewItems.length; i++) {
+                var reviewText = reviewItems[i].innerText || reviewItems[i].textContent;
+                if (reviewText.toLowerCase().indexOf(filter) > -1) {
+                    reviewItems[i].style.display = ""; // Rodyti
+                    found = true; // Rastas bent vienas rezultatas
+                } else {
+                    reviewItems[i].style.display = "none"; // Slėpti
+                }
+            }
+
+            // Rodyti arba slėpti pranešimą
+            if (!found) {
+                noResultsMessage.style.display = "block";
+            } else {
+                noResultsMessage.style.display = "none";
+            }
+        }
+
+        // Paieškos funkcija
+        function filterReviews() {
+            var type = document.getElementById('filterType').value;
+            var student = document.getElementById('filterStudent').value;
+            var teacher = document.getElementById('filterTeacher').value;
+            var date = document.getElementById('filterDate').value;
+
+            console.log("Filtrai:", type, student, teacher, date);  // Atspausdins pasirinkimus
+
+            var reviewItems = document.getElementsByClassName('review-item');
+            var noResultsMessage = document.getElementById('noResultsMessage');
+
+            var found = false;
+
+            for (var i = 0; i < reviewItems.length; i++) {
+                var reviewType = reviewItems[i].querySelector('.review-type').innerText.trim();
+                var reviewStudent = reviewItems[i].querySelector('.review-student').innerText.trim();
+                var reviewTeacher = reviewItems[i].querySelector('.review-teacher').innerText.trim();
+                var reviewDate = reviewItems[i].querySelector('.review-date').innerText.trim();
+
+                // Paverskite reviewDate į datos objektą
+                var reviewDateObj = new Date(reviewDate);
+
+                // Filtrai pagal užpildytus laukus
+                var matchesType = (type === "" || reviewType.toLowerCase().includes(type.toLowerCase())) ? true : false;
+                var matchesStudent = (student === "" || reviewStudent.toLowerCase().includes(student.toLowerCase())) ? true : false;
+                var matchesTeacher = (teacher === "" || reviewTeacher.toLowerCase().includes(teacher.toLowerCase())) ? true : false;
+
+                // Patikrinkite, ar data atitinka
+                var matchesDate = (date === "" || new Date(date).toDateString() === reviewDateObj.toDateString()) ? true : false;
+
+                // Filtru tikrinimas pagal visus pasirinktus laukus
+                if (matchesType && matchesStudent && matchesTeacher && matchesDate) {
+                    reviewItems[i].style.display = ""; // Rodyti
+                    console.log("Atsiliepimo duomenys:", reviewType, reviewStudent, reviewTeacher, reviewDate);  // Atspausdins atsiliepimo informaciją
+                    found = true;
+                } else {
+                    reviewItems[i].style.display = "none"; // Slėpti
+                }
+            }
+
+            // Rodyti arba slėpti "nerasta rezultatų" žinutę
+            if (!found) {
+                noResultsMessage.style.display = "block";
+            } else {
+                noResultsMessage.style.display = "none";
+            }
+        }
+        
+        function clearFilters() {
+            document.getElementById('filterType').value = "";
+            document.getElementById('filterStudent').value = "";
+            document.getElementById('filterTeacher').value = "";
+            document.getElementById('filterDate').value = "";
+
+            // Pašalinti filtrų poveikį
+            filterReviews(); 
+        }
+    </script>
+}

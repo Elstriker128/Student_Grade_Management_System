@@ -20,6 +20,11 @@
             </ul>
         </div>
     }
+    <div class="form-group">
+        <label for="Teacher_Username">Mokytojas:
+        <input type="text" class="form-control" id="Teacher_Username" name="Teacher_Username" value="@ViewData["TeacherName"]" style="border: none;" readonly />
+        </label>
+    </div>
 
     <div class="form-group">
         <label for="Type">Tipas</label>
@@ -30,7 +35,9 @@
 
     <div class="form-group">
         <label for="Student_Username">Mokinys</label>
-        <input type="text" class="form-control" id="Student_Username" name="Student_Username" value="@Model.Student_Username" required />
+        <select asp-for="Student_Username" class="form-control" asp-items="@(ViewData["Students"] as SelectList)">
+            <!-- Tipų pasirinkimas iš SelectList -->
+        </select>
     </div>
 
     <div class="form-group">
@@ -47,3 +54,30 @@
 </form>
 
 <a asp-controller="Review" asp-action="Index" class="btn btn-secondary mt-3">Atgal į sąrašą</a>
+@section Scripts {
+    <!-- Pridėti SweetAlert skriptą -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message,
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(TempData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(TempData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
+    </script>
+}
