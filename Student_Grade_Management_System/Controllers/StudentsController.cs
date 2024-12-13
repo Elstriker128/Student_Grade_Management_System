@@ -43,17 +43,6 @@ namespace Student_Grade_Management_System.Controllers
                 .Distinct()
                 .ToList();
 
-            // Combine Class_Letter and Class_Number for dropdown display
-            //ViewBag.Classes = _context.Classes
-            //    .Select(s => new
-            //    {
-            //        Combined = s.Number + " " + s.Letter,
-            //        s.Number,
-            //        s.Letter
-            //    })
-            //    .Distinct()
-            //    .ToList();
-
             return View();
         }
 
@@ -64,6 +53,27 @@ namespace Student_Grade_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var usernameExists = _context.Students.Any(s => s.Username == model.Username);
+                if (usernameExists)
+                {
+                    // Add a model error and re-render the form
+                    ModelState.AddModelError("Username", "Šis vartotojo vardas jau užimtas. Prašau parinkti kitą.");
+
+                    // Repopulate the dropdowns for Schools
+                    ViewBag.Schools = _context.Schools
+                        .Select(s => new
+                        {
+                            CombinedOne = s.ID + " " + s.Name,
+                            s.ID,
+                            s.Name
+                        })
+                        .Distinct()
+                        .ToList();
+
+                    return View(model); // Return the form with validation errors
+                }
+
                 // Process the combined dropdown values for School_ID and Class
                 if (!string.IsNullOrEmpty(combinedSchool))
                 {
@@ -71,14 +81,6 @@ namespace Student_Grade_Management_System.Controllers
                     var schoolParts = combinedSchool.Split(" "); // Adjust this logic to split the value as required
                     model.School_ID = int.Parse(schoolParts[0]); // Assuming the first part is the School_ID
                 }
-
-                //if (!string.IsNullOrEmpty(combinedClass))
-                //{
-                //    // Extract and assign Class_Letter and Class_Number
-                //    var classParts = combinedClass.Split(" ");
-                //    model.Class_Number = int.Parse(classParts[0]);
-                //    model.Class_Letter = classParts[1];
-                //}
 
                 // Add the student to the database
                 _context.Students.Add(model);
@@ -98,10 +100,6 @@ namespace Student_Grade_Management_System.Controllers
                 })
                 .Distinct()
                 .ToList();
-
-            //ViewBag.Classes = _context.Classes
-            //    .Select(c => new { Combined = c.Number + " " + c.Letter })
-            //    .ToList();
 
             return View(model); // Return to the form with validation errors
         }
