@@ -10,8 +10,8 @@
 <div class="review-details border rounded p-4 mb-4 shadow-sm">
     <h5 class="mb-0">@Model.Type</h5>
     <p class="mt-3 mb-1">
-        <strong>Mokytojas:</strong> @Model.Teacher_Username, 
-        <strong>Mokinys:</strong> @Model.Student_Username
+        <strong>Mokytojas:</strong> @Model.Teacher_Name, 
+        <strong>Mokinys:</strong> @Model.Student_Name
     </p>
     <p class="text-muted mb-2">
         <strong>Data:</strong> @Model.Date.ToString("yyyy-MM-dd")
@@ -22,5 +22,32 @@
 
     <!-- Redagavimo mygtukas -->
     <a asp-controller="Review" asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning mt-3">Redaguoti atsiliepimą</a>
+    <a asp-controller="Review" asp-action="Delete" 
+        asp-route-id="@Model.ID" 
+        class="btn btn-danger mt-3"
+        onclick="confirmDelete(event, '@Url.Action("Delete", "Review", new { id = Model.ID })')">
+        Ištrinti
+    </a>
     <a asp-controller="Review" asp-action="Index" class="btn btn-secondary mt-3">Atgal į sąrašą</a>
 </div>
+@section Scripts {
+    <script>
+        function confirmDelete(event, deleteUrl) {
+            event.preventDefault(); // Neleisti vykdyti įprasto mygtuko veiksmo
+            Swal.fire({
+                title: 'Ar tikrai norite ištrinti?',
+                text: "Šio veiksmo negalėsite atšaukti!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Taip, ištrinti',
+                cancelButtonText: 'Atšaukti'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Vykdyti trynimą, jei patvirtinta
+                }
+            });
+        }
+    </script>
+}

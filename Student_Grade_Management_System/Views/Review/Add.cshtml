@@ -1,5 +1,92 @@
-﻿@{
+﻿@model Student_Grade_Management_System.Models.Review
+
+@{
     ViewData["Title"] = "Review";
 }
 
 <h2>Rašyti naują atsiliepimą</h2>
+
+<form asp-action="Add" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="Content">Turinys</label>
+        <textarea id="Content" name="Content" class="form-control" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Type">Tipas</label>
+        <select id="Type" name="Type" class="form-control">
+            <option value="">Pasirinkite tipą</option>
+            @foreach (var type in ViewData["ReviewTypes"] as SelectList)
+            {
+                <option value="@type.Value">@type.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Student_Username">Mokinys</label>
+        <select id="Student_Username" name="Student_Username" class="form-control">
+            <option value="">Pasirinkite mokinį</option>
+            @if (ViewData["Students"] != null)
+            {
+                var students = (SelectList)ViewData["Students"];
+                foreach (var student in students)
+                {
+                    <option value="@student.Value">@student.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Teacher_Username">Mokytojas</label>
+        <select id="Teacher_Username" name="Teacher_Username" class="form-control">
+            <option value="">Pasirinkite mokytoją</option>
+            @if (ViewData["Teachers"] != null)
+            {
+                var teachers = (SelectList)ViewData["Teachers"];
+                foreach (var teacher in teachers)
+                {
+                    <option value="@teacher.Value">@teacher.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Date">Data</label>
+        <input type="date" id="Date" name="Date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Pateikti</button>
+</form>
+<a asp-controller="Review" asp-action="Index" class="btn btn-secondary mt-3">Atgal į sąrašą</a>
+@section Scripts {
+    <!-- Pridėti SweetAlert skriptą -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message,
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(TempData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(TempData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
+    </script>
+}
