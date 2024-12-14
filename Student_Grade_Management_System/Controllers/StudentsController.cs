@@ -200,7 +200,28 @@ namespace Student_Grade_Management_System.Controllers
 		}
 		public IActionResult Assign()
 		{
-			// Code to assign students to classes
+
+			// Used to assign students to classes
+
+			ViewBag.Students = _context.Students
+				.Select(s => new
+				{
+					CombinedName = s.Name + " " + s.Surname,
+					s.Name,
+					s.Surname,
+					s.Username
+				})
+				.Distinct()
+				.ToList();
+
+			ViewBag.Classes = _context.Classes.Select(s => s.Number).Distinct().ToList();
+
+			ViewBag.SuccessUpdate = new
+			{
+				Message = "",
+				Found = false
+			};
+
 			return View();
 		}
 		public IActionResult History()
