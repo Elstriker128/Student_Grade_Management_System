@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Student_Grade_Management_System.Models;
+using System.Text;
 
 namespace Student_Grade_Management_System.Controllers
 {
@@ -103,10 +104,46 @@ namespace Student_Grade_Management_System.Controllers
 
 			return View(model); // Return to the form with validation errors
 		}
-		public IActionResult Extract()
+
+		public IActionResult Extract(string username)
 		{
-			// Code to extract student data
-			return View();
+			if (string.IsNullOrEmpty(username))
+			{
+				return RedirectToAction("Index", "Profile");
+			}
+
+			// Fetch the user's data
+			var userProfile = _context.Students.FirstOrDefault(u => u.Username == username);
+			if (userProfile == null)
+			{
+				return RedirectToAction("Index", "Profile");
+			}
+
+			var currentSchool = _context.Schools.Where(s => s.ID == userProfile.School_ID).Select(s => s.Name).FirstOrDefault();
+
+			// Create the text content
+			StringBuilder fileContent = new StringBuilder();
+			fileContent.AppendLine("Asmeniniai duomenys");
+			fileContent.AppendLine("-------------------------------------------");
+			fileContent.AppendLine($"Vartotojo vardas: {userProfile.Username}");
+			fileContent.AppendLine($"Slaptažodis: {userProfile.Password}");
+			fileContent.AppendLine($"Vardas: {userProfile.Name}");
+			fileContent.AppendLine($"Pavardė: {userProfile.Surname}");
+			fileContent.AppendLine($"Gimimo data: {userProfile.Birth_Date:yyyy-MM-dd}");
+			fileContent.AppendLine($"Asmens kodas: {userProfile.SSN}");
+			fileContent.AppendLine($"Miestas: {userProfile.City}");
+			fileContent.AppendLine($"Gatvė: {userProfile.Street}");
+			fileContent.AppendLine($"Namo numeris: {userProfile.Building}");
+			fileContent.AppendLine($"Buto numeris: {userProfile.Apartment}");
+			fileContent.AppendLine($"Mokykla: {currentSchool}");
+			fileContent.AppendLine($"Klasė: {userProfile.Class_Number} {userProfile.Class_Letter}");
+
+			// Convert the text content to bytes
+			var fileBytes = Encoding.UTF8.GetBytes(fileContent.ToString());
+			var fileName = $"Asmeniniai_Duomenys_{username}.txt";
+
+			// Return the file for download
+			return File(fileBytes, "text/plain", fileName);
 		}
 		public IActionResult Change(string username)
 		{
@@ -118,21 +155,21 @@ namespace Student_Grade_Management_System.Controllers
 			}
 
 			// Load schools into ViewBag for the dropdown
-			ViewBag.Schools = _context.Schools.Where(s => s.ID != student.School_ID).Select(s => new {
+			ViewBag.Schools = _context.Schools.Where(s => s.ID != student.School_ID).Select(s => new
+			{
 				CombinedOne = s.ID + " " + s.Name,
 				s.ID,
 				s.Name
 			}).Distinct().ToList();
 
 			ViewBag.CurrentSchool = _context.Schools.Where(s => s.ID == student.School_ID)
-						  .Select(s => new {
+						  .Select(s => new
+						  {
 							  Combined = s.ID + " " + s.Name,
 							  s.ID,
 							  s.Name
 						  })
 						  .FirstOrDefault();
-
-			//student.Birth_Date = DateOnly.Parse(student.Birth_Date.ToString("yyyy-MM-dd"));
 
 			return View(student);
 		}
@@ -166,20 +203,9 @@ namespace Student_Grade_Management_System.Controllers
 				}
 			}
 
-			//foreach (var key in ModelState.Keys)
-			//{
-			//	var errors = ModelState[key].Errors;
-			//	foreach (var error in errors)
-			//	{
-			//		// Log or inspect the error message
-			//		Console.WriteLine($"Error in {key}: {error.ErrorMessage}");
-			//	}
-			//}
-
-
-
 			// If there were validation errors, reload the school data and return the view with error messages
-			ViewBag.Schools = _context.Schools.Select(s => new {
+			ViewBag.Schools = _context.Schools.Select(s => new
+			{
 				CombinedOne = s.ID + " " + s.Name,
 				Selected = s.ID == model.School_ID ? "selected" : "",
 				s.ID,
@@ -187,21 +213,20 @@ namespace Student_Grade_Management_System.Controllers
 			}).Distinct().ToList();
 
 			ViewBag.CurrentSchool = _context.Schools.Where(s => s.ID == model.School_ID)
-						  .Select(s => new {
+						  .Select(s => new
+						  {
 							  Combined = s.ID + " " + s.Name,
 							  s.ID,
 							  s.Name
 						  })
 						  .FirstOrDefault();
 
-			//model.Birth_Date = DateTime.Parse(model.Birth_Date.Date.ToString("MM/dd/yyyy"));
 
 			return View(model);
 		}
 		public IActionResult Assign()
 		{
-
-			// Used to assign students to classes
+			// Code to assign students to classes
 
 			ViewBag.Students = _context.Students
 				.Select(s => new
@@ -224,6 +249,100 @@ namespace Student_Grade_Management_System.Controllers
 
 			return View();
 		}
+
+		[HttpPost]
+		public IActionResult Assign(string filterStudent, string filterClass)
+		{
+			ViewBag.Students = _context.Students
+				.Select(s => new
+				{
+					CombinedName = s.Name + " " + s.Surname,
+					s.Name,
+					s.Surname,
+					s.Username
+				})
+				.Distinct()
+				.ToList();
+
+			ViewBag.Classes = _context.Classes.Select(s => s.Number).Distinct().ToList();
+
+			ViewBag.SuccessUpdate = new
+			{
+				Message = "",
+				Found = false
+			};
+
+			var studClassCount = _context.Students
+			.GroupBy(s => new { s.Class_Number, s.Class_Letter })
+			.Select(g => new
+			{
+				Number = g.Key.Class_Number,
+				Letter = g.Key.Class_Letter,
+				Count = g.Count()
+			})
+			.Join(
+				_context.Classes,
+				sc => new { Number = sc.Number, Letter = sc.Letter },
+				cd => new { Number = (int?)cd.Number, Letter = cd.Letter }, // Match nullable/non-nullable
+				(sc, cd) => new
+				{
+					sc.Number,
+					sc.Letter,
+					sc.Count,
+					MaxCount = cd.StudentCount
+				}
+			)
+			.ToList();
+
+
+			if (ModelState.IsValid)
+			{
+
+				if (!string.IsNullOrEmpty(filterStudent) || !string.IsNullOrEmpty(filterClass))
+				{
+					var userProfile = _context.Students.Find(filterStudent);
+					if (userProfile != null)
+					{
+
+						var newProfile = userProfile;
+						bool found = false;
+						foreach(var classes in studClassCount)
+						{
+							if(classes.Number.ToString()==filterClass && classes.Count < classes.MaxCount)
+							{
+								newProfile.Class_Letter = classes.Letter;
+								newProfile.Class_Number = classes.Number;
+								found = true;
+								break;
+							}
+						}
+						if (found)
+						{
+							_context.Entry(userProfile).CurrentValues.SetValues(newProfile);
+							_context.SaveChanges();
+
+							ViewBag.SuccessUpdate = new
+							{
+								Message = $"{newProfile.Name} {newProfile.Surname} buvo pridėta(-s) prie klasės {newProfile.Class_Number} {newProfile.Class_Letter}",
+								Found = true
+							};
+						}
+						else
+						{
+							ViewBag.SuccessUpdate = new
+							{
+								Message = "Mokinio(-ės) neišėjo pridėti į norimą klasę",
+								Found = false
+							};
+						}
+
+						return View();
+					}
+				}
+			}
+			return View();
+		}
+
 		public IActionResult History()
 		{
 			// Code to assign students to classes
