@@ -226,7 +226,7 @@ namespace Student_Grade_Management_System.Controllers
 		}
 		public IActionResult Assign()
 		{
-			// Code to assign students to classes
+			// Used to assign students to classes
 
 			ViewBag.Students = _context.Students
 				.Select(s => new
