@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 14, 2024 at 02:08 AM
+-- Host: localhost
+-- Generation Time: Dec 14, 2024 at 08:23 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -249,7 +249,7 @@ CREATE TABLE `klase` (
   `kelinta` int(10) NOT NULL DEFAULT 0,
   `raide` varchar(255) NOT NULL,
   `mokiniu_skaicius` int(20) NOT NULL DEFAULT 0,
-  `atsakingo_mokytojo_useris` varchar(255) NOT NULL
+  `atsakingo_mokytojo_useris` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_lithuanian_ci;
 
 --
@@ -261,10 +261,14 @@ INSERT INTO `klase` (`kelinta`, `raide`, `mokiniu_skaicius`, `atsakingo_mokytojo
 (5, 'b', 30, 'T-Ingrida'),
 (5, 'c', 30, 'T-Ramūnas'),
 (5, 'd', 30, 'T-Giedrė'),
+(5, 'e', 24, 'T-Giedrė'),
+(5, 'f', 24, 'T-Diana'),
+(5, 'g', 20, NULL),
 (6, 'a', 30, 'T-Saulius'),
 (6, 'b', 30, 'T-Jūratė'),
 (6, 'c', 30, 'T-Rytis'),
 (6, 'd', 30, 'T-Diana'),
+(6, 'e', 20, NULL),
 (7, 'a', 30, 'T-Lukas'),
 (7, 'b', 30, 'T-Rita'),
 (8, 'a', 30, 'T-Giedrius'),
@@ -337,8 +341,8 @@ CREATE TABLE `mokinys` (
   `namas` varchar(255) NOT NULL,
   `butas` varchar(255) NOT NULL,
   `fk_MOKYKLAmokyklos_id` int(20) NOT NULL,
-  `fk_KLASEraide` varchar(255) DEFAULT NULL,
-  `fk_KLASEkelinta` int(10) DEFAULT NULL
+  `fk_KLASEraide` varchar(255) NOT NULL,
+  `fk_KLASEkelinta` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_lithuanian_ci;
 
 --
@@ -346,7 +350,7 @@ CREATE TABLE `mokinys` (
 --
 
 INSERT INTO `mokinys` (`mokinio_useris`, `slaptazodis`, `vardas`, `pavarde`, `gimimo_data`, `asmens_kodas`, `miestas`, `gatve`, `namas`, `butas`, `fk_MOKYKLAmokyklos_id`, `fk_KLASEraide`, `fk_KLASEkelinta`) VALUES
-('S-Agne', 'Agne123', 'Agne', 'Agne', '2002-06-21', 48906150016, 'Alytus', 'Alytaus g.', '36', '7', 1, NULL, NULL),
+('S-Agne', 'Agne123', 'Agne', 'Agne', '2002-06-21', 48906150016, 'Alytus', 'Alytaus g.', '36', '7', 1, 'd', 8),
 ('S-Aistė', 'Aistė123', 'Aistė', 'Aistė', '2005-04-15', 48602150002, 'Kaunas', 'Laisvės al.', '15', '2', 1, 'b', 5),
 ('S-Dainius', 'Dainius123', 'Dainius', 'Dainius', '2004-07-14', 37605150005, 'Panevėžys', 'J. Basanavičiaus g.', '30', '5', 1, 'a', 6),
 ('S-Dainora', 'Dainora123', 'Dainora', 'Dainora', '2002-09-30', 38107150027, 'Marijampolė', 'Marijampolės g.', '41', '8', 1, 'c', 7),
@@ -431,7 +435,7 @@ INSERT INTO `mokytojas` (`mokytojo_useris`, `slaptazodis`, `vardas`, `pavarde`, 
 ('T-Ingrida', 'Ingrida123', 'Ingrida', 'Ingridaitė', 48602150002, '861345678', 'ingrida.ingridaite@example.com', 'Kaunas', 'Laisvės al.', '15', '2'),
 ('T-Jūratė', 'Jurate123', 'Jūratė', 'Juraitė', 48906150006, '861789012', 'jurate.juraite@example.com', 'Alytus', 'Alytaus g.', '35', '6'),
 ('T-Lukas', 'Lukas123', 'Lukas', 'Lukauskas', 37509150009, '861012345', 'lukas.lukauskas@example.com', 'Utena', 'Utenos g.', '50', '9'),
-('T-Ramūnas', 'Ramunas123', 'Ramūnas', 'Ramanauskas', 37903150003, '861456789', 'ramunas.ramanauskas@example.com', 'Klaipėda', 'Taikos pr.', '20', '3'),
+('T-Ramūnas', 'Ramunas1234', 'Ramūnas', 'Ramanauskas', 37903150003, '861456788', 'ramunas.ramanauskas@example.com', 'Klaipėda', 'Taikos pr.', '20', '3'),
 ('T-Rita', 'Rita123', 'Rita', 'Ritienė', 48310150010, '861123456', 'rita.ritiene@example.com', 'Biržai', 'Biržų g.', '55', '10'),
 ('T-Rytis', 'Rytis123', 'Rytis', 'Ryčkauskas', 38107150007, '861890123', 'rytis.ryckauskas@example.com', 'Marijampolė', 'Marijampolės g.', '40', '7'),
 ('T-Saulius', 'Saulius123', 'Saulius', 'Sauliūnas', 37605150005, '861678901', 'saulius.sauliunas@example.com', 'Panevėžys', 'J. Basanavičiaus g.', '30', '5');
@@ -752,7 +756,7 @@ ALTER TABLE `atsiliepimas`
 -- AUTO_INCREMENT for table `dalykas`
 --
 ALTER TABLE `dalykas`
-  MODIFY `dalyko_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `dalyko_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `ivertinimas`

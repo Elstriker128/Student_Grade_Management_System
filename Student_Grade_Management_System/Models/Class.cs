@@ -11,6 +11,6 @@ namespace Student_Grade_Management_System.Models
         [Column("mokiniu_skaicius")]
         public int StudentCount { get; set; }
         [Column("atsakingo_mokytojo_useris")]
-        public string Teacher_Username { get; set; }
+        public string? Teacher_Username { get; set; }
     }
 }

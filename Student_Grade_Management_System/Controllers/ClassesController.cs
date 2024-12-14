@@ -28,12 +28,11 @@ namespace Student_Grade_Management_System.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Add(int classNumber, string classLetter, int studentCount, string Teacher_Username)
+        public async Task<IActionResult> Add(int classNumber, int studentCount, string Teacher_Username)
         {
             var newClass = new Class
             {
                 Number = classNumber,
-                Letter = classLetter,
                 StudentCount = studentCount,
                 Teacher_Username = Teacher_Username
             };
@@ -41,10 +40,10 @@ namespace Student_Grade_Management_System.Controllers
             var classes = await _context.Classes.ToListAsync();
             foreach (var c in classes)
             {
-                if (c.Number == newClass.Number && c.Letter == newClass.Letter)
+                if (c.Number == classNumber)
                 {
-                    return View("Error", new ErrorViewModel { RequestId = "Tokia klasė jau egzistuoja." });
-
+                    char lastLetter = c.Letter.Last();
+                    newClass.Letter = ((char)(lastLetter + 1)).ToString();
                 }
             }
 
