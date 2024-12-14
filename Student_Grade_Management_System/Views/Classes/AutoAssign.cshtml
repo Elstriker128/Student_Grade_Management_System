@@ -1,0 +1,36 @@
+@model Tuple<IEnumerable<Student_Grade_Management_System.Models.Class>, IEnumerable<Student_Grade_Management_System.Models.Teacher>>
+
+@{
+    ViewData["Title"] = "Automatinis mokytojų priskyrimas klasėms";
+}
+
+<h2>Automatinis mokytojų priskyrimas klasėms</h2>
+
+@if (ViewBag.FreeClasses != null && ViewBag.FreeTeachers != null)
+{
+    <form asp-action="AutoAssignConfirm" method="post">
+        <div class="alert alert-warning">
+            <p>Ar tikrai norite automatiškai priskirti mokytojus klasėms?</p>
+            <ul>
+                @foreach (var freeClass in ViewBag.FreeClasses)
+                {
+                    <li>Klasė: @freeClass.Number @freeClass.Letter</li>
+                }
+            </ul>
+            <ul>
+                @foreach (var freeTeacher in ViewBag.FreeTeachers)
+                {
+                    <li>Mokytojas: @freeTeacher.Name @freeTeacher.Surname</li>
+                }
+            </ul>
+        </div>
+        <button type="submit" class="btn btn-primary">Patvirtinti</button>
+        <a asp-action="Index" class="btn btn-secondary">Atšaukti</a>
+    </form>
+}
+else
+{
+    <div class="alert alert-info">
+        <p>Nėra laisvų klasių arba mokytojų.</p>
+    </div>
+}
