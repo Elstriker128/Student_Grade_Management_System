@@ -84,8 +84,6 @@ namespace Student_Grade_Management_System.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-                // GET: Teachers/Edit/{id}
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
@@ -102,8 +100,7 @@ namespace Student_Grade_Management_System.Controllers
 
             return View(teacher);
         }
-
-        // POST: Teachers/Edit/{id}
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Name,Surname,SSN,Email,PhoneNumber,Street,City,Building,Apartment")] Teacher teacher)
