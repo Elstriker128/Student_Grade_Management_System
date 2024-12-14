@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Student_Grade_Management_System.csproj": {}
+    "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj": {}
   },
   "projects": {
-    "/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Student_Grade_Management_System.csproj": {
+    "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Student_Grade_Management_System.csproj",
+        "projectUniqueName": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj",
         "projectName": "Student_Grade_Management_System",
-        "projectPath": "/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Student_Grade_Management_System.csproj",
-        "packagesPath": "/home/gate/.nuget/packages/",
-        "outputPath": "/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/obj/",
+        "projectPath": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Student_Grade_Management_System.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/gate/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -54,16 +66,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.20, 7.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.linux-x64",
-              "version": "[7.0.20, 7.0.20]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -72,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.110/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
