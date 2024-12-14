@@ -1,6 +1,7 @@
 ﻿@{
-	ViewData["Title"] = "Assign";
+    ViewData["Title"] = "Assign";
 }
+
 
 <h2>Mokinių priskyrimo klasėms langas</h2>
 
@@ -46,6 +47,7 @@
 		</div>
 	}
 	@* Used for checking data *@
+
 	else if (ViewBag.SuccessUpdate.Found == false && !string.IsNullOrEmpty(ViewBag.SuccessUpdate.Message))
 	{
 		<div class="alert alert-danger">

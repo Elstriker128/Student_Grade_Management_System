@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Student_Grade_Management_System.Models;
 
 namespace Student_Grade_Management_System.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly SystemDbContext _context;
         public ProfileController(SystemDbContext context)
         {
-            _context = context;
-        }
+              _context = context;
+        } 
         public IActionResult Index(string username)
         {
             if (string.IsNullOrEmpty(username))
@@ -32,6 +29,7 @@ namespace Student_Grade_Management_System.Controllers
             }).FirstOrDefault();
 
             return View(userProfile);
+
         }
         public IActionResult TProfile()
         {
