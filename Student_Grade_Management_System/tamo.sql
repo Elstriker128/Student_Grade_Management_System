@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2024 at 03:32 PM
+-- Generation Time: Dec 14, 2024 at 02:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -337,8 +337,8 @@ CREATE TABLE `mokinys` (
   `namas` varchar(255) NOT NULL,
   `butas` varchar(255) NOT NULL,
   `fk_MOKYKLAmokyklos_id` int(20) NOT NULL,
-  `fk_KLASEraide` varchar(255) NOT NULL,
-  `fk_KLASEkelinta` int(10) NOT NULL
+  `fk_KLASEraide` varchar(255) DEFAULT NULL,
+  `fk_KLASEkelinta` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_lithuanian_ci;
 
 --
@@ -346,7 +346,7 @@ CREATE TABLE `mokinys` (
 --
 
 INSERT INTO `mokinys` (`mokinio_useris`, `slaptazodis`, `vardas`, `pavarde`, `gimimo_data`, `asmens_kodas`, `miestas`, `gatve`, `namas`, `butas`, `fk_MOKYKLAmokyklos_id`, `fk_KLASEraide`, `fk_KLASEkelinta`) VALUES
-('S-Agne', 'Agne123', 'Agne', 'Agne', '2002-06-21', 48906150016, 'Alytus', 'Alytaus g.', '36', '7', 1, 'd', 8),
+('S-Agne', 'Agne123', 'Agne', 'Agne', '2002-06-21', 48906150016, 'Alytus', 'Alytaus g.', '36', '7', 1, NULL, NULL),
 ('S-Aistė', 'Aistė123', 'Aistė', 'Aistė', '2005-04-15', 48602150002, 'Kaunas', 'Laisvės al.', '15', '2', 1, 'b', 5),
 ('S-Dainius', 'Dainius123', 'Dainius', 'Dainius', '2004-07-14', 37605150005, 'Panevėžys', 'J. Basanavičiaus g.', '30', '5', 1, 'a', 6),
 ('S-Dainora', 'Dainora123', 'Dainora', 'Dainora', '2002-09-30', 38107150027, 'Marijampolė', 'Marijampolės g.', '41', '8', 1, 'c', 7),
