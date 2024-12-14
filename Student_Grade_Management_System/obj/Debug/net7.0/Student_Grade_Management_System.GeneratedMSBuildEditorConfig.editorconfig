@@ -66,16 +66,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvZmlsZS9UUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Report/Export.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0L0V4cG9ydC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Report/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0L0luZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Report/Report.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0L1JlcG9ydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Review/Add.cshtml]
