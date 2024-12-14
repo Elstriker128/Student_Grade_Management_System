@@ -5,41 +5,53 @@
 }
 
 <h2>Mokytojai</h2>
-@*<a asp-controller="Teachers" asp-action="Find" class="btn btn-primary">Ieškoti mokytojo</a>*@
+
 <p>Administratorius:</p>
 <a asp-controller="Teachers" asp-action="Add" class="btn btn-primary">Įtraukti naują mokytoją į sistemą</a>
 <a asp-controller="Profile" asp-action="TProfile" class="btn btn-primary">Mokytojo profilis</a>
-@*<a asp-controller="Teachers" asp-action="Edit" class="btn btn-primary">Redaguoti mokytojo duomenis</a>
-<a asp-controller="Teachers" asp-action="AddQualification" class="btn btn-primary">Susieti mokytoją su dalyku</a>
-<a asp-controller="Teachers" asp-action="AssignToClass" class="btn btn-primary">Priskirti mokytoją klasei</a>*@
 
-<div class="container mt-5">
-    <h2>Mokytojų sąrašas</h2>
+<form asp-controller="Teachers" asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Ieškoti pagal vardą arba pavardę..." value="@ViewData["Search"]" />
+        <button type="submit" class="btn btn-success">Ieškoti</button>
+    </div>
+</form>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Vardas</th>
-                <th>Pavardė</th>
-                <th>Telefono numeris</th>
-                <th>El. paštas</th>
-                <th>Veiksmai</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var teacher in Model)
-            {
+@if (Model != null && Model.Any())
+{
+    <div class="container mt-5">
+        <h2>Mokytojų sąrašas</h2>
+
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td>@teacher.Name</td>
-                    <td>@teacher.Surname</td>
-                    <td>@teacher.PhoneNumber</td>
-                    <td>@teacher.Email</td>
-                    <td>
-                        <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Username" class="btn btn-primary">Redaguoti</a>
-                        <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>
-                        <a asp-controller="Teachers" asp-action="AssignToClass" asp-route-id="@teacher.Username" class="btn btn-primary">Priskirti klasei</a>
-                    </td>
+                    <th>Vardas</th>
+                    <th>Pavardė</th>
+                    <th>Telefono numeris</th>
+                    <th>El. paštas</th>
+                    <th>Veiksmai</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var teacher in Model)
+                {
+                    <tr>
+                        <td>@teacher.Name</td>
+                        <td>@teacher.Surname</td>
+                        <td>@teacher.PhoneNumber</td>
+                        <td>@teacher.Email</td>
+                        <td>
+                            <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Username" class="btn btn-primary">Redaguoti</a>
+                            <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>
+                            <a asp-controller="Teachers" asp-action="AssignToClass" asp-route-id="@teacher.Username" class="btn btn-primary">Priskirti klasei</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else if (ViewData["Search"] != null)
+{
+    <p>Nėra mokytojų, atitinkančių paieškos kriterijų.</p>
+}
