@@ -1,8 +1,45 @@
-﻿@{
+﻿@model IEnumerable<Student_Grade_Management_System.Models.Subject>
+
+@{
     ViewData["Title"] = "Dalykai";
 }
 
 <h2>Dalykai</h2>
 <p>Administratorius:</p>
 <a asp-controller="Subject" asp-action="Add" class="btn btn-primary">Pridėti naują dalyką</a>
-@*<a asp-controller="Subject" asp-action="Remove" class="btn btn-primary">Šalinti dalyką</a>*@
+
+<div class="container mt-5">
+    <h2>Dalykų sąrašas</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Dalyko pavadinimas</th>
+                <th>Veiksmai</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var subject in Model)
+        {
+            <tr>
+                <td>@subject.Name</td>
+                <td>
+                    <form asp-controller="Subject" asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirmDelete();">
+                        <input type="hidden" name="id" value="@subject.ID" />
+                        <button type="submit" class="btn btn-danger">Ištrinti</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        function confirmDelete() {
+            return confirm('Ar tikrai norite ištrinti šį dalyką?');
+        }
+    </script>
+}

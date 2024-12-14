@@ -22,7 +22,7 @@
             <tr>
                 <th>Klasės skaičius</th>
                 <th>Klasės raidė</th>
-                <th>Mokinių skaičius</th>
+                <th>Maksimalus mokinių skaičius</th>
                 <th>Atsakingas mokytojas</th>
             </tr>
         </thead>
@@ -33,9 +33,22 @@
                     <td>@classObj.Number</td>
                     <td>@classObj.Letter</td>
                     <td>@classObj.StudentCount</td>
-                    <td>@classObj.Teacher_Username</td>
+                    @if (classObj.Teacher_Username != null)
+                    {
+                        <td>@classObj.Teacher_Username</td>
+                    }
+                    else
+                    {
+                        <td class="nepriskirtas">Nepriskirtas!</td>
+                    }
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<style>
+    .nepriskirtas {
+        color: red;
+    }
+</style>
