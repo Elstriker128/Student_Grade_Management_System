@@ -162,6 +162,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvTWFudWFsQXNzaWduLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Qualifications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvUXVhbGlmaWNhdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

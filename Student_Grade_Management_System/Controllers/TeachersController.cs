@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Org.BouncyCastle.Crypto.Utilities;
 using Student_Grade_Management_System.Models;
 
@@ -100,7 +103,7 @@ namespace Student_Grade_Management_System.Controllers
 
             return View(teacher);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Name,Surname,SSN,Email,PhoneNumber,Street,City,Building,Apartment")] Teacher teacher)
@@ -138,12 +141,67 @@ namespace Student_Grade_Management_System.Controllers
             return _context.Teachers.Any(e => e.Username == id);
         }
 
-
-
-
-        public IActionResult AddQualification()
+        [HttpGet]
+        public async Task<IActionResult> AddQualification(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var teacher = await _context.Teachers.FindAsync(id);
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Subjects = new SelectList(_context.Subjects, "ID", "Name");
+            ViewBag.TeacherUsername = teacher.Username;
+
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddQualification(string teacherUsername, int subjectId)
+        {
+            if (teacherUsername == null || subjectId == 0)
+            {
+            return BadRequest();
+            }
+
+            var existingQualification = await _context.SubjectsOfTeachers
+            .FirstOrDefaultAsync(sot => sot.Teacher_Username == teacherUsername && sot.Subject_ID == subjectId);
+
+            if (existingQualification != null)
+            {
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = "Šis/ši mokytojas/mokytoja jau turi šią kvalifikaciją."
+                };
+                return View("Error", errorViewModel);
+            }
+
+            var qualification = new SubjectOfTeacher
+            {
+                Teacher_Username = teacherUsername,
+                Subject_ID = subjectId
+            };
+
+            _context.SubjectsOfTeachers.Add(qualification);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Qualifications));
+        }
+
+        public async Task<IActionResult> Qualifications()
+        {
+            var qualifications = await _context.SubjectsOfTeachers
+                .Include(sot => sot.Teacher)
+                .Include(sot => sot.Subject)
+                .OrderByDescending(sot => sot.Teacher.Name)
+                .ToListAsync();
+
+            return View(qualifications);
         }
         public IActionResult AssignToClass()
         {

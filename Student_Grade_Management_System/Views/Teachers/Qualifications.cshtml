@@ -1,0 +1,29 @@
+@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Mokytojų kvalifikacijos";
+}
+
+<h2>Mokytojų kvalifikacijos</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mokytojo vardas</th>
+            <th>Mokytojo pavardė</th>
+            <th>Dalykas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Teacher.Name</td>
+                <td>@item.Teacher.Surname</td>
+                <td>@item.Subject.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Atgal į sąrašą</a>
