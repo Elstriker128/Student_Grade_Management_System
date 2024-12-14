@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\views\\students\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:views\\students\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\systemdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:systemdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\views\\students\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -27,12 +19,8 @@
       "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:views\\students\\change.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\models\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:models\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\models\\school.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:models\\school.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|c:\\users\\user\\onedrive\\desktop\\vsp\\student_grade_management_system\\student_grade_management_system\\views\\students\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{15F001B5-2C02-4A5A-8210-5EDF1745617F}|Student_Grade_Management_System.csproj|solutionrelative:views\\students\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,8 +30,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -52,101 +44,61 @@
               "RelativeDocumentMoniker": "Controllers\\StudentsController.cs",
               "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Controllers\\StudentsController.cs",
               "RelativeToolTip": "Controllers\\StudentsController.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAgwDwAAABwAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwIoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-12T18:33:34.691Z",
-              "IsPinned": true,
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Change.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Change.cshtml",
               "RelativeDocumentMoniker": "Views\\Students\\Change.cshtml",
               "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Change.cshtml",
               "RelativeToolTip": "Views\\Students\\Change.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAkwCAAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-12T23:54:50.138Z"
+              "WhenOpened": "2024-12-12T23:54:50.138Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Students\\Index.cshtml",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Index.cshtml",
-              "RelativeToolTip": "Views\\Students\\Index.cshtml",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-12T21:51:02.264Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "School.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\School.cs",
-              "RelativeDocumentMoniker": "Models\\School.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\School.cs",
-              "RelativeToolTip": "Models\\School.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T21:04:49.21Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Class.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\Class.cs",
-              "RelativeDocumentMoniker": "Models\\Class.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\Class.cs",
-              "RelativeToolTip": "Models\\Class.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T20:37:27.193Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SystemDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\SystemDbContext.cs",
-              "RelativeDocumentMoniker": "SystemDbContext.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\SystemDbContext.cs",
-              "RelativeToolTip": "SystemDbContext.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAwwAsAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T18:40:34.819Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Student.cs",
-              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\Student.cs",
-              "RelativeDocumentMoniker": "Models\\Student.cs",
-              "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\Student.cs",
-              "RelativeToolTip": "Models\\Student.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T19:02:03.068Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "Add.cshtml",
               "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Add.cshtml",
               "RelativeDocumentMoniker": "Views\\Students\\Add.cshtml",
               "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Add.cshtml",
               "RelativeToolTip": "Views\\Students\\Add.cshtml",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAD0AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-12-12T19:41:01.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Students\\Index.cshtml",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Views\\Students\\Index.cshtml",
+              "RelativeToolTip": "Views\\Students\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-12T21:51:02.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Student.cs",
+              "DocumentMoniker": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\Student.cs",
+              "RelativeDocumentMoniker": "Models\\Student.cs",
+              "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Models\\Student.cs*",
+              "RelativeToolTip": "Models\\Student.cs*",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAzwBEAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-12T19:02:03.068Z",
               "EditorCaption": ""
             }
           ]

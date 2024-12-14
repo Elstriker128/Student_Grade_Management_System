@@ -63,19 +63,7 @@
             </select>
         </div>
 
-        @* <!-- Dropdown for Combined Class (Letter + Number) -->
-        <div class="mb-3">
-            <label class="form-label" for="combinedClass">Class (Letter + Number)</label>
-            <select name="combinedClass" id="combinedClass" class="form-control">
-                <option value="">Select a Class</option>
-                @foreach (var classItem in ViewBag.Classes)
-                {
-                    <option value="@classItem.Combined">@classItem.Combined</option>
-                }
-            </select>
-        </div> *@
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Išsaugoti</button>
     
     }
 </div>

@@ -39,7 +39,17 @@ namespace Student_Grade_Management_System
             modelBuilder.Entity<Models.Class>().ToTable("klase").HasKey(c => new {c.Number, c.Letter});
             modelBuilder.Entity<Models.ParentOfStudent>().ToTable("mokinio_tevas").HasNoKey(); 
             modelBuilder.Entity<Models.Student>().ToTable("mokinys").HasKey(s => s.Username);
-            modelBuilder.Entity<Models.School>().ToTable("mokykla").HasKey(s => s.ID);
+
+
+			// Add the conversion for DateOnly
+			modelBuilder.Entity<Models.Student>()
+				.Property(s => s.Birth_Date)
+				.HasConversion(
+					v => v.ToDateTime(TimeOnly.MinValue),  // Convert DateOnly to DateTime (stored in the database)
+					v => DateOnly.FromDateTime(v)           // Convert DateTime back to DateOnly when reading from the database
+				);
+
+			modelBuilder.Entity<Models.School>().ToTable("mokykla").HasKey(s => s.ID);
             modelBuilder.Entity<Models.Teacher>().ToTable("mokytojas").HasKey(t => t.Username);
             modelBuilder.Entity<Models.SubjectOfTeacher>().ToTable("mokytojo_dalykas").HasNoKey();
             modelBuilder.Entity<Models.SchoolOfTeacher>().ToTable("mokytojo_mokykla").HasNoKey();
