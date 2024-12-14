@@ -14,7 +14,7 @@ namespace Student_Grade_Management_System.Controllers
 		}
 		public async Task<IActionResult> Index(string search)
 		{
-			// Store the search term in ViewData so it persists in the view
+			// Keep the search term in ViewData so it persists in the view
 			ViewData["Search"] = search;
 
 			// Start by fetching all students

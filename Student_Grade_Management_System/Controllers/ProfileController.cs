@@ -18,7 +18,7 @@ namespace Student_Grade_Management_System.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Fetch the user profile based on the username
+            // Get the user profile based on the username
             var userProfile = _context.Students.Find(username); // Replace _userService with your data fetching logic
 
             if (userProfile == null)
