@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Student_Grade_Management_System.Models;
 
 
 
@@ -9,8 +11,8 @@ namespace Student_Grade_Management_System.Controllers
         private readonly SystemDbContext _context;
         public ProfileController(SystemDbContext context)
         {
-              _context = context;
-        } 
+            _context = context;
+        }
         public IActionResult Index(string username)
         {
             if (string.IsNullOrEmpty(username))
@@ -18,7 +20,8 @@ namespace Student_Grade_Management_System.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Get the user profile based on the username
+            // Fetch the user profile based on the username
+
             var userProfile = _context.Students.Find(username); // Replace _userService with your data fetching logic
 
             if (userProfile == null)
