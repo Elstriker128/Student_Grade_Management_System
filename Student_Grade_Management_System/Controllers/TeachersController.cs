@@ -14,24 +14,19 @@ namespace Student_Grade_Management_System.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
-        {
-            var teachers = await _context.Teachers.ToListAsync();
-            if (teachers == null)
-            {
-                return NotFound();
-            }
-            return View(teachers);
-        }
-        [HttpPost]
         public async Task<IActionResult> Index(string search)
         {
-            var teachers = await _context.Teachers.Where(t => t.Name.Contains(search)).ToListAsync();
-            if (teachers == null)
+            ViewData["Search"] = search;
+
+            var teachers = from t in _context.Teachers
+                           select t;
+
+            if (!string.IsNullOrEmpty(search))
             {
-                return NotFound();
+                teachers = teachers.Where(t => t.Name.Contains(search) || t.Surname.Contains(search));
             }
-            return View(teachers);
+            
+            return View(await teachers.ToListAsync());
         }
 
         [HttpGet]
@@ -83,12 +78,6 @@ namespace Student_Grade_Management_System.Controllers
         {
             return View();
         }
-
-        public IActionResult Find()
-        {
-            return View();
-        }
-
         public IActionResult AssignToClass()
         {
             return View();
