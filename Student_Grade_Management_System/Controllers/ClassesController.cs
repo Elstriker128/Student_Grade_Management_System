@@ -44,7 +44,6 @@ namespace Student_Grade_Management_System.Controllers
                 if (c.Number == newClass.Number && c.Letter == newClass.Letter)
                 {
                     return View("Error", new ErrorViewModel { RequestId = "Tokia klasė jau egzistuoja." });
-
                 }
             }
 
