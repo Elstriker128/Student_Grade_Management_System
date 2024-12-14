@@ -45,6 +45,7 @@
 			@ViewBag.SuccessUpdate.Message
 		</div>
 	}
+	@* Check witch scenario *@
 	else if (ViewBag.SuccessUpdate.Found == false && !string.IsNullOrEmpty(ViewBag.SuccessUpdate.Message))
 	{
 		<div class="alert alert-danger">
