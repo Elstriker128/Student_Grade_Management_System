@@ -203,6 +203,8 @@ namespace Student_Grade_Management_System.Controllers
 
             return View(qualifications);
         }
+
+        
         public IActionResult AssignToClass()
         {
             return View();
