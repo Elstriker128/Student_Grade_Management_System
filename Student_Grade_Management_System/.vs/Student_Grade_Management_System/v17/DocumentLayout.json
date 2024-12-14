@@ -54,8 +54,7 @@
               "RelativeToolTip": "Models\\Class.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-14T19:51:44.832Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-14T19:51:44.832Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "SystemDbContext.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAkwCYAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-14T17:08:30.022Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-14T17:08:30.022Z"
             },
             {
               "$type": "Document",
@@ -80,8 +78,7 @@
               "RelativeToolTip": "Views\\Students\\Assign.cshtml",
               "ViewState": "AgIAACEAAAAAAAAAAAAkwDQAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-14T17:09:48.671Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-14T17:09:48.671Z"
             },
             {
               "$type": "Document",
@@ -91,7 +88,7 @@
               "RelativeDocumentMoniker": "Controllers\\StudentsController.cs",
               "ToolTip": "C:\\Users\\User\\OneDrive\\Desktop\\VSP\\Student_Grade_Management_System\\Student_Grade_Management_System\\Controllers\\StudentsController.cs",
               "RelativeToolTip": "Controllers\\StudentsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0BAAASAAAAAAAAAA==",
+              "ViewState": "AgIAADoBAAAAAAAAAAAswE0BAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-14T17:05:51.074Z",
               "EditorCaption": ""
@@ -106,8 +103,7 @@
               "RelativeToolTip": "Views\\Report\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-14T16:56:35.988Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-14T16:56:35.988Z"
             },
             {
               "$type": "Document",
@@ -119,8 +115,7 @@
               "RelativeToolTip": "Models\\Student.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAA/wB4AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T19:02:03.068Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T19:02:03.068Z"
             },
             {
               "$type": "Document",
@@ -132,8 +127,7 @@
               "RelativeToolTip": "Views\\Profile\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-14T14:39:53.98Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-14T14:39:53.98Z"
             }
           ]
         }
