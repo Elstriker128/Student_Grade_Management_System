@@ -15,7 +15,7 @@
                 var students = (SelectList)ViewData["Students"];
                 foreach (var student in students)
                 {
-                    <option value="@student.Text">@student.Text</option>
+                    <option value="@student.Value">@student.Text</option>
                 }
             }
         </select>
@@ -43,7 +43,7 @@
                 var subjects = (SelectList)ViewData["Subjects"];
                 foreach (var subject in subjects)
                 {
-                    <option value="@subject.Value">@subject.Text</option>
+                    <option value="@subject.Text">@subject.Text</option>
                 }
             }
         </select>
@@ -75,9 +75,12 @@
     <thead>
         <tr>
             <th>Studentas</th>
+            <th>Klasė</th>
             <th>Dalykas</th>
+            <th>Įvertinimo data</th>
             <th>Įvertinimas</th>
-            <th>Data</th>
+            <th>Atsiliepimo data</th>
+            <th>Atsiliepimas</th>
         </tr>
     </thead>
     <tbody>
@@ -85,6 +88,28 @@
     </tbody>
 </table>
 <p id="noResultsMessage" class="text-muted mt-3" style="display: none;">Nerasta jokių atitikčių.</p>
+<div class="modal" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exportModalLabel">Pasirinkite eksportavimo formatą</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="exportFormat">Pasirinkite formatą:</label>
+        <select id="exportFormat" class="form-select">
+          <option value="csv">CSV</option>
+          <option value="txt">TXT</option>
+          <option value="docx">DOCX</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atšaukti</button>
+        <button type="button" class="btn btn-primary" onclick="exportReport()">Atsisiųsti</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -159,29 +184,60 @@
             };
 
             // Atlikti POST užklausą
-            fetch('/Report/GenerateReport', {
+            fetch('/Report/Index', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(filters),
             })
             .then(response => response.json())
             .then(data => {
                 var table = document.getElementById('reportTable');
                 var tbody = table.querySelector('tbody');
-                tbody.innerHTML = ''; // Išvalome senus duomenis
+                tbody.innerHTML = '';
 
                 if (data.length > 0) {
-                    data.forEach(item => {
-                        var row = document.createElement('tr');
-                        row.innerHTML = `<td>${item.student}</td><td>${item.subject}</td><td>${item.grade}</td><td>${item.date}</td>`;
-                        tbody.appendChild(row);
+                    data.forEach(studentGroup => {
+                        // Mokinio pavadinimas
+                        var studentRow = document.createElement('tr');
+                        studentRow.innerHTML = `<td colspan="7" class="student-header" style="background-color: #f0f0f0; color: #333; font-weight: bold; padding: 10px;">
+                            ${studentGroup.student}
+                            <button class="export-button" onclick="showExportModal('${studentGroup.student}')"
+                                    style="float: right; background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                    Eksportuoti
+                            </button>
+                        </td>`;
+                        tbody.appendChild(studentRow);
+
+                        // Iteruojame per įvertinimus
+                        studentGroup.records.forEach(item => {
+                            var row = document.createElement('tr');
+                            row.innerHTML = `<td></td> <!-- Tuščia pirmoje langelyje --> 
+                            <td>${item.classid}</td>
+                            <td>${item.subject}</td>
+                            <td>${item.date}</td>
+                            <td>${item.grade}</td>
+                            <td></td> <!-- Atsiliepimų data -->
+                            <td></td> <!-- Atsiliepimai -->
+                            `;
+                            tbody.appendChild(row);
+                        });
+
+                        // Pridedame atsiliepimus
+                        studentGroup.reviews.forEach(review => {
+                            var reviewRow = document.createElement('tr');
+                            reviewRow.innerHTML = `<td></td>
+                            <td colspan="4" style="text-align:left;">${review.type}:</td>
+                            <td>${review.date}</td>
+                            <td>${review.review}</td>`;
+                            tbody.appendChild(reviewRow);
+                        });
                     });
-                    table.style.display = 'table'; // Parodome lentelę
+                    table.style.display = 'table';
+                    document.getElementById('noResultsMessage').style.display = 'none';
+                    showMessage("Ataskaita sėkmingai sugeneruota.", 'success');
                 } else {
-                    showMessage("Nerasta jokių atitikčių.", 'error');
                     table.style.display = 'none';
+                    document.getElementById('noResultsMessage').style.display = 'block';
                 }
             })
             .catch(error => {
@@ -191,13 +247,52 @@
         }
         
         function clearFilters() {
-            document.getElementById('filterType').value = "";
             document.getElementById('filterStudent').value = "";
-            document.getElementById('filterTeacher').value = "";
-            document.getElementById('filterDate').value = "";
+            document.getElementById('filterStartDate').value = "";
+            document.getElementById('filterEndDate').value = "";
+            document.getElementById('filterSubject').value = "";
+            document.getElementById('filterGradeMin').value = 1;
+            document.getElementById('filterGradeMax').value = 10;
 
-            // Pašalinti filtrų poveikį
-            //filterReviews(); 
+            document.getElementById('gradeMinValue').textContent = 1;
+            document.getElementById('gradeMaxValue').textContent = 10;
+
+            // Pašalinti rezultatus iš lentelės
+            var table = document.getElementById('reportTable');
+            table.querySelector('tbody').innerHTML = '';
+            table.style.display = 'none';
+
+            document.getElementById('noResultsMessage').style.display = 'none';
+        }
+        
+        function showExportModal(student) {
+            // Store the student name or any other required data in the modal for later use
+            document.getElementById('exportModal').dataset.student = student;
+            new bootstrap.Modal(document.getElementById('exportModal')).show();
+        }
+
+        function exportReport() {
+            var format = document.getElementById('exportFormat').value;
+            var student = document.getElementById('exportModal').dataset.student;
+            showMessage("Ataskaita sėkmingai sugeneruota ir atsiunčiama.", 'success');
+
+            fetch(`/Report/Export?student=${student}&format=${format}`, {
+                method: 'GET'
+            })
+            .then(response => response.blob())
+            .then(data => {
+                var url = window.URL.createObjectURL(data);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = `${student}_ataskaita.${format}`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+                showMessage("Ataskaita eksportuota.", 'success');
+            })
+            .catch(error => {
+                console.error('Error exporting report:', error);
+                showMessage("Įvyko klaida eksportuojant ataskaitą.", 'error');
+            });
         }
     </script>
 }
