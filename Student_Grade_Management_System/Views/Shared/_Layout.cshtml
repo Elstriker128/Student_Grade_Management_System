@@ -108,5 +108,28 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message, // Pranešimo tekstas čia
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(TempData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(TempData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
+    </script>
 </body>
 </html>
