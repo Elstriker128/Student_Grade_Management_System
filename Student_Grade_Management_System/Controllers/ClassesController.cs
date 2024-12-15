@@ -23,9 +23,14 @@ namespace Student_Grade_Management_System.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            ViewBag.Teachers = _context.Teachers.ToList();
+            var freeTeachers = await _context.Teachers
+            .Where(t => !_context.Classes.Any(c => c.Teacher_Username == t.Username))
+            .ToListAsync();
+
+            ViewBag.FreeTeachers = freeTeachers;
+
             return View();
         }
         [HttpPost]
@@ -46,7 +51,14 @@ namespace Student_Grade_Management_System.Controllers
                     char lastLetter = c.Letter.Last();
                     newClass.Letter = ((char)(lastLetter + 1)).ToString();
                 }
+
+                else
+                {
+                    newClass.Letter = "a";
+                }
             }
+
+            // if there is a class with the same teacher
 
             await _context.Classes.AddAsync(newClass);
             await _context.SaveChangesAsync();
