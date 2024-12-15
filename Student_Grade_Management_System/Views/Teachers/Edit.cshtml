@@ -4,10 +4,7 @@
     ViewData["Title"] = "Redaguoti mokytoją";
 }
 
-
-@if (Context.Session.GetString("UserType") == "Admin")
-{
-    <h2>Redaguoti mokytoją</h2>
+<h2>Redaguoti mokytoją</h2>
 
 <form asp-action="Edit">
     <div class="form-group">
@@ -57,8 +54,3 @@
     <button type="submit" class="btn btn-primary">Išsaugoti</button>
 </form>
 <a asp-action="Index" class="btn btn-secondary">Atgal į sąrašą</a>
-}
-else
-{
-    <div class="alert alert-danger" role="alert">Jūs neturite teisės matyti šio puslapio.</div>
-}

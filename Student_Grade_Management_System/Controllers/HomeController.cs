@@ -7,43 +7,39 @@ namespace Student_Grade_Management_System.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly SystemDbContext _context;
         private readonly ILogger<HomeController> _logger;
         private readonly SystemDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, SystemDbContext context)
+        public HomeController(SystemDbContext context, ILogger<HomeController> logger)
         {
-            _logger = logger;
             _context = context;
+            _logger = logger;
         }
-
         public IActionResult Index()
         {
-            // Get user type from session
+            // Gauti UserType reikšmę iš sesijos
             var userType = HttpContext.Session.GetString("UserType");
-            ViewData["UserType"] = userType;
+            var userName = HttpContext.Session.GetString("Username");
 
-            // Get username from session
-            var username = HttpContext.Session.GetString("Username");
-
-            if (username != null)
+            // Jei UserType nėra nustatytas (reikšmė null arba tuščia), nukreipti į prisijungimo puslapį
+            if (string.IsNullOrEmpty(userType))
             {
-                // Attempt to find the student by username
-                var student = _context.Students.FirstOrDefault(s => s.Username == username);
-                if (student != null)
-                {
-                    HttpContext.Session.SetString("UserNameAndSurname", $"{student.Name} {student.Surname}");
-                }
-                //else
-                //{
-                //    _logger.LogWarning("No student found with username: {Username}", username);
-                //    ViewData["UserNameSurname"] = "";
-                //}
+                return RedirectToAction("Login", "Client");
             }
-            //else
-            //{
-            //    _logger.LogWarning("Session does not contain 'Username'");
-            //    ViewData["UserNameSurname"] = "No username in session";
-            //}
+
+            // Priskirti UserType į ViewData (jei reikia)
+            TempData["UserType"] = userType;
+            TempData["Username"] = userName;
+
+            var student = _context.Students
+                            .Where(x => x.Username == userName)
+                            .Select(x => x.Name + " " + x.Surname)
+                            .FirstOrDefault();
+
+            if (userType == "Student"){
+                HttpContext.Session.SetString("Name", student);
+            }
 
             return View();
         }
