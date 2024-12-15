@@ -796,7 +796,7 @@ ALTER TABLE `administratorius`
 -- Constraints for table `atsiliepimas`
 --
 ALTER TABLE `atsiliepimas`
-  ADD CONSTRAINT `apibudina` FOREIGN KEY (`fk_MOKINYSmokinio_useris`) REFERENCES `mokinys` (`mokinio_useris`),
+  ADD CONSTRAINT `apibudina` FOREIGN KEY (`fk_MOKINYSmokinio_useris`) REFERENCES `mokinys` (`mokinio_useris`) ON DELETE CASCADE,
   ADD CONSTRAINT `atsiliepimas_ibfk_1` FOREIGN KEY (`tipas`) REFERENCES `atsiliepimo_tipas` (`id_atsiliepimo_tipas`),
   ADD CONSTRAINT `raso` FOREIGN KEY (`fk_MOKYTOJASmokytojo_useris`) REFERENCES `mokytojas` (`mokytojo_useris`);
 
@@ -805,7 +805,7 @@ ALTER TABLE `atsiliepimas`
 --
 ALTER TABLE `ivertinimas`
   ADD CONSTRAINT `atitinka` FOREIGN KEY (`fk_IVERTINIMO_SVORISsvorio_id`) REFERENCES `ivertinimo_svoris` (`svorio_id`),
-  ADD CONSTRAINT `gauna` FOREIGN KEY (`fk_MOKINYSmokinio_useris`) REFERENCES `mokinys` (`mokinio_useris`),
+  ADD CONSTRAINT `gauna` FOREIGN KEY (`fk_MOKINYSmokinio_useris`) REFERENCES `mokinys` (`mokinio_useris`) ON DELETE CASCADE,
   ADD CONSTRAINT `suteikia` FOREIGN KEY (`fk_PAMOKApamokos_id`) REFERENCES `pamoka` (`pamokos_id`);
 
 --
@@ -818,7 +818,7 @@ ALTER TABLE `ivertinimo_svoris`
 -- Constraints for table `mokinio_tevas`
 --
 ALTER TABLE `mokinio_tevas`
-  ADD CONSTRAINT `atstovauja` FOREIGN KEY (`fk_MOKINYSmokinio_useris`) REFERENCES `mokinys` (`mokinio_useris`);
+  ADD CONSTRAINT `atstovauja` FOREIGN KEY (`fk_MOKINYSmokinio_useris`) REFERENCES `mokinys` (`mokinio_useris`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
