@@ -15,7 +15,18 @@ namespace Student_Grade_Management_System.Controllers
 
         public IActionResult Index()
         {
-            ViewData["UserType"] = HttpContext.Session.GetString("UserType");
+            // Gauti UserType reikšmę iš sesijos
+            var userType = HttpContext.Session.GetString("UserType");
+
+            // Jei UserType nėra nustatytas (reikšmė null arba tuščia), nukreipti į prisijungimo puslapį
+            if (string.IsNullOrEmpty(userType))
+            {
+                return RedirectToAction("Login", "Client"); // Nukreipiama į "Login" veiksmą "Client" valdiklyje
+            }
+
+            // Priskirti UserType į ViewData (jei reikia)
+            ViewData["UserType"] = userType;
+
             return View();
         }
 
