@@ -9,7 +9,9 @@
     <div class="me-3 mb-3" style="width: 20%; display: flex; flex-direction: column; justify-content: center;">
         <label for="filterStudent">Mokinys:</label>
         <select id="filterStudent" class="form-select" style="width: 100%;">
+            @if (Context.Session.GetString("UserType") != "Parent"){
             <option value="">Pasirinkite mokinį</option>
+            }
             @if (ViewData["Students"] != null)
             {
                 var students = (SelectList)ViewData["Students"];
@@ -74,7 +76,7 @@
 <table id="reportTable" class="table mt-4" style="display:none;">
     <thead>
         <tr>
-            <th>Studentas</th>
+            <th>Mokinys</th>
             <th>Klasė</th>
             <th>Dalykas</th>
             <th>Įvertinimo data</th>
