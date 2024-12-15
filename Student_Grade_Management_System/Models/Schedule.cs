@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Student_Grade_Management_System.Models
 {
-    public class Timetable // tvarkaraštis
+    public class Schedule // tvarkaraštis
     {
         [ForeignKey("fk_PAMOKApamokos_id")]
         [Column("fk_PAMOKApamokos_id")]
