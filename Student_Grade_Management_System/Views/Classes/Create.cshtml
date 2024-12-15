@@ -3,3 +3,49 @@
 }
 
 <h2>Naujų klasių tvarkaraščių sudarymo langas</h2>
+
+@* The form to collect input for subjects, occurrences, and teachers *@
+<form method="post" action="@Url.Action("Create", "ClassesController")">
+
+    <div class="form-group">
+        <select name="Class" id="Class" style="margin-top: 30px;" class="form-control">
+            <option value="">Pasirinkite klasę</option>
+            @foreach (var classItem in ViewBag.Classes)
+            {
+                <option value="@classItem.CombinedOne">@classItem.CombinedOne</option>
+            }
+        </select>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dalykas</th>
+                <th>Kartai per savaitę</th>
+                <th>Mokytojas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < ViewBag.TeacherSubjects.Count; i++)
+            {
+                <tr>
+                    <td>@ViewBag.TeacherSubjects[i].SubjectName</td>
+                    <td>
+                        <input type="number" name="Occurrences_@i" class="form-control" min="0" value="0" required />
+                    </td>
+                    <td>
+                        <select name="Teacher_@i" class="form-control">
+                            <option value="">Pasirinkite mokytoją</option>
+                            @foreach (var teacher in ViewBag.TeacherSubjects[i].Teachers)
+                            {
+                                <option value="@teacher.Username">@teacher.Name @teacher.Surname</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Generuoti</button>
+</form>
