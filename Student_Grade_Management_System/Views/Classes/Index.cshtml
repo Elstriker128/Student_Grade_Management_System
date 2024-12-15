@@ -1,55 +1,58 @@
-﻿@model Tuple<IEnumerable<Student_Grade_Management_System.Models.Class>, IEnumerable<Student_Grade_Management_System.Models.Teacher>>
+﻿@model IEnumerable<Student_Grade_Management_System.Models.Class>
 
 @{
-    ViewData["Title"] = "Automatinis mokytojų priskyrimas klasėms";
+    ViewData["Title"] = "Klasių valdymas";
 }
 
 @if (Context.Session.GetString("UserType") == "Admin")
 {
-<h2>Automatinis mokytojų priskyrimas klasėms</h2>
+    <div class="container mt-5">
+    <h2>Klasių sąrašas</h2>
 
-@if (ViewBag.FreeClasses != null && ViewBag.FreeTeachers != null)
-{
-    @if (ViewBag.FreeClasses.Count > 0 && ViewBag.FreeTeachers.Count > 0)
-    {
-            <form asp-action="AutoAssignConfirm" method="post">
-        <div class="alert alert-warning">
-            <p>Ar tikrai norite automatiškai priskirti mokytojus klasėms?</p>
-            <ul>
-                @foreach (var freeClass in ViewBag.FreeClasses)
-                {
-                    <li>Klasė: @freeClass.Number @freeClass.Letter</li>
-                }
-            </ul>
-            <ul>
-                @foreach (var freeTeacher in ViewBag.FreeTeachers)
-                {
-                    <li>Mokytojas: @freeTeacher.Name @freeTeacher.Surname</li>
-                }
-            </ul>
-        </div>
-        <button type="submit" class="btn btn-primary">Patvirtinti</button>
-        <a asp-action="Index" class="btn btn-secondary">Atšaukti</a>
-    </form>
-    }
-    else
-    {
-        <div class="alert alert-info">
-            <p>Nėra laisvų klasių arba mokytojų.</p>
-        </div>
-    }
+    <a asp-controller="Classes" asp-action="Add" style="margin-bottom:20px;" class="btn btn-primary">Naujų klasių pridėjimo langas</a>
+    <a asp-controller="Classes" asp-action="Create" style="margin-bottom:20px;" class="btn btn-primary">Klasės tvarkaraščio sudarymo langas</a>
+    <a asp-controller="Students" asp-action="Assign" style="margin-bottom:20px;" class="btn btn-primary">Mokinio priskyrimo klasei langas</a>
+    <a asp-controller="Classes" asp-action="ManualAssign" style="margin-bottom:20px;" class="btn btn-primary">Rankinis mokytojų priskyrimas klasėms</a>
+    <a asp-controller="Classes" asp-action="AutoAssign" style="margin-bottom:20px;" class="btn btn-primary">Automatinis mokytojų priskyrimas klasėms</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Klasės skaičius</th>
+                <th>Klasės raidė</th>
+                <th>Maksimalus mokinių skaičius</th>
+                <th>Atsakingas mokytojas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var classObj in Model)
+            {
+                <tr>
+                    <td>@classObj.Number</td>
+                    <td>@classObj.Letter</td>
+                    <td>@classObj.StudentCount</td>
+                    @if (classObj.Teacher_Username != null)
+                    {
+                        <td>@classObj.Teacher_Username</td>
+                    }
+                    else
+                    {
+                        <td class="nepriskirtas">Nepriskirtas!</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-}
-else
-{
-    <div class="alert alert-info">
-        <p>Nėra laisvų klasių arba mokytojų.</p>
-    </div>
-}
+<style>
+    .nepriskirtas {
+        color: red;
+    }
+</style>
 }
 else
 {
     <div class="alert alert-danger" role="alert">
-        Jūs neturite teisės matyti šio puslapio.
+        Jūs neturite teisės peržiūrėti šio puslapio.
     </div>
 }
