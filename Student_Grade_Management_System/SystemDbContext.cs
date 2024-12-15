@@ -22,7 +22,7 @@ namespace Student_Grade_Management_System
         public DbSet<Models.Teacher> Teachers { get; set; }
         public DbSet<Models.Subject> Subjects { get; set; }
         public DbSet<Models.SubjectOfTeacher> SubjectsOfTeachers { get; set; }
-        public DbSet<Models.Timetable> Timetables { get; set; }
+        public DbSet<Models.Schedule> Timetables { get; set; }
         public DbSet<Models.WorkDay> WorkDays { get; set; }
 
 
@@ -65,7 +65,7 @@ namespace Student_Grade_Management_System
             modelBuilder.Entity<Models.SchoolOfTeacher>().ToTable("mokytojo_mokykla").HasKey(st => new {st.Teacher_Username, st.School_ID});
             modelBuilder.Entity<Models.Lesson>().ToTable("pamoka").HasKey(l => l.ID);
             modelBuilder.Entity<Models.Parent>().ToTable("tevas").HasKey(p => p.Username);
-            modelBuilder.Entity<Models.Timetable>().ToTable("tvarkarastis").HasKey(tt => new {tt.Lesson_ID, tt.Class_Letter, tt.Class_Number});
+            modelBuilder.Entity<Models.Schedule>().ToTable("tvarkarastis").HasKey(tt => new {tt.Lesson_ID, tt.Class_Letter, tt.Class_Number});
         }
     }
 
