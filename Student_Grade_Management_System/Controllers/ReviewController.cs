@@ -116,7 +116,7 @@ namespace Student_Grade_Management_System.Controllers
             // Sukuriame SelectList su Username ir FullName, kad būtų galima pasirinkti vardą ir pavardę
             ViewData["Students"] = new SelectList(students, "Username", "FullName");
             ViewData["Teachers"] = new SelectList(teachers, "Username", "FullName");
-            // Get review types for the select dropdown
+            
             var reviewTypes = _context.ReviewTypes.ToList();
             ViewData["ReviewTypes"] = new SelectList(reviewTypes, "ID", "Name");
 

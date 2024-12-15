@@ -23,7 +23,7 @@ namespace Student_Grade_Management_System.Controllers
             // Jei UserType nėra nustatytas (reikšmė null arba tuščia), nukreipti į prisijungimo puslapį
             if (string.IsNullOrEmpty(userType))
             {
-                return RedirectToAction("Login", "Client"); // Nukreipiama į "Login" veiksmą "Client" valdiklyje
+                return RedirectToAction("Login", "Client");
             }
 
             // Priskirti UserType į ViewData (jei reikia)

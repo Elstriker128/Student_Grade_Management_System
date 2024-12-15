@@ -20,7 +20,7 @@
         @Model.Content
     </p>
 
-    <!-- Redagavimo mygtukas -->
+    <!-- Redagavimo mygtukas --->
     @if (Context.Session.GetString("UserType") == "Admin" || Context.Session.GetString("UserType") == "Teacher"){
         <a asp-controller="Review" asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning mt-3">Redaguoti atsiliepimą</a>
         <a asp-controller="Review" asp-action="Delete" 
