@@ -8,7 +8,9 @@
 
 @if (ViewBag.FreeClasses != null && ViewBag.FreeTeachers != null)
 {
-    <form asp-action="AutoAssignConfirm" method="post">
+    @if (ViewBag.FreeClasses.Count > 0 && ViewBag.FreeTeachers.Count > 0)
+    {
+            <form asp-action="AutoAssignConfirm" method="post">
         <div class="alert alert-warning">
             <p>Ar tikrai norite automatiškai priskirti mokytojus klasėms?</p>
             <ul>
@@ -27,6 +29,14 @@
         <button type="submit" class="btn btn-primary">Patvirtinti</button>
         <a asp-action="Index" class="btn btn-secondary">Atšaukti</a>
     </form>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <p>Nėra laisvų klasių arba mokytojų.</p>
+        </div>
+    }
+
 }
 else
 {
