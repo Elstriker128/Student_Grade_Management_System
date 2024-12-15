@@ -123,6 +123,10 @@ namespace Student_Grade_Management_System.Controllers
                                 .Where(j => j.ID == i.Type)
                                 .Select(m => m.Name)
                                 .FirstOrDefault(),
+                    teacher = _context.Teachers
+                                .Where(j => j.Username == i.Teacher_Username)
+                                .Select(m => m.Name + " " + m.Surname)
+                                .FirstOrDefault(),
                     review = i.Content,
                     date = i.Date.ToString("yyyy-MM-dd")
                 })
@@ -171,6 +175,10 @@ namespace Student_Grade_Management_System.Controllers
                     Type = _context.ReviewTypes
                                 .Where(j => j.ID == i.Type)
                                 .Select(m => m.Name)
+                                .FirstOrDefault(),
+                    TeacherName = _context.Teachers
+                                .Where(j => j.Username == i.Teacher_Username)
+                                .Select(m => m.Name + " " + m.Surname)
                                 .FirstOrDefault(),
                     Review = i.Content,
                     Date = i.Date.ToString("yyyy-MM-dd")
@@ -236,10 +244,10 @@ namespace Student_Grade_Management_System.Controllers
             }
             if (data2.Count > 0){
                 sb.AppendLine("");
-                sb.AppendLine("Atsiliepimo tipas;Data;Atsiliepimas");
+                sb.AppendLine("Atsiliepimo tipas;Atsiliepimą parašęs mokytojas;Data;Atsiliepimas");
                 foreach (var record in data2)
                 {
-                    sb.AppendLine($"{record.Type};{record.Date};{record.Review}");
+                    sb.AppendLine($"{record.Type};{record.TeacherName};{record.Date};{record.Review}");
                 }
             }
 
@@ -271,14 +279,14 @@ namespace Student_Grade_Management_System.Controllers
                 sb.AppendLine();
                 sb.AppendLine("Atsiliepimai:");
                 sb.AppendLine(new string('-', totalLength));
-                
+
                 // Formatavimas atsiliepimų stulpeliams
-                string reviewFormat = $"{{0,-{columnWidth}}} | {{1,-{columnWidth}}} | {{2,-{columnWidth}}}";
-                sb.AppendLine(string.Format(reviewFormat, "Tipas", "Data", "Atsiliepimas"));
+                string reviewFormat = $"{{0,-{columnWidth}}} | {{1,-{columnWidth}}} | {{2,-{columnWidth}}} | {{3,-{columnWidth}}}";
+                sb.AppendLine(string.Format(reviewFormat, "Tipas", "Parašęs mokytojas", "Data", "Atsiliepimas"));
 
                 foreach (var review in data2)
                 {
-                    sb.AppendLine(string.Format(reviewFormat, review.Type, review.Date, review.Review));
+                    sb.AppendLine(string.Format(reviewFormat, review.Type, review.TeacherName, review.Date, review.Review));
                 }
             }
 
@@ -337,11 +345,11 @@ namespace Student_Grade_Management_System.Controllers
                                 new InsideVerticalBorder() { Val = BorderValues.Single, Size = 4 }
                             )
                         ));
-                        reviewTable.AppendChild(CreateTableRow("Tipas", "Data", "Atsiliepimas")); // Atsiliepimų antraštė
+                        reviewTable.AppendChild(CreateTableRow("Tipas", "Atsiliepimą parašęs dėstytojas", "Data", "Atsiliepimas")); // Atsiliepimų antraštė
 
                         foreach (var review in reviewData)
                         {
-                            reviewTable.AppendChild(CreateTableRow(review.Type, review.Date, review.Review));
+                            reviewTable.AppendChild(CreateTableRow(review.Type, review.TeacherName, review.Date, review.Review));
                         }
 
                         body.AppendChild(reviewTable);
@@ -391,6 +399,7 @@ namespace Student_Grade_Management_System.Controllers
         public class ReportReview
         {
             public string StudentName { get; set; }
+            public string TeacherName { get; set; }
             public string Type { get; set; }
             public string Date { get; set; }
             public string Review { get; set; }
