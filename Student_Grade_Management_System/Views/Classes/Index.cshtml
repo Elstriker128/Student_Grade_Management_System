@@ -4,19 +4,13 @@
     ViewData["Title"] = "Klasių valdymas";
 }
 
-
-<h2>Klasės</h2>
-
-<h2>Klasių paieška</h2>
-<a asp-controller="Classes" asp-action="Add" class="btn btn-primary">Naujų klasių pridėjimo langas</a>
-<a asp-controller="Classes" asp-action="Create" class="btn btn-primary">Klasės tvarkaraščio sudarymo langas</a>
-<a asp-controller="Students" asp-action="Assign" class="btn btn-primary">Mokinio priskyrimo klasei langas</a>
-<a asp-controller="Classes" asp-action="AutoAssign" class="btn btn-primary">Automatinis mokytojų priskyrimas klasėms</a>
-<a asp-controller="Classes" asp-action="ManualAssign"class="btn btn-primary">Rankinis mokytojų priskyrimas klasėms</a>
-
-
 <div class="container mt-5">
     <h2>Klasių sąrašas</h2>
+
+    <a asp-controller="Classes" asp-action="Add" style="margin-bottom:20px;" class="btn btn-primary">Naujų klasių pridėjimo langas</a>
+    <a asp-controller="Classes" asp-action="Create" style="margin-bottom:20px;" class="btn btn-primary">Klasės tvarkaraščio sudarymo langas</a>
+    <a asp-controller="Students" asp-action="Assign" style="margin-bottom:20px;" class="btn btn-primary">Mokinio priskyrimo klasei langas</a>
+    <a asp-controller="Teachers" asp-action="AssignToClass" style="margin-bottom:20px;" class="btn btn-primary"> Mokytojo priskyrimo klasei langas</a>
 
     <table class="table table-bordered">
         <thead>

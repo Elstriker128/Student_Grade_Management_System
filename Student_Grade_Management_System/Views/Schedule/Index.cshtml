@@ -1,5 +1,91 @@
 ﻿@{
-    ViewData["Title"] = "Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Schedule view";
 }
 
-<h2>Tvarkaraštis</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        .timetable {
+            display: grid;
+            grid-template-columns: 1fr repeat(5, 1fr); /* 1 for time column, 5 for days */
+            gap: 1px;
+            margin-top: 20px;
+        }
+
+            .timetable div {
+                padding: 20px;
+                text-align: center;
+                border: 1px solid #ccc;
+                min-height: 50px;
+                background-color: #f9f9f9;
+            }
+
+        .day-header {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .subject-cell {
+            background-color: #e0f7fa;
+        }
+
+        .empty-cell {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tvarkaraštis</h1>
+
+    <div class="timetable">
+        <!-- Header row for Time and Days of the week -->
+        <div class="day-header">Laikas</div>
+        <div class="day-header">Pirmadienis</div>
+        <div class="day-header">Antradienis</div>
+        <div class="day-header">Trečiadienis</div>
+        <div class="day-header">Ketvirtadienis</div>
+        <div class="day-header">Penktadienis</div>
+
+        <!-- Loop through the predefined times from ViewBag.Times -->
+        @foreach (var timeSlot in ViewBag.Times)
+        {
+            <div class="day-header">@timeSlot.StartTime-@timeSlot.EndTime</div> <!-- Display the time slot -->
+            // Loop through the days (Monday to Friday)
+            for (int i = 1; i <= 5; i++) // 5 days: Monday to Friday
+            {
+                var lessonsFound = false; // Flag to track if a lesson is found for this time and day
+                var studentSchedule = (IEnumerable<dynamic>)ViewBag.StudentSchedule;
+                  <!-- Cast ViewBag.StudentSchedule to IEnumerable<dynamic> -->
+                // Loop through the student schedule to find the matching lessons for this time slot
+                foreach (var schedule in studentSchedule)
+                {
+                    if ($"{schedule.StartTime}" == timeSlot.StartTime)
+                    {
+                        // Find the lesson for the specific day
+                        foreach (var lesson in schedule.Lessons)
+                        {
+                            if (lesson.Day == i)
+                            {
+                                // Display the subject if a lesson is found
+                                <div class="subject-cell">@lesson.Name</div>
+                                lessonsFound = true;
+                            }
+                        }
+                    }
+                }
+
+                // If no lesson was found for this time slot and day, show an empty cell
+                if (!lessonsFound)
+                {
+                    <div class="empty-cell"></div> <!-- Empty cell if no lesson for the day -->
+                }
+            }
+        }
+    </div>
+</body>
+</html>

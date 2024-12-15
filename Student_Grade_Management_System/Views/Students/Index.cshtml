@@ -6,11 +6,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 
-<a asp-controller="Students" asp-action="Add" class="btn btn-primary">Naujo mokinio pridėjimas</a>
+@* <a asp-controller="Students" asp-action="Add" class="btn btn-primary">Naujo mokinio pridėjimas</a> *@
 
 <div class="container mt-5">
     <h2>Mokinių sąrašas</h2>
 
+    <a asp-controller="Students" asp-action="Add" style="margin-bottom:20px" class="btn btn-primary">Naujo mokinio pridėjimas</a>
     <!-- Search Form -->
     <form asp-controller="Students" asp-action="Index" method="get" class="mb-3">
         <div class="input-group">
@@ -33,7 +34,16 @@
             {
                 <tr>
                     <td>@classObj.Name @classObj.Surname</td>
-                    <td>@classObj.Class_Number @classObj.Class_Letter</td>
+                    <td>
+                        @if (string.IsNullOrEmpty(classObj.Class_Letter))
+                        {
+                            <span style="color: red;">Nepriskirtas!</span>
+                        }
+                        else
+                        {
+                            @($"{classObj.Class_Number} {classObj.Class_Letter}")
+                        }
+                    </td>
                     <td>
                         <a asp-controller="Profile" asp-action="Index" asp-route-username="@classObj.Username" class="btn btn-primary">
                             <i class="fas fa-user"></i>
