@@ -42,17 +42,31 @@
 
     <div class="form-group">
         <label for="Teacher_Username">Mokytojas</label>
-        <select id="Teacher_Username" name="Teacher_Username" class="form-control">
-            <option value="">Pasirinkite mokytoją</option>
-            @if (ViewData["Teachers"] != null)
-            {
-                var teachers = (SelectList)ViewData["Teachers"];
-                foreach (var teacher in teachers)
+        @if (Context.Session.GetString("UserType") == "Teacher"){
+            <select id="Teacher_Username" name="Teacher_Username" class="form-control">
+                @if (ViewData["Teachers"] != null)
                 {
-                    <option value="@teacher.Value">@teacher.Text</option>
+                    var teachers = (SelectList)ViewData["Teachers"];
+                    foreach (var teacher in teachers)
+                    {
+                        <option value="@teacher.Value">@teacher.Text</option>
+                    }
                 }
+            </select>
             }
-        </select>
+            else{
+            <select id="Teacher_Username" name="Teacher_Username" class="form-control">
+                <option value="">Pasirinkite mokytoją</option>
+                @if (ViewData["Teachers"] != null)
+                {
+                    var teachers = (SelectList)ViewData["Teachers"];
+                    foreach (var teacher in teachers)
+                    {
+                        <option value="@teacher.Value">@teacher.Text</option>
+                    }
+                }
+            </select>
+        }
     </div>
 
     <div class="form-group">
