@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets\\Student_Grade_Management_System.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\Tamo.png",
-      "PackagePath": "staticwebassets\\Tamo.png"
-    },
-    {
       "Id": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -247,6 +243,10 @@
     {
       "Id": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\tamopeleda.png",
+      "PackagePath": "staticwebassets\\tamopeleda.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Student_Grade_Management_System.Microsoft.AspNetCore.StaticWebAssets.props",
