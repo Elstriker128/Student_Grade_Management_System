@@ -5,7 +5,6 @@
 }
 
 <h2>Mokytojai</h2>
-<p>Mokinys:</p>
 <form asp-controller="Teachers" asp-action="Index" method="get" class="mb-3">
     <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="Ieškoti pagal vardą arba pavardę..." value="@ViewData["Search"]" />
@@ -13,11 +12,13 @@
     </div>
 </form>
 
-<p>Administratorius:</p>
-<a asp-controller="Teachers" asp-action="Add" class="btn btn-primary">Įtraukti naują mokytoją į sistemą</a>
-<a asp-controller="Teachers" asp-action="Qualifications" class="btn btn-primary">Peržiūrėti mokytojų kvalifikacijas</a>
-
-@if (Model != null && Model.Any()) // and if user is admin
+@if (Context.Session.GetString("UserType") == "Admin")
+{
+    <p>Administratoriaus parinktys:</p>
+    <a asp-controller="Teachers" asp-action="Add" class="btn btn-primary">Įtraukti naują mokytoją į sistemą</a>
+    <a asp-controller="Teachers" asp-action="Qualifications" class="btn btn-primary">Peržiūrėti mokytojų kvalifikacijas</a>
+}
+@if (Model != null && Model.Any())
 {
     <div class="container mt-5">
         <h2>Mokytojų sąrašas</h2>
@@ -29,7 +30,10 @@
                     <th>Pavardė</th>
                     <th>Telefono numeris</th>
                     <th>El. paštas</th>
-                    <th>Veiksmai</th>
+                    @if (Context.Session.GetString("UserType") == "Admin")
+                    {
+                        <th>Administratoriaus veiksmai</th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -40,9 +44,13 @@
                         <td>@teacher.Surname</td>
                         <td>@teacher.PhoneNumber</td>
                         <td>@teacher.Email</td>
-                        <td>
-                            <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Username" class="btn btn-primary">Redaguoti</a>
-                            <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>                        </td>
+                        @if (Context.Session.GetString("UserType") == "Admin")
+                        {
+                            <td>
+                                <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Username" class="btn btn-primary">Redaguoti</a>
+                                <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>
