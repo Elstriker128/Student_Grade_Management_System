@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.EMMA;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Student_Grade_Management_System.Models;
 
@@ -139,7 +140,39 @@ namespace Student_Grade_Management_System.Controllers
 
         public IActionResult Create()
         {
-            // Code to create a new schedule for a class
+            ViewBag.Classes = _context.Classes
+                .Select(s => new
+                {
+                    CombinedOne = s.Number + " " + s.Letter,
+                    s.Number,
+                    s.Letter
+                })
+                .Distinct()
+                .ToList();
+
+            ViewBag.TeacherSubjects = _context.Subjects
+            .Join(
+                _context.SubjectsOfTeachers,
+                cls => cls.ID,
+                timetable => timetable.Subject_ID,
+                (cls, timetable) => new { Subject = cls, SubjectAndTeacher = timetable }
+            )
+            .Join(
+                _context.Teachers,
+                combined => combined.SubjectAndTeacher.Teacher_Username,
+                lesson => lesson.Username,
+                (combined, lesson) => new { combined.Subject, combined.SubjectAndTeacher, Teacher = lesson }
+            )
+            .GroupBy(data => data.Subject.ID)
+            .Select(group => new
+            {
+                SubjectName = group.FirstOrDefault().Subject.Name,  // Assuming you want the name of the subject
+                SubjectID = group.Key,  // Using the grouped ID
+                Teachers = group.Select(g => new {Username=g.Teacher.Username, Name=g.Teacher.Name, Surname =g.Teacher.Surname }).ToList() // List of teacher names for the subject
+            })
+            .ToList();
+
+
             return View();
         }
     }
