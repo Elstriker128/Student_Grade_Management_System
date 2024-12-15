@@ -19,7 +19,7 @@
         <label for="Teacher_Username">Atsakingas mokytojas</label>
         <select class="form-control" id="Teacher_Username" name="Teacher_Username">
             <option value="">Pasirinkite mokytoją</option>
-            @foreach (var teacher in ViewBag.Teachers)
+            @foreach (var teacher in ViewBag.FreeTeachers)
             {
                 <option value="@teacher.Username">@teacher.Username</option>
             }
