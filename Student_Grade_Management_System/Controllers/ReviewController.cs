@@ -128,17 +128,30 @@ namespace Student_Grade_Management_System.Controllers
 
         public async Task<IActionResult> Add()
         {
+            var userType = HttpContext.Session.GetString("UserType");
+            var userName = HttpContext.Session.GetString("Username");
             var students = await _context.Students
                 .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
                 .ToListAsync();
 
-            var teachers = await _context.Teachers
+            if (userType == "Teacher"){
+                var teacher = await _context.Teachers
+                            .Where(x => x.Username == userName)
+                            .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
+                            .ToListAsync();
+                ViewData["Teachers"] = new SelectList(teacher, "Username", "FullName");
+                //HttpContext.Session.SetString("Name", teacher);
+            }
+            else{
+                var teachers = await _context.Teachers
                 .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
                 .ToListAsync();
+                ViewData["Teachers"] = new SelectList(teachers, "Username", "FullName");
+            }
 
             // Sukuriame SelectList su Username ir FullName, kad būtų galima pasirinkti vardą ir pavardę
             ViewData["Students"] = new SelectList(students, "Username", "FullName");
-            ViewData["Teachers"] = new SelectList(teachers, "Username", "FullName");
+            
             // Get review types for the select dropdown
             var reviewTypes = _context.ReviewTypes.ToList();
             ViewData["ReviewTypes"] = new SelectList(reviewTypes, "ID", "Name");
