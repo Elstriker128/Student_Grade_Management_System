@@ -1,7 +1,59 @@
-﻿@{
-    ViewData["Title"] = "test";
+﻿@model Student_Grade_Management_System.Models.Teacher
+
+@{
+    ViewData["Title"] = "Įtraukti mokytoją";
 }
 
+@if (Context.Session.GetString("UserType") == "Admin")
+{
 <h2>Mokytojo įtraukimas į sistemą</h2>
-<!-- useless button -->
-<a asp-controller="Teachers" asp-action="Add" class="btn btn-primary">Įtraukti naują mokytoją į sistemą</a>
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Password" class="control-label">Slaptažodis</label>
+        <input asp-for="Password" type="password" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Vardas</label>
+        <input asp-for="Name" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Surname" class="control-label">Pavardė</label>
+        <input asp-for="Surname" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="SSN" class="control-label">Asmens kodas</label>
+        <input asp-for="SSN" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label">Telefono numeris</label>
+        <input asp-for="PhoneNumber" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label">El.Paštas</label>
+        <input asp-for="Email" class="form-control" type="email" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="City" class="control-label">Miestas</label>
+        <input asp-for="City" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Street" class="control-label">Gatvė</label>
+        <input asp-for="Street" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Building" class="control-label">Namas</label>
+        <input asp-for="Building" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Apartment" class="control-label">Buto nr.</label>
+        <input asp-for="Apartment" class="form-control" required/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Įtraukti" class="btn btn-primary" />
+    </div>
+</form>
+}
+else
+{
+    <div class="alert alert-danger">Jūs neturite teisės matyti šio puslapio.</div>
+}

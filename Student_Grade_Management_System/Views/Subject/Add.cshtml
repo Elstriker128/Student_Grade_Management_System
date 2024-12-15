@@ -1,5 +1,24 @@
-﻿@{
+﻿@model Student_Grade_Management_System.Models.Subject
+
+@{
     ViewData["Title"] = "Dalyko pridėjimas";
 }
 
-<h2>Pridėti naują dalyką</h2>
+@if (Context.Session.GetString("UserType") == "Admin")
+{
+
+    <h2>Pridėti naują dalyką</h2>
+    <form asp-action="Add" method="post">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Dalyko pavadinimas</label>
+            <input asp-for="Name" class="form-control" required/>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Pridėti dalyką</button>
+    </form>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Jūs neturite teisės matyti šio puslapio.
+    </div>
+}

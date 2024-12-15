@@ -1,6 +1,70 @@
 ﻿@{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Filter by Date";
 }
 
 <h2>Mokinio istorija</h2>
-<a asp-controller="Students" asp-action="SpecificHistory" class="btn btn-primary">Pasirinktų praeities duomenų istorija</a>
+
+<form asp-action="History" method="get">
+    <div class="d-flex justify-content-center align-items-center">
+        <!-- Pradžios data -->
+        <div class="me-3" style="width: 20%;">
+            <label for="filterStartDate">Pradžios data:</label>
+            <input type="date" id="filterStartDate" name="filterStartDate" class="form-control">
+        </div>
+
+        <!-- Pabaigos data -->
+        <div class="me-3" style="width: 20%;">
+            <label for="filterEndDate">Pabaigos data:</label>
+            <input type="date" id="filterEndDate" name="filterEndDate" class="form-control">
+        </div>
+
+        <!-- Submit button -->
+        <div>
+            <button type="submit" class="btn btn-primary btn-sm" style="width: 120px; margin-top: 22px; height: 36px;">Filtruoti</button>
+        </div>
+    </div>
+</form>
+
+<h3>Mokinio pažymiai</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pamoka</th>
+            <th>Pažymys</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mark in ViewBag.StudentMarks)
+        {
+            <tr>
+                <td>@mark.Lesson</td>
+                <td>@mark.Grade</td>
+                <td>@mark.Date</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Atsiliepimai</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mokytojas</th>
+            <th>Atsiliepimo tipas</th>
+            <th>Atsiliepimas</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in ViewBag.Reviews)
+        {
+            <tr>
+                <td>@review.TeacherName @review.TeacherSurname</td>
+                <td>@review.ReviewType</td>
+                <td>@review.Review</td>
+                <td>@review.Date</td>
+            </tr>
+        }
+    </tbody>
+</table>

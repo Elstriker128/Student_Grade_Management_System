@@ -6,12 +6,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 
-<p>Administratorius:</p>
-<a asp-controller="Students" asp-action="Add" class="btn btn-primary">Naujo mokinio pridėjimas</a>
+@* <a asp-controller="Students" asp-action="Add" class="btn btn-primary">Naujo mokinio pridėjimas</a> *@
 
 <div class="container mt-5">
     <h2>Mokinių sąrašas</h2>
 
+    @if (Context.Session.GetString("UserType") == "Admin")
+    {
+        <a asp-controller="Students" asp-action="Add" style="margin-bottom:20px" class="btn btn-primary">Naujo mokinio pridėjimas</a>
+    }
     <!-- Search Form -->
     <form asp-controller="Students" asp-action="Index" method="get" class="mb-3">
         <div class="input-group">
@@ -20,14 +23,13 @@
         </div>
     </form>
 
-    <!-- Students Table -->
+    <!-- Students Table for displaying students -->
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Mokinio vardas ir pavardė</th>
                 <th>Mokinio klasė</th>
                 <th>Peržiūrėti profilį</th>
-                <th>Redaguoti mokinio duomenis</th>
             </tr>
         </thead>
         <tbody>
@@ -35,15 +37,19 @@
             {
                 <tr>
                     <td>@classObj.Name @classObj.Surname</td>
-                    <td>@classObj.Class_Number @classObj.Class_Letter</td>
                     <td>
-                        <a asp-controller="Profile" asp-action="Index" class="btn btn-primary">
-                            <i class="fas fa-user"></i>
-                        </a>
+                        @if (string.IsNullOrEmpty(classObj.Class_Letter))
+                        {
+                            <span style="color: red;">Nepriskirtas!</span>
+                        }
+                        else
+                        {
+                            @($"{classObj.Class_Number} {classObj.Class_Letter}")
+                        }
                     </td>
                     <td>
-                        <a asp-controller="Students" asp-action="Change" class="btn btn-primary">
-                            <i class="fas fa-edit"></i>
+                        <a asp-controller="Profile" asp-action="Index" asp-route-username="@classObj.Username" class="btn btn-primary">
+                            <i class="fas fa-user"></i>
                         </a>
                     </td>
                 </tr>

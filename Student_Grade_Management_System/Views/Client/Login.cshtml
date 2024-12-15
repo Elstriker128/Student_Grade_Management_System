@@ -15,10 +15,17 @@
         body, html {
             height: 100%;
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* Pažymi, kad puslapio turinys bus išdėstytas stulpelyje */
+        }
+
+        .container {
+            flex-grow: 0.5; /* Leidžia centriniam turiniui augti ir užimti visą likusį aukštį */
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f8f9fa;
+            flex-direction: column;
         }
         .login-container {
             width: 400px; /* Didesnė forma */
@@ -26,6 +33,7 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Šiek tiek šešėlio */
         }
         .form-group {
             margin-bottom: 1rem;
@@ -101,9 +109,26 @@
         header {
             display: none;
         }
+        footer {
+            margin-top: auto; /* Užtikrina, kad footer bus visuomet apačioje */
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #ccc;
+        }
+        #password:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        #username:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+    <h1 class="display-4">Mokinių įvertinimų valdymo sistema</h1>
+    <img src="~/tamopeleda.png" alt="Mokinių įvertinimai" class="img-fluid" style="width: 100px;" />
     <div class="login-container">
         <h2 class="text-center">Prisijungti</h2>
 
@@ -125,11 +150,7 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block" style="width: 100%;">Prisijungti</button>
         </form>
-
-        <!-- Linija ir mygtukas "Jungiantis pirma karta" -->
-        <div class="line"></div>
-        <button class="first-time-btn" onclick="window.location.href='@Url.Action("Register", "Client")'">Jungiantis pirma karta</button>
-
+    </div>
     </div>
 
     <script>

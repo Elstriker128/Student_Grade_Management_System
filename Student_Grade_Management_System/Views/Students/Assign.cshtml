@@ -1,5 +1,60 @@
 ﻿@{
-    ViewData["Title"] = "Assign";
+	ViewData["Title"] = "Assign";
 }
 
 <h2>Mokinių priskyrimo klasėms langas</h2>
+
+@using (Html.BeginForm("Assign", "Students", FormMethod.Post))
+{
+	<div class="me-3 mb-3" style="width: 50%; display: flex; justify-content: space-between;">
+		<!-- First Column for Dropdown -->
+		<div style="width: 45%; display: flex; flex-direction: column;">
+			<label for="filterStudent" style="margin-bottom: 5px;">Mokinys:</label>
+			<select id="filterStudent" name="filterStudent" class="form-select">
+				<option value="">Pasirinkite mokinį</option>
+				@if (ViewBag.Students != null)
+				{
+					foreach (var student in ViewBag.Students)
+					{
+						<option value="@student.Username">@student.CombinedName</option>
+					}
+				}
+			</select>
+		</div>
+
+		<!-- Second Column for Number Input -->
+		<div style="width: 45%; display: flex; flex-direction: column;">
+			<label for="filterClass" style="margin-bottom: 5px;">Klasė:</label>
+			<select id="filterClass" name="filterClass" class="form-select">
+				<option value="">Pasirinkite klasę</option>
+				@if (ViewBag.Classes != null)
+				{
+					foreach (var classes in ViewBag.Classes)
+					{
+						<option value="@classes">@classes</option>
+					}
+				}
+			</select>
+		</div>
+	</div>
+
+
+	@if (ViewBag.SuccessUpdate.Found==true)
+	{
+		<div class="alert alert-success">
+			@ViewBag.SuccessUpdate.Message
+		</div>
+	}
+
+	@* Used for checking data *@
+	else if (ViewBag.SuccessUpdate.Found == false && !string.IsNullOrEmpty(ViewBag.SuccessUpdate.Message))
+	{
+		<div class="alert alert-danger">
+			@ViewBag.SuccessUpdate.Message
+		</div>
+	}
+
+	<div>
+		<button type="submit" class="btn btn-primary">Priskirti</button>
+	</div>
+}
