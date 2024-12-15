@@ -13,6 +13,7 @@ namespace Student_Grade_Management_System.Models
         [Column("pavarde")]
         public string Surname { get; set; }
         [ForeignKey("fk_MOKYKLAmokyklos_id")]
+        [Column("fk_MOKYKLAmokyklos_id")]
         public int School_ID { get; set; }
     }
 }

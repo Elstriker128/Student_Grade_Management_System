@@ -35,43 +35,85 @@ namespace Student_Grade_Management_System.Controllers
 
             if (userType == "S") // Studentas
             {
-                var student = _context.Students.FirstOrDefault(s => s.Username == username.Substring(1));
+                var student = _context.Students.FirstOrDefault(s => s.Username == username);
                 if (student != null)
                 {
                     // Patikriname slaptažodį su PasswordHasher
                     //var result = passwordHasher.VerifyHashedPassword(null, student.Password, password);
-                    var classLetter = student.Class_Letter;
                     var result = _context.Students.FirstOrDefault(s => s.Password == password);
                     //if (result == PasswordVerificationResult.Success)
                     if(result != null)
                     {
+                        TempData["SuccessMessage"] = "Prisijungta sėkmingai.";
                         return RedirectToAction("Index", "Home"); // Sėkmingas prisijungimas
+                    }
+                    else
+                    {
+                        ViewData["ErrorMessage"] = "Neteisingas vartotojo vardas arba slaptažodis.";
+                        return View();
                     }
                 }
             }
             else if (userType == "T") // Mokytojas
             {
-                var teacher = _context.Teachers.FirstOrDefault(t => t.Username == username.Substring(1));
+                var teacher = _context.Teachers.FirstOrDefault(t => t.Username == username);
                 if (teacher != null)
                 {
                     // Patikriname slaptažodį su PasswordHasher
-                    var result = passwordHasher.VerifyHashedPassword(null, teacher.Password, password);
-                    if (result == PasswordVerificationResult.Success)
+                    //var result = passwordHasher.VerifyHashedPassword(null, teacher.Password, password);
+                    var result = _context.Teachers.FirstOrDefault(s => s.Password == password);
+                    //if (result == PasswordVerificationResult.Success)
+                    if(result != null)
                     {
+                        TempData["SuccessMessage"] = "Prisijungta sėkmingai.";
                         return RedirectToAction("Index", "Home"); // Sėkmingas prisijungimas
+                    }
+                    else
+                    {
+                        ViewData["ErrorMessage"] = "Neteisingas vartotojo vardas arba slaptažodis.";
+                        return View();
                     }
                 }
             }
             else if (userType == "P") // Tėvas
             {
-                var parent = _context.Parents.FirstOrDefault(p => p.Username == username.Substring(1));
+                var parent = _context.Parents.FirstOrDefault(p => p.Username == username);
                 if (parent != null)
                 {
                     // Patikriname slaptažodį su PasswordHasher
-                    var result = passwordHasher.VerifyHashedPassword(null, parent.Password, password);
-                    if (result == PasswordVerificationResult.Success)
+                    //var result = passwordHasher.VerifyHashedPassword(null, parent.Password, password);
+                    var result = _context.Parents.FirstOrDefault(s => s.Password == password);
+                    //if (result == PasswordVerificationResult.Success)
+                    if(result != null)
                     {
+                        TempData["SuccessMessage"] = "Prisijungta sėkmingai.";
                         return RedirectToAction("Index", "Home"); // Sėkmingas prisijungimas
+                    }
+                    else
+                    {
+                        ViewData["ErrorMessage"] = "Neteisingas vartotojo vardas arba slaptažodis.";
+                        return View();
+                    }
+                }
+            }
+            else if (userType == "A") // Tėvas
+            {
+                var admin = _context.Administrators.FirstOrDefault(p => p.Username == username);
+                if (admin != null)
+                {
+                    // Patikriname slaptažodį su PasswordHasher
+                    //var result = passwordHasher.VerifyHashedPassword(null, parent.Password, password);
+                    var result = _context.Administrators.FirstOrDefault(s => s.Password == password);
+                    //if (result == PasswordVerificationResult.Success)
+                    if(result != null)
+                    {
+                        TempData["SuccessMessage"] = "Prisijungta sėkmingai.";
+                        return RedirectToAction("Index", "Home"); // Sėkmingas prisijungimas
+                    }
+                    else
+                    {
+                        ViewData["ErrorMessage"] = "Neteisingas vartotojo vardas arba slaptažodis.";
+                        return View();
                     }
                 }
             }
