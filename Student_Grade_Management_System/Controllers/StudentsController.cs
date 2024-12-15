@@ -369,8 +369,8 @@ namespace Student_Grade_Management_System.Controllers
 					lesson => lesson.ID,
 					(combined, lesson) => new { combined.Grade, combined.Student, combined.Lesson, Subject = lesson }
 				)
-				.Where(data => data.Grade.Student_Username == "S-Marius"
-							  && data.Grade.Date >= filterStartDate
+				.Where(data => data.Grade.Student_Username == HttpContext.Session.GetString("Username")
+                              && data.Grade.Date >= filterStartDate
 							  && data.Grade.Date <= filterEndDate)
 				.Select(group => new
 				{
@@ -400,8 +400,8 @@ namespace Student_Grade_Management_System.Controllers
 					type => type.ID,
 					(combined, type) => new { combined.Review, combined.Student, combined.Teacher, ReviewType = type }
 				)
-				.Where(data => data.Review.Student_Username == "S-Marius"
-							  && data.Review.Date >= filterStartDate
+				.Where(data => data.Review.Student_Username == HttpContext.Session.GetString("Username")
+                              && data.Review.Date >= filterStartDate
 							  && data.Review.Date <= filterEndDate)
 				.Select(group => new
 				{
