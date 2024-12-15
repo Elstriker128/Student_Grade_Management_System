@@ -11,6 +11,8 @@ namespace Student_Grade_Management_System
         public DbSet<Models.Administrator> Administrators { get; set; }
         public DbSet<Models.Class> Classes { get; set; }
         public DbSet<Models.Grade> Grades { get; set; }
+        public DbSet<Models.GradeType> GradeTypes { get; set;}
+        public DbSet<Models.GradeWeight> GradeWeights { get; set; }
         public DbSet<Models.Lesson> Lessons { get; set; }
         public DbSet<Models.ParentOfStudent> ParentsOfStudents { get; set; }
         public DbSet<Models.Parent> Parents { get; set; }
