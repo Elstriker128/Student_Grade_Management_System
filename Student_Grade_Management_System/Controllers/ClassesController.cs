@@ -52,7 +52,7 @@ namespace Student_Grade_Management_System.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> AutoAssign()
         {
@@ -96,6 +96,45 @@ namespace Student_Grade_Management_System.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ManualAssign()
+        {
+            var classes = await _context.Classes.ToListAsync();
+            var freeTeachers = await _context.Teachers
+                .Where(t => !_context.Classes.Any(c => c.Teacher_Username == t.Username))
+                .ToListAsync();
+
+            ViewBag.FreeTeachers = freeTeachers;
+
+            return View(classes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignTeacher(int classNumber, string classLetter, string teacherUsername)
+        {
+            var classToUpdate = await _context.Classes.FindAsync(classNumber, classLetter);
+            if (classToUpdate != null)
+            {
+                classToUpdate.Teacher_Username = teacherUsername;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(ManualAssign));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnassignTeacher(int classNumber, string classLetter)
+        {
+            var classToUpdate = await _context.Classes.FindAsync(classNumber, classLetter);
+            if (classToUpdate != null)
+            {
+                classToUpdate.Teacher_Username = null;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(ManualAssign));
         }
 
         public IActionResult Create()

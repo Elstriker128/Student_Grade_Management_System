@@ -30,6 +30,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2xhc3Nlcy9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Classes/ManualAssign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2xhc3Nlcy9NYW51YWxBc3NpZ24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Client/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2xpZW50L0xvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -142,24 +146,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvQWRkUXVhbGlmaWNhdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/AssignToClass.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvQXNzaWduVG9DbGFzcy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Find.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvRmluZC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/ManualAssign.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGVhY2hlcnMvTWFudWFsQXNzaWduLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Views/Teachers/Qualifications.cshtml]
