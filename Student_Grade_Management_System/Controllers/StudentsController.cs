@@ -343,15 +343,77 @@ namespace Student_Grade_Management_System.Controllers
 			return View();
 		}
 
-		public IActionResult History()
-		{
-			// Code to assign students to classes
-			return View();
-		}
-		public IActionResult SpecificHistory()
-		{
-			// Code to assign students to classes
-			return View();
-		}
-	}
+        public IActionResult History(DateTime? filterStartDate, DateTime? filterEndDate)
+        {
+            // Set default values if parameters are null
+            filterStartDate ??= DateTime.MinValue;  // Default to a very old date
+            filterEndDate ??= DateTime.MaxValue;    // Default to a very future date
+
+            // Filter StudentMarks
+            ViewBag.StudentMarks = _context.Grades
+                .Join(
+                    _context.Students,
+                    cls => cls.Student_Username,
+                    timetable => timetable.Username,
+                    (cls, timetable) => new { Grade = cls, Student = timetable }
+                )
+                .Join(
+                    _context.Lessons,
+                    combined => combined.Grade.Subject_ID,
+                    lesson => lesson.ID,
+                    (combined, lesson) => new { combined.Grade, combined.Student, Lesson = lesson }
+                )
+                .Join(
+                    _context.Subjects,
+                    combined => combined.Lesson.Subject_ID,
+                    lesson => lesson.ID,
+                    (combined, lesson) => new { combined.Grade, combined.Student, combined.Lesson, Subject = lesson }
+                )
+                .Where(data => data.Grade.Student_Username == "S-Marius"
+                              && data.Grade.Date >= filterStartDate
+                              && data.Grade.Date <= filterEndDate)
+                .Select(group => new
+                {
+                    Grade = group.Grade.Value,
+                    Date = group.Grade.Date.ToString("yyyy-MM-dd"),
+                    Lesson = group.Subject.Name
+                })
+                .ToList();
+
+            // Filter Reviews
+            ViewBag.Reviews = _context.Reviews
+                .Join(
+                    _context.Students,
+                    cls => cls.Student_Username,
+                    timetable => timetable.Username,
+                    (cls, timetable) => new { Review = cls, Student = timetable }
+                )
+                .Join(
+                    _context.Teachers,
+                    combined => combined.Review.Teacher_Username,
+                    teacher => teacher.Username,
+                    (combined, teacher) => new { combined.Review, combined.Student, Teacher = teacher }
+                )
+                .Join(
+                    _context.ReviewTypes,
+                    combined => combined.Review.Type,
+                    type => type.ID,
+                    (combined, type) => new { combined.Review, combined.Student, combined.Teacher, ReviewType = type }
+                )
+                .Where(data => data.Review.Student_Username == "S-Marius"
+                              && data.Review.Date >= filterStartDate
+                              && data.Review.Date <= filterEndDate)
+                .Select(group => new
+                {
+                    Review = group.Review.Content,
+                    Date = group.Review.Date.ToString("yyyy-MM-dd"),
+                    TeacherName = group.Teacher.Name,
+                    TeacherSurname = group.Teacher.Surname,
+                    ReviewType = group.ReviewType.Name
+                })
+                .ToList();
+
+            return View();
+        }
+    }
 }
