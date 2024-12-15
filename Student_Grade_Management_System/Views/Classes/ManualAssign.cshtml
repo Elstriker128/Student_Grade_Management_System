@@ -42,7 +42,7 @@
                             <button type="submit" class="btn btn-primary mt-2">Priskirti</button>
                         </form>
                     }
-                    @if (classObj.Teacher_Username != null && ViewBag.FreeTeachers.Count > 0)
+                    @if (classObj.Teacher_Username != null)
                     {
                         <form asp-action="UnassignTeacher" method="post" style="display:inline;">
                             <input type="hidden" name="classNumber" value="@classObj.Number" />
@@ -50,7 +50,7 @@
                             <button type="submit" class="btn btn-danger mt-2">Atšaukti priskyrimą</button>
                         </form>
                     }
-                    @if (ViewBag.FreeTeachers.Count == 0) 
+                    @if (classObj.Teacher_Username == null && ViewBag.FreeTeachers.Count == 0)
                     {
                         <p>Nėra laisvų mokytojų.</p>
                     }
