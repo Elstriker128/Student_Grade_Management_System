@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "fK28Z1xI36AXeEaJaxIgMtxmGcz3NKhX6R3Wy/nOBz7sEpHfnRqQ2PrQ9MeMOYKYyGXIeKyTWaKWizRbwvd+KA==",
+  "dgSpecHash": "eJEqHHdU+OoNM91pFmalZgfmQ8rYWOyMdBG7L17nGc9AVF6xoeyWembBp8jIkY4k5c1KGzlC1E8Ls9klWO57Gg==",
   "success": true,
   "projectFilePath": "/home/gate/coding/csharp/Student_Grade_Management_System/Student_Grade_Management_System/Student_Grade_Management_System.csproj",
   "expectedPackageFiles": [
     "/home/gate/.nuget/packages/bouncycastle.cryptography/2.3.1/bouncycastle.cryptography.2.3.1.nupkg.sha512",
+    "/home/gate/.nuget/packages/documentformat.openxml/3.2.0/documentformat.openxml.3.2.0.nupkg.sha512",
+    "/home/gate/.nuget/packages/documentformat.openxml.framework/3.2.0/documentformat.openxml.framework.3.2.0.nupkg.sha512",
     "/home/gate/.nuget/packages/google.protobuf/3.26.1/google.protobuf.3.26.1.nupkg.sha512",
     "/home/gate/.nuget/packages/k4os.compression.lz4/1.3.8/k4os.compression.lz4.1.3.8.nupkg.sha512",
     "/home/gate/.nuget/packages/k4os.compression.lz4.streams/1.3.8/k4os.compression.lz4.streams.1.3.8.nupkg.sha512",
@@ -31,6 +33,7 @@
     "/home/gate/.nuget/packages/system.diagnostics.diagnosticsource/8.0.1/system.diagnostics.diagnosticsource.8.0.1.nupkg.sha512",
     "/home/gate/.nuget/packages/system.diagnostics.eventlog/8.0.0/system.diagnostics.eventlog.8.0.0.nupkg.sha512",
     "/home/gate/.nuget/packages/system.io/4.3.0/system.io.4.3.0.nupkg.sha512",
+    "/home/gate/.nuget/packages/system.io.packaging/8.0.1/system.io.packaging.8.0.1.nupkg.sha512",
     "/home/gate/.nuget/packages/system.io.pipelines/6.0.3/system.io.pipelines.6.0.3.nupkg.sha512",
     "/home/gate/.nuget/packages/system.reflection/4.3.0/system.reflection.4.3.0.nupkg.sha512",
     "/home/gate/.nuget/packages/system.reflection.primitives/4.3.0/system.reflection.primitives.4.3.0.nupkg.sha512",
