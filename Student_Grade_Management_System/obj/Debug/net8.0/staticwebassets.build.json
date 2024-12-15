@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "l0TvueeY05/HGT/gtuNIRahNXd1VgcMUspUv1cA9dxY=",
+  "Hash": "WkPRhpZzrY4dMEyWLOJ1Vs480s/lTfPHPG8xL6C6HJo=",
   "Source": "Student_Grade_Management_System",
   "BasePath": "_content/Student_Grade_Management_System",
   "Mode": "Default",
@@ -1195,12 +1195,12 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\Tamo.png",
+      "Identity": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\tamopeleda.png",
       "SourceId": "Student_Grade_Management_System",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\",
       "BasePath": "_content/Student_Grade_Management_System",
-      "RelativePath": "Tamo.png",
+      "RelativePath": "tamopeleda.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1211,7 +1211,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Tamo.png"
+      "OriginalItemSpec": "wwwroot\\tamopeleda.png"
     }
   ]
 }
