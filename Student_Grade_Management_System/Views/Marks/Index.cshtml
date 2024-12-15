@@ -1,7 +1,137 @@
-﻿@{
-    ViewData["Title"] = "Marks";
+﻿@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Visi Pažymiai";
 }
 
-<h2>Įvertinimų langas</h2>
-<a asp-controller="Marks" asp-action="ClassMarks" class="btn btn-primary">Įvesti įvertinimus klasei</a>
-<a asp-controller="Marks" asp-action="Graphic" class="btn btn-primary">Grafinis įvertinimų vaizdavimas</a>
+<h2>Visi Pažymiai</h2>
+
+<!-- Filtravimo forma -->
+<form method="get" asp-action="FilteredIndex" asp-controller="Marks">
+    @if (ViewBag.Role != "Student")
+    {
+        <div class="form-group">
+            <label for="classFilter">Klasė:</label>
+            <input type="text" name="classFilter" id="classFilter" class="form-control" placeholder="Pvz.: 10 A" />
+        </div>
+    }
+    <div class="form-group">
+        <label for="subjectFilter">Dalykas:</label>
+        <input type="text" name="subjectFilter" id="subjectFilter" class="form-control" placeholder="Pvz.: Matematika" />
+    </div>
+    <button type="submit" class="btn btn-primary">Filtruoti</button>
+</form>
+
+<!-- Mygtukas pridėti pažymį -->
+@if (ViewBag.Role == "Teacher")
+{
+    <a asp-action="Create" asp-controller="Marks" class="btn btn-success mt-4">Pridėti Pažymį</a>
+}
+
+<!-- Mygtukas apskaičiuoti vidurkį -->
+<form method="get" asp-action="CalculateAverage" asp-controller="Marks" class="d-inline">
+    <button type="submit" class="btn btn-warning mt-4">Apskaičiuoti Bendrą Vidurkį</button>
+</form>
+
+<!-- Mygtukas vizualizuoti pažymius -->
+<form method="get" asp-action="VisualizeGrades" asp-controller="Marks" class="d-inline">
+    <button type="submit" class="btn btn-info mt-4">Vizualizuoti Pažymius</button>
+</form>
+
+<!-- Lentelė vidurkiams, jeigu skaičiuojama -->
+@if (ViewBag.CalculatedAverages != null)
+{
+    <h3 class="mt-4">Vidurkiai</h3>
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Mokinio Vardas</th>
+                <th>Dalykas</th>
+                <th>Vidurkis</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.CalculatedAverages)
+            {
+                <tr>
+                    <td>@item.StudentName</td>
+                    <td>@item.SubjectName</td>
+                    <td>@item.Average.ToString("0.00")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="alert alert-info mt-4">
+        <strong>Bendras Vidurkis:</strong> @ViewBag.OverallAverage.ToString("0.00")
+    </div>
+}
+else
+{
+    <!-- Lentelė visiems pažymiams -->
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Studento Vardas</th>
+                <th>Pažymys</th>
+                <th>Data</th>
+                <th>Dalyko Pavadinimas</th>
+                <th>Tipas</th>
+                @if (ViewBag.Role != "Student")
+                {
+                    <th>Klasė</th>
+                }
+                @if (ViewBag.Role == "Teacher")
+                {
+                    <th>Veiksmai</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var grade in Model)
+            {
+                <tr>
+                    <td>@grade.StudentFullName</td>
+
+                    @if (ViewBag.Role == "Teacher")
+                    {
+                        <form asp-action="Edit" asp-controller="Marks" method="post">
+                            <td>
+                                <input type="hidden" name="id" value="@grade.ID" />
+                                <input type="number" name="value" value="@grade.Value" class="form-control form-control-sm" style="width: 80px;" min="0" max="10" required />
+                            </td>
+                            <td>
+                                <input type="date" name="date" value="@grade.Date.ToString("yyyy-MM-dd")" class="form-control form-control-sm" required />
+                            </td>
+                        <td>@grade.SubjectName</td>
+                        <td>@grade.GradeTypeName</td>
+                            @if (ViewBag.Role != "Student")
+                            {
+                            <td>@grade.Class</td>
+                            }
+                        <td>
+                            <button type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Ar tikrai norite išsaugoti pakeitimus?');">Išsaugoti</button>
+                        </td>
+                            </form>
+                            <form asp-action="DeleteConfirmed" asp-controller="Marks" asp-route-id="@grade.ID" method="post" class="d-inline">
+                        <td>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Ar tikrai norite ištrinti?');">Ištrinti</button>
+                        </td>
+                         </form>
+                        
+                    }
+                    else
+                    {
+                        <td>@grade.Value</td>
+                        <td>@grade.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@grade.SubjectName</td>
+                        <td>@grade.GradeTypeName</td>
+                        @if (ViewBag.Role != "Student")
+                        {
+                            <td>@grade.Class</td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}

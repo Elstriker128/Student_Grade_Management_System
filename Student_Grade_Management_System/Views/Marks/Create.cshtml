@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Įvesti įvertinimus";
+}
+
+<h2>Įvesti įvertinimus</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Student_Username">Pasirinkite mokinį:</label>
+        <select id="Student_Username" name="Student_Username" class="form-control" required>
+            @foreach (var student in ViewBag.Students)
+            {
+                <option value="@student.Username">@student.FullName (@student.Username)</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="gradeTypeId">Pasirinkite pažymio tipą:</label>
+        <select id="gradeTypeId" name="gradeTypeId" class="form-control" required>
+            @foreach (var gradeType in ViewBag.GradeTypes)
+            {
+                <option value="@gradeType.ID">@gradeType.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="lessonId">Pasirinkite pamoką:</label>
+        <select id="lessonId" name="lessonId" class="form-control" required>
+            @foreach (var lesson in ViewBag.Lessons)
+            {
+                <option value="@lesson.ID">@lesson.LessonInfo</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Value">Pažymys (0–10):</label>
+        <input type="number" id="Value" name="Value" class="form-control" min="0" max="10" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Date">Data:</label>
+        <input type="date" id="Date" name="Date" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Išsaugoti</button>
+    <a asp-action="Index" class="btn btn-secondary">Atšaukti</a>
+</form>
+
