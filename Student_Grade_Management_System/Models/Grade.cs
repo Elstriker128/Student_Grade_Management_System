@@ -24,10 +24,16 @@ namespace Student_Grade_Management_System.Models
     {
         [Column("ivertinimo_id")]
         public int ID { get; set; }
+
         [Column("pazymys")]
         public int Value { get; set; }
+
         [Column("data")]
         public DateTime Date { get; set; }
+
+        [Column("fk_MOKINYSmokinio_useris")]
+        public string Student_Username { get; set; }
+
         [ForeignKey("fk_MOKINYSmokinio_useris")]
         [Column("fk_MOKINYSmokinio_useris")]
         public string Student_Username { get; set; }
@@ -38,6 +44,11 @@ namespace Student_Grade_Management_System.Models
         [Column("fk_IVERTINIMO_SVORISsvorio_id")]
         public int Weight_ID { get; set; }
 
+        [Column("fk_PAMOKApamokos_id")]
+        public int Subject_ID { get; set; }
 
+        [Column("fk_IVERTINIMO_SVORISsvorio_id")]
+        public int Weight_ID { get; set; }
     }
+
 }
