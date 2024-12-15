@@ -39,10 +39,10 @@ namespace Student_Grade_Management_System.Controllers
 				.Where(data => data.Parent.Username == HttpContext.Session.GetString("Username"))
 				.Select(group => group.Student);
 			}
-			else if (HttpContext.Session.GetString("UserType") == "Teacher")
-			{
+			//else if (HttpContext.Session.GetString("UserType") == "Teacher")
+			//{
 
-			}
+			//}
 
 			// If there is a search query, filter students by Name or Surname
 			if (!string.IsNullOrEmpty(search))
