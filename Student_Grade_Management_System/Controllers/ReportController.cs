@@ -20,6 +20,9 @@ namespace Student_Grade_Management_System.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            var userType = HttpContext.Session.GetString("UserType");
+            var userName = HttpContext.Session.GetString("Username");
+
             var students = await _context.Students
                 .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
                 .ToListAsync();
@@ -28,6 +31,9 @@ namespace Student_Grade_Management_System.Controllers
             ViewData["Students"] = new SelectList(students, "Username", "FullName");
             var subjects = _context.Subjects.ToList();
             ViewData["Subjects"] = new SelectList(subjects, "ID", "Name");
+
+            TempData["UserType"] = userType;
+            TempData["Username"] = userName;
             return View();
         }
 

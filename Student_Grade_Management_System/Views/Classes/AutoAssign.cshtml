@@ -4,8 +4,6 @@
     ViewData["Title"] = "Automatinis mokytojų priskyrimas klasėms";
 }
 
-@if (Context.Session.GetString("UserType") == "Admin")
-{
 <h2>Automatinis mokytojų priskyrimas klasėms</h2>
 
 @if (ViewBag.FreeClasses != null && ViewBag.FreeTeachers != null)
@@ -44,12 +42,5 @@ else
 {
     <div class="alert alert-info">
         <p>Nėra laisvų klasių arba mokytojų.</p>
-    </div>
-}
-}
-else
-{
-    <div class="alert alert-danger" role="alert">
-        Jūs neturite teisės matyti šio puslapio.
     </div>
 }

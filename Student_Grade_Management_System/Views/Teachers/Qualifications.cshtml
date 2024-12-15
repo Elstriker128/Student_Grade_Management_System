@@ -4,9 +4,7 @@
     ViewData["Title"] = "Mokytojų kvalifikacijos";
 }
 
-@if (Context.Session.GetString("UserType") == "Admin")
-{
-    <h2>Mokytojų kvalifikacijos</h2>
+<h2>Mokytojų kvalifikacijos</h2>
 
 <table class="table table-bordered">
     <thead>
@@ -29,10 +27,3 @@
 </table>
 
 <a asp-action="Index" class="btn btn-secondary">Atgal į sąrašą</a>
-}
-else
-{
-    <div class="alert alert-danger" role="alert">
-        Jūs neturite teisės peržiūrėti šio puslapio.
-    </div>
-}

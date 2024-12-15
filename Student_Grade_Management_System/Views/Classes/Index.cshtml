@@ -4,9 +4,7 @@
     ViewData["Title"] = "Klasių valdymas";
 }
 
-@if (Context.Session.GetString("UserType") == "Admin")
-{
-    <div class="container mt-5">
+<div class="container mt-5">
     <h2>Klasių sąrašas</h2>
 
     <a asp-controller="Classes" asp-action="Add" style="margin-bottom:20px;" class="btn btn-primary">Naujų klasių pridėjimo langas</a>
@@ -49,10 +47,3 @@
         color: red;
     }
 </style>
-}
-else
-{
-    <div class="alert alert-danger" role="alert">
-        Jūs neturite teisės peržiūrėti šio puslapio.
-    </div>
-}

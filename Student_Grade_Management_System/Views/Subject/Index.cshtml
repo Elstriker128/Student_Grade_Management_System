@@ -4,9 +4,7 @@
     ViewData["Title"] = "Dalykai";
 }
 
-@if (Context.Session.GetString("UserType") == "Admin")
-{
-    <h2>Dalykai</h2>
+<h2>Dalykai</h2>
 <p>Administratorius:</p>
 <a asp-controller="Subject" asp-action="Add" class="btn btn-primary">Pridėti naują dalyką</a>
 
@@ -36,13 +34,7 @@
         </tbody>
     </table>
 </div>
-}
-else
-{
-    <div class="alert alert-danger" role="alert">
-        Jūs neturite teisės peržiūrėti šio puslapio.
-    </div>
-}
+
 
 @section Scripts {
     <script type="text/javascript">
