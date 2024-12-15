@@ -17,7 +17,6 @@
 <a asp-controller="Teachers" asp-action="Add" class="btn btn-primary">Įtraukti naują mokytoją į sistemą</a>
 <a asp-controller="Teachers" asp-action="Qualifications" class="btn btn-primary">Peržiūrėti mokytojų kvalifikacijas</a>
 
-
 @if (Model != null && Model.Any()) // and if user is admin
 {
     <div class="container mt-5">
@@ -43,9 +42,7 @@
                         <td>@teacher.Email</td>
                         <td>
                             <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Username" class="btn btn-primary">Redaguoti</a>
-                            <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>
-                            <a asp-controller="Teachers" asp-action="AssignToClass" asp-route-id="@teacher.Username" class="btn btn-primary">Priskirti klasei</a>
-                        </td>
+                            <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>                        </td>
                     </tr>
                 }
             </tbody>

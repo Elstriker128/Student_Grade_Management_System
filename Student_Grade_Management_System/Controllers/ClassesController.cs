@@ -52,6 +52,91 @@ namespace Student_Grade_Management_System.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AutoAssign()
+        {
+            var freeClasses = await _context.Classes
+                .Where(c => c.Teacher_Username == null)
+                .ToListAsync();
+
+            var freeTeachers = await _context.Teachers
+                .Where(t => !_context.Classes.Any(c => c.Teacher_Username == t.Username))
+                .ToListAsync();
+
+            ViewBag.FreeClasses = freeClasses;
+            ViewBag.FreeTeachers = freeTeachers;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AutoAssignConfirm()
+        {
+            var freeClasses = await _context.Classes
+                .Where(c => c.Teacher_Username == null)
+                .ToListAsync();
+
+            var freeTeachers = await _context.Teachers
+                .Where(t => !_context.Classes.Any(c => c.Teacher_Username == t.Username))
+                .ToListAsync();
+
+            int teacherIndex = 0;
+            foreach (var freeClass in freeClasses)
+            {
+                if (teacherIndex >= freeTeachers.Count)
+                {
+                    break;
+                }
+
+                freeClass.Teacher_Username = freeTeachers[teacherIndex].Username;
+                teacherIndex++;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ManualAssign()
+        {
+            var classes = await _context.Classes.ToListAsync();
+            var freeTeachers = await _context.Teachers
+                .Where(t => !_context.Classes.Any(c => c.Teacher_Username == t.Username))
+                .ToListAsync();
+
+            ViewBag.FreeTeachers = freeTeachers;
+
+            return View(classes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignTeacher(int classNumber, string classLetter, string teacherUsername)
+        {
+            var classToUpdate = await _context.Classes.FindAsync(classNumber, classLetter);
+            if (classToUpdate != null)
+            {
+                classToUpdate.Teacher_Username = teacherUsername;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(ManualAssign));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnassignTeacher(int classNumber, string classLetter)
+        {
+            var classToUpdate = await _context.Classes.FindAsync(classNumber, classLetter);
+            if (classToUpdate != null)
+            {
+                classToUpdate.Teacher_Username = null;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(ManualAssign));
+        }
+
         public IActionResult Create()
         {
             // Code to create a new schedule for a class
