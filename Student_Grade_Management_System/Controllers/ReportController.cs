@@ -22,11 +22,14 @@ namespace Student_Grade_Management_System.Controllers
         {
             var userType = HttpContext.Session.GetString("UserType");
             var userName = HttpContext.Session.GetString("Username");
-            var kid = HttpContext.Session.GetString("Kid");
 
             if(userType == "Parent"){
+                var kidsUsernames = _context.ParentsOfStudents
+                            .Where(m => m.Parent_Username == userName)
+                            .Select(m => m.Student_Username)
+                            .ToList();
                 var student = await _context.Students
-                    .Where(s => s.Username == kid)
+                    .Where(s => kidsUsernames.Contains(s.Username))
                     .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
                     .ToListAsync();
 

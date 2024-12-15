@@ -34,29 +34,6 @@ namespace Student_Grade_Management_System.Controllers
             TempData["UserType"] = userType;
             TempData["Username"] = userName;
 
-            if (userType == "Parent")
-            {
-                var queryKids = _context.ParentsOfStudents.AsQueryable();
-                queryKids = queryKids.Where(i => i.Parent_Username == userName);
-
-                var kids = await queryKids
-                    .Select(i => new
-                    {
-                        i.Student_Username,
-                        name = _context.Students
-                            .Where(j => j.Username == i.Student_Username)
-                            .Select(j => j.Name + " " + j.Surname)
-                            .FirstOrDefault()
-                    })
-                    .ToListAsync();
-                    foreach(var kid in kids)
-                    {
-                        Console.WriteLine(kid.name);
-                    }
-                var kidsList = kids.Select(k => new { Username = k.Student_Username, FullName = k.name }).ToList();
-                ViewData["Kids"] = new SelectList(kidsList, "Username", "FullName");
-            }
-
             var student = await _context.Students
                 .Where(x => x.Username == userName)
                 .Select(x => x.Name + " " + x.Surname)
