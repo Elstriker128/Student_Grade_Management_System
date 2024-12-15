@@ -22,13 +22,23 @@ namespace Student_Grade_Management_System.Controllers
         {
             var userType = HttpContext.Session.GetString("UserType");
             var userName = HttpContext.Session.GetString("Username");
+            var kid = HttpContext.Session.GetString("Kid");
 
-            var students = await _context.Students
-                .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
-                .ToListAsync();
+            if(userType == "Parent"){
+                var student = await _context.Students
+                    .Where(s => s.Username == kid)
+                    .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
+                    .ToListAsync();
 
-            // Sukuriame SelectList su Username ir FullName, kad būtų galima pasirinkti vardą ir pavardę
-            ViewData["Students"] = new SelectList(students, "Username", "FullName");
+                ViewData["Students"] = new SelectList(student, "Username", "FullName");
+            }
+            else{
+                var students = await _context.Students
+                    .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
+                    .ToListAsync();
+                // Sukuriame SelectList su Username ir FullName, kad būtų galima pasirinkti vardą ir pavardę
+                ViewData["Students"] = new SelectList(students, "Username", "FullName");
+            }
             var subjects = _context.Subjects.ToList();
             ViewData["Subjects"] = new SelectList(subjects, "ID", "Name");
 
@@ -236,7 +246,7 @@ namespace Student_Grade_Management_System.Controllers
         {
             var sb = new StringBuilder();
             sb.Append('\uFEFF');
-            sb.AppendLine("Studentas;Klasė;Dalykas;Įvertinimas;Data");
+            sb.AppendLine("Mokinys;Klasė;Dalykas;Įvertinimas;Data");
 
             foreach (var record in data)
             {
@@ -265,7 +275,7 @@ namespace Student_Grade_Management_System.Controllers
             string format = $"{{0,-{columnWidth}}} | {{1,-{columnWidth}}} | {{2,-{columnWidth}}} | {{3,-{columnWidth}}} | {{4,-{columnWidth}}}";
 
             // Antraštės eilutė
-            sb.AppendLine(string.Format(format, "Studentas", "Klasė", "Dalykas", "Įvertinimas", "Data"));
+            sb.AppendLine(string.Format(format, "Mokinys", "Klasė", "Dalykas", "Įvertinimas", "Data"));
 
             // Įrašyti duomenis apie mokinius
             foreach (var record in data)
@@ -321,7 +331,7 @@ namespace Student_Grade_Management_System.Controllers
                         )
                     );
                     table.AppendChild(tblProps);
-                    table.AppendChild(CreateTableRow("Studentas", "Klasė", "Dalykas", "Įvertinimas", "Data")); // Antraštės eilutė
+                    table.AppendChild(CreateTableRow("Mokinys", "Klasė", "Dalykas", "Įvertinimas", "Data")); // Antraštės eilutė
 
                     foreach (var record in reportData)
                     {

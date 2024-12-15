@@ -95,6 +95,32 @@ namespace Student_Grade_Management_System.Controllers
                                                 })
                                                 .ToListAsync();
             }
+            else if(userType == "Parent"){
+                var kid = HttpContext.Session.GetString("Kid");
+                reviews = await _context.Reviews
+                                                .Where(r => r.Student_Username == kid)
+                                                .Select(r => new ReviewM
+                                                {
+                                                    ID = r.ID,
+                                                    Date = r.Date,
+                                                    Content = r.Content,
+                                                    // Užkrauname tipo pavadinimą tiesiogiai iš ReviewType lentelės
+                                                    Type = _context.ReviewTypes
+                                                                    .Where(t => t.ID == r.Type)  // Palyginame ReviewType ID su Review Type
+                                                                    .Select(t => t.Name)         // Grąžiname pavadinimą
+                                                                    .FirstOrDefault(),
+                                                    Student_Name = _context.Students
+                                                                        .Where(m => m.Username == r.Student_Username) // Palyginame su Student_Username
+                                                                        .Select(m => m.Name + " " + m.Surname) // Grąžiname studento vardą
+                                                                        .FirstOrDefault(),
+                                                    // Užkrauname mokytojo vardą pagal Teacher_Username
+                                                    Teacher_Name = _context.Teachers
+                                                                        .Where(m => m.Username == r.Teacher_Username) // Palyginame su Teacher_Username
+                                                                        .Select(m => m.Name + " " + m.Surname) // Grąžiname mokytojo vardą
+                                                                        .FirstOrDefault()
+                                                })
+                                                .ToListAsync();
+            }
             else
             {
                 // Galite apdoroti neteisingą "userType" reikšmę

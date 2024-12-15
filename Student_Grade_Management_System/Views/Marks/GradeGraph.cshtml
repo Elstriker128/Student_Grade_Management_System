@@ -1,0 +1,80 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Pažymių Grafikas";
+
+    // Grupavimas pagal vaiko vardą ir dalyką.
+    var groupedData = Model
+        .GroupBy(g => g.StudentName)
+        .Select(studentGroup => new
+        {
+            StudentName = studentGroup.Key,
+            Subjects = studentGroup
+                .GroupBy(g => g.SubjectName)
+                .Select(subjectGroup => new
+                {
+                    SubjectName = subjectGroup.Key,
+                    Grades = subjectGroup
+                        .Select(x => new { x.Value, x.Date })
+                        .OrderBy(x => x.Date)
+                        .ToList()
+                }).ToList()
+        }).ToList();
+
+    var jsonSerializerOptions = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
+            };
+
+    var chartDataJson = System.Text.Json.JsonSerializer.Serialize(groupedData, jsonSerializerOptions);
+}
+
+<h2>Pažymių Grafikai</h2>
+
+<div id="chartsContainer"></div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    const chartData = @Html.Raw(chartDataJson);
+
+    const chartsContainer = document.getElementById('chartsContainer');
+
+    chartData.forEach(student => {
+        // Sukuriamas naujas konteineris kiekvienam vaikui.
+        const studentContainer = document.createElement('div');
+        studentContainer.style.marginBottom = '50px';
+
+        const studentTitle = document.createElement('h3');
+        studentTitle.textContent = `Vaikas: ${student.studentName}`;
+        studentContainer.appendChild(studentTitle);
+
+        student.subjects.forEach(subject => {
+            const chartDiv = document.createElement('div');
+            chartDiv.style.width = '100%';
+            chartDiv.style.height = '500px';
+            studentContainer.appendChild(chartDiv);
+
+            const trace = {
+                x: subject.grades.map(point => point.date),
+                y: subject.grades.map(point => point.value),
+                mode: 'lines+markers',
+                name: subject.subjectName
+            };
+
+            const layout = {
+                title: `Dalykas: ${subject.subjectName}`,
+                xaxis: {
+                    title: 'Data',
+                    type: 'date'
+                },
+                yaxis: {
+                    title: 'Pažymys'
+                }
+            };
+
+            Plotly.newPlot(chartDiv, [trace], layout);
+        });
+
+        chartsContainer.appendChild(studentContainer);
+    });
+</script>
