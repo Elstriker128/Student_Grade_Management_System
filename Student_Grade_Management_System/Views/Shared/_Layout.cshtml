@@ -64,15 +64,15 @@
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex" style="float: right;">
                     <ul class="navbar-nav flex-grow-1">
-                       @*  <li class="nav-item dropdown">
+                        @* <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="studentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Mokytojas
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="classesDropdown">
                                 <li><p>Mokytojo vardas pavardė</p></li>
                                 <li><a class="dropdown-item" asp-controller="Profile" asp-action="TProfile">Mokytojo profilis</a></li>
-                            </ul> *@
-                        </li>
+                            </ul>
+                        </li> *@
                         @if (Context.Session.GetString("UserType") == "Student")
                         {
                             <li class="nav-item dropdown">
@@ -116,6 +116,21 @@
                         {
                             <li class="nav-item">
                                 <label class="nav-link text-dark">Labas @Context.Session.GetString("Name")</label>
+                            </li>
+                        }
+                        else if (Context.Session.GetString("UserType") == "Admin"){
+                            <li class="nav-item">
+                                <label class="nav-link text-dark">Administratorius: @Context.Session.GetString("Name")</label>
+                            </li>
+                        }
+                        else if (Context.Session.GetString("UserType") == "Teacher"){
+                            <li class="nav-item">
+                                <label class="nav-link text-dark">Labas, mokytojau @Context.Session.GetString("Name")</label>
+                            </li>
+                        }
+                        else if (Context.Session.GetString("UserType") == "Parent"){
+                            <li class="nav-item">
+                                <label class="nav-link text-dark">Labas, tėveli @Context.Session.GetString("Name")</label>
                             </li>
                         }
                     </ul>

@@ -62,9 +62,33 @@ namespace Student_Grade_Management_System.Controllers
                 .Select(x => x.Name + " " + x.Surname)
                 .FirstOrDefaultAsync();
 
+            var teacher = await _context.Teachers
+                .Where(x => x.Username == userName)
+                .Select(x => x.Name + " " + x.Surname)
+                .FirstOrDefaultAsync();
+
+            var admin = await _context.Administrators
+                .Where(x => x.Username == userName)
+                .Select(x => x.Name + " " + x.Surname)
+                .FirstOrDefaultAsync();
+
+            var parent = await _context.Parents
+                .Where(x => x.Username == userName)
+                .Select(x => x.Name + " " + x.Surname)
+                .FirstOrDefaultAsync();
+
             if (userType == "Student")
             {
                 HttpContext.Session.SetString("Name", student);
+            }
+            else if (userType == "Teacher"){
+                HttpContext.Session.SetString("Name", teacher);
+            }
+            else if (userType == "Admin"){
+                HttpContext.Session.SetString("Name", admin);
+            }
+            else if (userType == "Parent"){
+                HttpContext.Session.SetString("Name", parent);
             }
 
             return View();
