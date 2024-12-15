@@ -10,6 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Pridedame sesijų palaikymą
+builder.Services.AddDistributedMemoryCache(); // Sesijų duomenų saugojimui atmintyje
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Sesijos galiojimo laikas
+    options.Cookie.HttpOnly = true; // Apsauga nuo XSS
+    options.Cookie.IsEssential = true; // Užtikrina, kad sesijos sausainis visada bus išsaugotas
+});
+
 builder.Services.AddDbContext<SystemDbContext>(options =>
 {
     options.UseMySQL("Data Source=127.0.0.1;port=3306;Initial Catalog=tamo;User Id=root;Password=;SslMode=None;Convert Zero Datetime=True;");
@@ -36,6 +45,9 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Įgaliname sesijas
+app.UseSession();
 
 app.UseAuthorization();
 

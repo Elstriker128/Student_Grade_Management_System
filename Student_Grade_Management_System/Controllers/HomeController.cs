@@ -15,6 +15,7 @@ namespace Student_Grade_Management_System.Controllers
 
         public IActionResult Index()
         {
+            ViewData["UserType"] = HttpContext.Session.GetString("UserType");
             return View();
         }
 
