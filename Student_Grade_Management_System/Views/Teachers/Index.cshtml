@@ -42,9 +42,7 @@
                         <td>@teacher.Email</td>
                         <td>
                             <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Username" class="btn btn-primary">Redaguoti</a>
-                            <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>
-                            <a asp-controller="Teachers" asp-action="AssignToClass" asp-route-id="@teacher.Username" class="btn btn-primary">Priskirti klasei</a>
-                        </td>
+                            <a asp-controller="Teachers" asp-action="AddQualification" asp-route-id="@teacher.Username" class="btn btn-primary">Susieti su dalyku</a>                        </td>
                     </tr>
                 }
             </tbody>
