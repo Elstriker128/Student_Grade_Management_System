@@ -409,7 +409,7 @@ namespace Student_Grade_Management_System.Controllers
                     Date = group.Review.Date.ToString("yyyy-MM-dd"),
                     TeacherName = group.Teacher.Name,
                     TeacherSurname = group.Teacher.Surname,
-                    ReviewType = group.Review.Type
+                    ReviewType = group.ReviewType.Name
                 })
                 .ToList();
 
