@@ -1,0 +1,106 @@
+﻿@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Pažymių Vidurkiai";
+    var role = ViewBag.Role; // Naudotojo rolė
+}
+
+<h2>Pažymių Vidurkiai</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped mt-4">
+        <thead>
+            @if (role == "Teacher" || role == "Admin")
+            {
+                <tr>
+                    <th>Mokinio Vardas</th>
+                    <th>Dalykas</th>
+                    <th>Vidurkis</th>
+                </tr>
+            }
+            else if (role == "Parent")
+            {
+                <tr>
+                    <th>Mokinio Vardas</th>
+                    <th>Dalykas</th>
+                    <th>Vidurkis</th>
+                </tr>
+            }
+            else if (role == "Student")
+            {
+                <tr>
+                    <th>Dalykas</th>
+                    <th>Vidurkis</th>
+                </tr>
+            }
+        </thead>
+        <tbody>
+            @if (role == "Teacher" || role == "Admin")
+            {
+                @foreach (var studentGroup in Model.GroupBy(item => item.StudentName))
+                {
+                    <tr>
+                        <td colspan="3"><strong>@studentGroup.Key</strong></td>
+                    </tr>
+                    @foreach (var item in studentGroup)
+                    {
+                        <tr>
+                            <td></td>
+                            <td>@item.SubjectName</td>
+                            <td>@item.Average.ToString("0.00")</td>
+                        </tr>
+                    }
+                }
+            }
+            else if (role == "Parent")
+            {
+                @foreach (var studentGroup in Model.GroupBy(item => item.StudentName))
+                {
+                    <tr>
+                        <td colspan="3"><strong>@studentGroup.Key</strong></td>
+                    </tr>
+                    @foreach (var item in studentGroup)
+                    {
+                        <tr>
+                            <td></td>
+                            <td>@item.SubjectName</td>
+                            <td>@item.Average.ToString("0.00")</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td><strong>Mokinio Bendras Vidurkis:</strong></td>
+                        <td><strong>@studentGroup.Average(g => (double)g.Average).ToString("0.00")</strong></td>
+                    </tr>
+                }
+            }
+            else if (role == "Student")
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SubjectName</td>
+                        <td>@item.Average.ToString("0.00")</td>
+                    </tr>
+                }
+                <tr>
+                    <td><strong>Bendras Vidurkis:</strong></td>
+                    <td><strong>@ViewBag.OverallAverage.ToString("0.00")</strong></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (role == "Teacher" || role == "Admin")
+    {
+        <div class="alert alert-info mt-4">
+            <strong>Bendras Vidurkis (Visiems Mokiniams):</strong> @ViewBag.OverallAverage.ToString("0.00")
+        </div>
+    }
+}
+else
+{
+    <div class="alert alert-warning mt-4">
+        Nėra duomenų vidurkiams apskaičiuoti.
+    </div>
+}
