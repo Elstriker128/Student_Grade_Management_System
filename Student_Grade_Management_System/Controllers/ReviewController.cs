@@ -16,7 +16,14 @@ namespace Student_Grade_Management_System.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var reviews = await _context.Reviews
+            var userType = HttpContext.Session.GetString("UserType");
+            var userName = HttpContext.Session.GetString("Username");
+            List<ReviewM>? reviews = null;
+
+            if (userType == "Student")
+            {
+                reviews = await _context.Reviews
+                                                .Where(r => r.Student_Username == userName)
                                                 .Select(r => new ReviewM
                                                 {
                                                     ID = r.ID,
@@ -38,6 +45,61 @@ namespace Student_Grade_Management_System.Controllers
                                                                         .FirstOrDefault()
                                                 })
                                                 .ToListAsync();
+            }
+            else if (userType == "Teacher"){
+                reviews = await _context.Reviews
+                                                .Where(r => r.Teacher_Username == userName)
+                                                .Select(r => new ReviewM
+                                                {
+                                                    ID = r.ID,
+                                                    Date = r.Date,
+                                                    Content = r.Content,
+                                                    // Užkrauname tipo pavadinimą tiesiogiai iš ReviewType lentelės
+                                                    Type = _context.ReviewTypes
+                                                                    .Where(t => t.ID == r.Type)  // Palyginame ReviewType ID su Review Type
+                                                                    .Select(t => t.Name)         // Grąžiname pavadinimą
+                                                                    .FirstOrDefault(),
+                                                    Student_Name = _context.Students
+                                                                        .Where(m => m.Username == r.Student_Username) // Palyginame su Student_Username
+                                                                        .Select(m => m.Name + " " + m.Surname) // Grąžiname studento vardą
+                                                                        .FirstOrDefault(),
+                                                    // Užkrauname mokytojo vardą pagal Teacher_Username
+                                                    Teacher_Name = _context.Teachers
+                                                                        .Where(m => m.Username == r.Teacher_Username) // Palyginame su Teacher_Username
+                                                                        .Select(m => m.Name + " " + m.Surname) // Grąžiname mokytojo vardą
+                                                                        .FirstOrDefault()
+                                                })
+                                                .ToListAsync();
+            }
+            else if(userType == "Admin"){
+                reviews = await _context.Reviews
+                                                .Select(r => new ReviewM
+                                                {
+                                                    ID = r.ID,
+                                                    Date = r.Date,
+                                                    Content = r.Content,
+                                                    // Užkrauname tipo pavadinimą tiesiogiai iš ReviewType lentelės
+                                                    Type = _context.ReviewTypes
+                                                                    .Where(t => t.ID == r.Type)  // Palyginame ReviewType ID su Review Type
+                                                                    .Select(t => t.Name)         // Grąžiname pavadinimą
+                                                                    .FirstOrDefault(),
+                                                    Student_Name = _context.Students
+                                                                        .Where(m => m.Username == r.Student_Username) // Palyginame su Student_Username
+                                                                        .Select(m => m.Name + " " + m.Surname) // Grąžiname studento vardą
+                                                                        .FirstOrDefault(),
+                                                    // Užkrauname mokytojo vardą pagal Teacher_Username
+                                                    Teacher_Name = _context.Teachers
+                                                                        .Where(m => m.Username == r.Teacher_Username) // Palyginame su Teacher_Username
+                                                                        .Select(m => m.Name + " " + m.Surname) // Grąžiname mokytojo vardą
+                                                                        .FirstOrDefault()
+                                                })
+                                                .ToListAsync();
+            }
+            else
+            {
+                // Galite apdoroti neteisingą "userType" reikšmę
+                return RedirectToAction("Error", "Home");
+            }
             if (reviews == null)
             {
                 return NotFound();
@@ -57,6 +119,9 @@ namespace Student_Grade_Management_System.Controllers
             // Get review types for the select dropdown
             var reviewTypes = _context.ReviewTypes.ToList();
             ViewData["ReviewTypes"] = new SelectList(reviewTypes, "ID", "Name");
+
+            TempData["UserType"] = userType;
+            TempData["Username"] = userName;
 
             return View(reviews);
         }

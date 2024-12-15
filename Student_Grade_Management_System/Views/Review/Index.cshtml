@@ -14,7 +14,9 @@
 </head>
 
 <h2>Atsiliepimų sąrašas</h2>
-<a asp-controller="Review" asp-action="Add" class="btn btn-primary">Rašyti naują atsiliepimą</a>
+@if (Context.Session.GetString("UserType") == "Admin" || Context.Session.GetString("UserType") == "Teacher"){
+    <a asp-controller="Review" asp-action="Add" class="btn btn-primary">Rašyti naują atsiliepimą</a>
+}
 
 <div class="d-flex justify-content-between mt-4">
     <span class="input-group-text" style="width: 300px; background-color: white;">
@@ -38,34 +40,38 @@
     </div>
 
     <!-- Mokinio pasirinkimas -->
-    <div class="me-3" style="width: 20%;">
-        <select id="filterStudent" class="form-select" style="width: 100%;">
-            <option value="">Pasirinkite mokinį</option>
-            @if (ViewData["Students"] != null)
-            {
-                var students = (SelectList)ViewData["Students"];
-                foreach (var student in students)
+    @if (Context.Session.GetString("UserType") == "Admin" || Context.Session.GetString("UserType") == "Teacher"){
+        <div class="me-3" style="width: 20%;">
+            <select id="filterStudent" class="form-select" style="width: 100%;">
+                <option value="">Pasirinkite mokinį</option>
+                @if (ViewData["Students"] != null)
                 {
-                    <option value="@student.Text">@student.Text</option>
+                    var students = (SelectList)ViewData["Students"];
+                    foreach (var student in students)
+                    {
+                        <option value="@student.Text">@student.Text</option>
+                    }
                 }
-            }
-        </select>
-    </div>
+            </select>
+        </div>
+    }
 
     <!-- Mokytojo pasirinkimas -->
-    <div class="me-3" style="width: 20%;">
-        <select id="filterTeacher" class="form-select" style="width: 100%;">
-            <option value="">Pasirinkite mokytoją</option>
-            @if (ViewData["Teachers"] != null)
-            {
-                var teachers = (SelectList)ViewData["Teachers"];
-                foreach (var teacher in teachers)
+    @if (Context.Session.GetString("UserType") != "Teacher"){
+        <div class="me-3" style="width: 20%;">
+            <select id="filterTeacher" class="form-select" style="width: 100%;">
+                <option value="">Pasirinkite mokytoją</option>
+                @if (ViewData["Teachers"] != null)
                 {
-                    <option value="@teacher.Text">@teacher.Text</option>
+                    var teachers = (SelectList)ViewData["Teachers"];
+                    foreach (var teacher in teachers)
+                    {
+                        <option value="@teacher.Text">@teacher.Text</option>
+                    }
                 }
-            }
-        </select>
-    </div>
+            </select>
+        </div>
+    }
 
     <!-- Datos pasirinkimas -->
     <div class="me-3" style="width: 20%;">
@@ -93,13 +99,15 @@
                     <h5 class="mb-0 review-type">@review.Type</h5>
                     <div>
                         <a asp-controller="Review" asp-action="Review" asp-route-id="@review.ID" class="btn btn-info btn-sm me-2">Peržiūrėti</a>
-                        <a asp-controller="Review" asp-action="Edit" asp-route-id="@review.ID" class="btn btn-warning btn-sm">Redaguoti</a>
-                        <a asp-controller="Review" asp-action="Delete" 
-                            asp-route-id="@review.ID" 
-                            class="btn btn-danger btn-sm"
-                            onclick="confirmDelete(event, '@Url.Action("Delete", "Review", new { id = review.ID })')">
-                            Ištrinti
-                        </a>
+                        @if (Context.Session.GetString("UserType") == "Admin" || Context.Session.GetString("UserType") == "Teacher"){
+                            <a asp-controller="Review" asp-action="Edit" asp-route-id="@review.ID" class="btn btn-warning btn-sm">Redaguoti</a>
+                            <a asp-controller="Review" asp-action="Delete" 
+                                asp-route-id="@review.ID" 
+                                class="btn btn-danger btn-sm"
+                                onclick="confirmDelete(event, '@Url.Action("Delete", "Review", new { id = review.ID })')">
+                                Ištrinti
+                            </a>
+                        }
                     </div>
                 </div>
                 <p class="mt-2 mb-1">
@@ -192,11 +200,9 @@
         // Paieškos funkcija
         function filterReviews() {
             var type = document.getElementById('filterType').value;
-            var student = document.getElementById('filterStudent').value;
-            var teacher = document.getElementById('filterTeacher').value;
+            var student = document.getElementById('filterStudent') ? document.getElementById('filterStudent').value : "";
+            var teacher = document.getElementById('filterTeacher') ? document.getElementById('filterTeacher').value : "";
             var date = document.getElementById('filterDate').value;
-
-            console.log("Filtrai:", type, student, teacher, date);  // Atspausdins pasirinkimus
 
             var reviewItems = document.getElementsByClassName('review-item');
             var noResultsMessage = document.getElementById('noResultsMessage');
@@ -209,28 +215,24 @@
                 var reviewTeacher = reviewItems[i].querySelector('.review-teacher').innerText.trim();
                 var reviewDate = reviewItems[i].querySelector('.review-date').innerText.trim();
 
-                // Paverskite reviewDate į datos objektą
-                var reviewDateObj = new Date(reviewDate);
+                // Ištraukiame tikrąją datą iš "Data:" teksto
+                var reviewDateObj = new Date(reviewDate.split(":")[1].trim());
 
                 // Filtrai pagal užpildytus laukus
                 var matchesType = (type === "" || reviewType.toLowerCase().includes(type.toLowerCase())) ? true : false;
                 var matchesStudent = (student === "" || reviewStudent.toLowerCase().includes(student.toLowerCase())) ? true : false;
                 var matchesTeacher = (teacher === "" || reviewTeacher.toLowerCase().includes(teacher.toLowerCase())) ? true : false;
-
-                // Patikrinkite, ar data atitinka
-                var matchesDate = (date === "" || new Date(date).toDateString() === reviewDateObj.toDateString()) ? true : false;
+                var matchesDate = (date === "" || reviewDateObj.toDateString() === new Date(date).toDateString()) ? true : false;
 
                 // Filtru tikrinimas pagal visus pasirinktus laukus
                 if (matchesType && matchesStudent && matchesTeacher && matchesDate) {
-                    reviewItems[i].style.display = ""; // Rodyti
-                    console.log("Atsiliepimo duomenys:", reviewType, reviewStudent, reviewTeacher, reviewDate);  // Atspausdins atsiliepimo informaciją
+                    reviewItems[i].style.display = "";
                     found = true;
                 } else {
-                    reviewItems[i].style.display = "none"; // Slėpti
+                    reviewItems[i].style.display = "none";
                 }
             }
 
-            // Rodyti arba slėpti "nerasta rezultatų" žinutę
             if (!found) {
                 noResultsMessage.style.display = "block";
             } else {
@@ -240,12 +242,26 @@
         
         function clearFilters() {
             document.getElementById('filterType').value = "";
-            document.getElementById('filterStudent').value = "";
-            document.getElementById('filterTeacher').value = "";
-            document.getElementById('filterDate').value = "";
+
+            if (document.getElementById('filterStudent')) {
+                document.getElementById('filterStudent').value = "";
+            }
+            
+            // Jei vartotojas nėra "Mokinys", išvalome mokytojo laukelį
+            if (document.getElementById('filterTeacher')) {
+                document.getElementById('filterTeacher').value = "";
+            }
+
+            // Jei vartotojas nėra "Mokinys" ir "Admin", išvalome datą
+            if (document.getElementById('filterDate')) {
+                document.getElementById('filterDate').value = "";
+            }
+
+            document.getElementById('searchBox').value = "";
 
             // Pašalinti filtrų poveikį
-            filterReviews(); 
+            filterReviews();
+            searchReviews();
         }
     </script>
 }

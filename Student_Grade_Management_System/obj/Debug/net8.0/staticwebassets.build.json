@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "m4P6BmbeHCPK4llLVLmVJn70zZjHfiUnhuzg6l9MNL4=",
+  "Hash": "l0TvueeY05/HGT/gtuNIRahNXd1VgcMUspUv1cA9dxY=",
   "Source": "Student_Grade_Management_System",
   "BasePath": "_content/Student_Grade_Management_System",
   "Mode": "Default",
@@ -1193,6 +1193,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\Tamo.png",
+      "SourceId": "Student_Grade_Management_System",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\rugil\\Documents\\GitHub\\Student_Grade_Management_System1\\Student_Grade_Management_System\\wwwroot\\",
+      "BasePath": "_content/Student_Grade_Management_System",
+      "RelativePath": "Tamo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Tamo.png"
     }
   ]
 }

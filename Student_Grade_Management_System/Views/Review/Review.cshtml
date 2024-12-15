@@ -21,13 +21,15 @@
     </p>
 
     <!-- Redagavimo mygtukas -->
-    <a asp-controller="Review" asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning mt-3">Redaguoti atsiliepimą</a>
-    <a asp-controller="Review" asp-action="Delete" 
-        asp-route-id="@Model.ID" 
-        class="btn btn-danger mt-3"
-        onclick="confirmDelete(event, '@Url.Action("Delete", "Review", new { id = Model.ID })')">
-        Ištrinti
-    </a>
+    @if (Context.Session.GetString("UserType") == "Admin" || Context.Session.GetString("UserType") == "Teacher"){
+        <a asp-controller="Review" asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning mt-3">Redaguoti atsiliepimą</a>
+        <a asp-controller="Review" asp-action="Delete" 
+            asp-route-id="@Model.ID" 
+            class="btn btn-danger mt-3"
+            onclick="confirmDelete(event, '@Url.Action("Delete", "Review", new { id = Model.ID })')">
+            Ištrinti
+        </a>
+    }
     <a asp-controller="Review" asp-action="Index" class="btn btn-secondary mt-3">Atgal į sąrašą</a>
 </div>
 @section Scripts {
