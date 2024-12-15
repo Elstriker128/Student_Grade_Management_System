@@ -21,6 +21,29 @@ namespace Student_Grade_Management_System.Controllers
 			var students = from s in _context.Students
 						   select s;
 
+			if (HttpContext.Session.GetString("UserType") == "Parent")
+			{
+				students = _context.Students
+				.Join(
+					_context.ParentsOfStudents,
+					cls => cls.Username,
+					timetable => timetable.Student_Username,
+					(cls, timetable) => new { Student = cls, StudentAndParent = timetable }
+				)
+				.Join(
+					_context.Parents,
+					combined => combined.StudentAndParent.Parent_Username,
+					lesson => lesson.Username,
+					(combined, lesson) => new { combined.Student, combined.StudentAndParent, Parent = lesson }
+				)
+				.Where(data => data.Parent.Username == HttpContext.Session.GetString("Username"))
+				.Select(group => group.Student);
+			}
+			else if (HttpContext.Session.GetString("UserType") == "Teacher")
+			{
+
+			}
+
 			// If there is a search query, filter students by Name or Surname
 			if (!string.IsNullOrEmpty(search))
 			{

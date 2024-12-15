@@ -25,15 +25,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><b>Mokinių valdymo sistema</b></a>
                         </li>
-                        @if (Context.Session.GetString("UserType") == "Admin" || Context.Session.GetString("UserType") == "Teacher"){
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Mokiniai</a>
-                        </li>
+                        @if (Context.Session.GetString("UserType") != "Student")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Mokiniai</a>
+                            </li>
+                        }
                         @if (Context.Session.GetString("UserType") == "Admin"){
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">Klasės</a>
                         </li>
-                        }}
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">Tvarkaraštis</a>
                         </li>
