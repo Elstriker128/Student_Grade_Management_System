@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Student_Grade_Management_System.Controllers
@@ -20,6 +21,30 @@ namespace Student_Grade_Management_System.Controllers
                 s.EndTime
             }).Distinct().OrderBy(s => s.StartTime).ToList();
 
+            // Get username from session
+            var username = HttpContext.Session.GetString("Username");
+
+            var neededNumber = 0;
+            var neededLetter = string.Empty;
+
+            if (username != null)
+            {
+                // Attempt to find the student by username
+                var userInfo = _context.Students.FirstOrDefault(s => s.Username == username);
+                if (userInfo != null)
+                {
+                    HttpContext.Session.SetString("ClassLetterNumber", $"{userInfo.Class_Number} {userInfo.Class_Letter}");
+
+                    var classInfo = HttpContext.Session.GetString("ClassLetterNumber");
+                    if (!string.IsNullOrEmpty(classInfo))
+                    {
+                        var classParts = classInfo.Split(" "); // Adjust this logic to split the value as required
+                        neededNumber = int.Parse(classParts[0]);
+                        neededLetter = classParts[1];
+                    }
+                }
+            }
+
             ViewBag.StudentSchedule = _context.Classes
             .Join(
                 _context.Timetables, // Join Classes with Timetables
@@ -39,7 +64,7 @@ namespace Student_Grade_Management_System.Controllers
                 subject => subject.ID, // Key from Subjects table
                 (combined, subject) => new { combined.Class, combined.Timetable, combined.Lesson, Subject = subject } // Result is an anonymous object with Subject
             )
-            .Where(data => data.Class.Number == 5 && data.Class.Letter == "a")
+            .Where(data => data.Class.Number == neededNumber && data.Class.Letter == neededLetter)
             .GroupBy(data => new { data.Lesson.StartTime, data.Lesson.EndTime }) // Group by class details
             .Select(group => new
             {

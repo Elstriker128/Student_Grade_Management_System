@@ -37,9 +37,12 @@
                                 <li><a class="dropdown-item" asp-controller="Classes" asp-action="Index">Klasių paieška</a></li>
                             </ul>
                         </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Mokiniai</a>
-                        </li>
+                        @if (Context.Session.GetString("UserType") == "Admin" || Context.Session.GetString("UserType") == "Teacher")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Mokiniai</a>
+                            </li>
+                        }
                         @if (Context.Session.GetString("UserType") == "Admin")
                         {
                             <li class="nav-item">
@@ -84,16 +87,19 @@
                                 <li><a class="dropdown-item" asp-controller="Profile" asp-action="TProfile">Mokytojo profilis</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="studentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Mokinys
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="classesDropdown">
-                                <li><p>Mokinio vardas pavardė</p></li>
-                                <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index" asp-route-username="S-Agne">Mokinio profilis</a></li>
-                                <li><a class="dropdown-item" asp-controller="Students" asp-action="History">Mokinio istorija</a></li>
-                            </ul>
-                        </li>
+                        @if (Context.Session.GetString("UserType") == "Student")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="studentsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mokinys
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="classesDropdown">
+                                    <li><p>@Context.Session.GetString("UserNameAndSurname")</p></li>
+                                    <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index" asp-route-username="S-Agne">Mokinio profilis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Students" asp-action="History">Mokinio istorija</a></li>
+                                </ul>
+                            </li>
+                        }
                         <a asp-controller="Client" asp-action="Login" class="btn btn-primary">Prisijungti</a>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="">Atsijungti</a>
