@@ -4,13 +4,15 @@
     ViewData["Title"] = "Teachers";
 }
 
-<h2>Mokytojai</h2>
-<form asp-controller="Teachers" asp-action="Index" method="get" class="mb-3">
-    <div class="input-group">
-        <input type="text" name="search" class="form-control" placeholder="Ieškoti pagal vardą arba pavardę..." value="@ViewData["Search"]" />
-        <button type="submit" class="btn btn-success">Ieškoti</button>
-    </div>
-</form>
+@if (Context.Session.GetString("Username") != null)
+{
+    <h2>Mokytojai</h2>
+    <form asp-controller="Teachers" asp-action="Index" method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Ieškoti pagal vardą arba pavardę..." value="@ViewData["Search"]" />
+            <button type="submit" class="btn btn-success">Ieškoti</button>
+        </div>
+    </form>
 
 @if (Context.Session.GetString("UserType") == "Admin")
 {
@@ -60,4 +62,11 @@
 else if (ViewData["Search"] != null)
 {
     <p>Nėra mokytojų, atitinkančių paieškos kriterijų.</p>
+}
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Jūs neturite teisės peržiūrėti šio puslapio.
+    </div>
 }
