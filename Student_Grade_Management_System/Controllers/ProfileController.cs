@@ -28,6 +28,14 @@ namespace Student_Grade_Management_System.Controllers
             {
                 return NotFound("Profile not found.");
             }
+            
+            var userType = HttpContext.Session.GetString("UserType");
+
+            if(userType == "Parent"){
+                var name = _context.Students.Where(i => i.Username == username).Select(i => i.Name + " " + i.Surname).FirstOrDefault();
+                HttpContext.Session.SetString("Kid", username);
+                HttpContext.Session.SetString("KidName", name);
+            }
 
             // Pass the profile data to the view
             ViewBag.CurrentSchool = _context.Schools.Where(s => s.ID == userProfile.School_ID).Select(s => new {
