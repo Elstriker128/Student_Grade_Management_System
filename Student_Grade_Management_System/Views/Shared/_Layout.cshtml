@@ -78,8 +78,8 @@
                                     Mokinys
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="classesDropdown">
-                                    <li><p>@Context.Session.GetString("Name")</p></li>
-                                    <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index" asp-route-username="S-Agne">Mokinio profilis</a></li>
+                                    <li><p style="margin-left:15px;">@Context.Session.GetString("Name")</p></li>
+                                    <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index" asp-route-username="@Context.Session.GetString("Username")">Mokinio profilis</a></li>
                                     <li><a class="dropdown-item" asp-controller="Students" asp-action="History">Mokinio istorija</a></li>
                                 </ul>
                             </li>
@@ -88,6 +88,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Client" asp-action="Logout">Atsijungti</a>
                         </li>
+                        @if (Context.Session.GetString("UserType") == "Student")
+                        {
+                            <li class="nav-item">
+                                <label class="nav-link text-dark">Labas @Context.Session.GetString("Name")</label>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

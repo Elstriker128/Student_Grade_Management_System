@@ -9,7 +9,6 @@ namespace Student_Grade_Management_System.Controllers
     {
         private readonly SystemDbContext _context;
         private readonly ILogger<HomeController> _logger;
-        private readonly SystemDbContext _context;
 
         public HomeController(SystemDbContext context, ILogger<HomeController> logger)
         {
