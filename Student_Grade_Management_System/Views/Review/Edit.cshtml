@@ -22,7 +22,7 @@
     }
     <div class="form-group">
         <label for="Teacher_Username">Mokytojas:
-        <input type="text" class="form-control" id="Teacher_Username" name="Teacher_Username" value="@ViewData["TeacherName"]" style="border: none;" readonly />
+        <input type="text" class="form-control" id="Teacher_Username" name="Teacher_Username" value="@Context.Session.GetString("Username")" style="border: none;" readonly />
         </label>
     </div>
 
