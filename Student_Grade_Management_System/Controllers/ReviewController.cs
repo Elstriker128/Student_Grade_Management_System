@@ -96,9 +96,12 @@ namespace Student_Grade_Management_System.Controllers
                                                 .ToListAsync();
             }
             else if(userType == "Parent"){
-                var kid = HttpContext.Session.GetString("Kid");
+                var kidsUsernames = _context.ParentsOfStudents
+                            .Where(m => m.Parent_Username == userName)
+                            .Select(m => m.Student_Username)
+                            .ToList();
                 reviews = await _context.Reviews
-                                                .Where(r => r.Student_Username == kid)
+                                                .Where(r => kidsUsernames.Contains(r.Student_Username))
                                                 .Select(r => new ReviewM
                                                 {
                                                     ID = r.ID,

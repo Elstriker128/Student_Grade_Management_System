@@ -34,6 +34,8 @@
 <div id="chartsContainer"></div>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     const chartData = @Html.Raw(chartDataJson);
 
@@ -74,7 +76,27 @@
 
             Plotly.newPlot(chartDiv, [trace], layout);
         });
-
+        //showMessage("Grafikas sugeneruotas.", "success");
         chartsContainer.appendChild(studentContainer);
     });
+    function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message,
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(TempData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(TempData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
 </script>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Student_Grade_Management_System.Models;
 using System;
@@ -21,7 +22,7 @@ namespace Student_Grade_Management_System.Controllers
         {
             get
             {
-                return User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "Teacher";
+                return HttpContext.Session.GetString("UserType");
             }
         }
 
@@ -29,7 +30,7 @@ namespace Student_Grade_Management_System.Controllers
         {
             get
             {
-                return User?.Identity?.Name ?? "T-Jūratė";
+                return HttpContext.Session.GetString("Username");
             }
         }
         public async Task<IActionResult> VisualizeGrades()
@@ -68,6 +69,7 @@ namespace Student_Grade_Management_System.Controllers
                         })
                         .OrderBy(g => g.Date)
                         .ToListAsync();
+                        TempData["SuccessMessage"] = "Grafikas sugeneruotas.";
 
                     return View("GradeGraph", studentGrades);
 
@@ -86,6 +88,7 @@ namespace Student_Grade_Management_System.Controllers
                         .ThenBy(g => g.SubjectName)
                         .ThenBy(g => g.Date)
                         .ToListAsync();
+                        TempData["SuccessMessage"] = "Grafikas sugeneruotas.";
 
                     return View("GradeGraph", teacherGrades);
 
@@ -109,6 +112,7 @@ namespace Student_Grade_Management_System.Controllers
                         .ThenBy(g => g.SubjectName)
                         .ThenBy(g => g.Date)
                         .ToListAsync();
+                        TempData["SuccessMessage"] = "Grafikas sugeneruotas.";
 
                     return View("GradeGraph", parentGrades);
 
@@ -125,11 +129,13 @@ namespace Student_Grade_Management_System.Controllers
                         .ThenBy(g => g.SubjectName)
                         .ThenBy(g => g.Date)
                         .ToListAsync();
+                    TempData["SuccessMessage"] = "Grafikas sugeneruotas.";
 
                     return View("GradeGraph", adminGrades);
 
                 default:
-                    return Unauthorized();
+                    TempData["ErrorMessage"] = "Nėra pakankamai duomenų sugeneruoti grafikui.";
+                    return RedirectToAction(nameof(Index));
             }
         }
 
@@ -206,6 +212,7 @@ namespace Student_Grade_Management_System.Controllers
                         : 0;
 
                     ViewBag.OverallAverage = overallStudentAverage;
+                    TempData["SuccessMessage"] = "Suskaičiuotas vidurkis.";
                     return View("Averages", studentData);
 
                 case "Teacher":
@@ -228,6 +235,7 @@ namespace Student_Grade_Management_System.Controllers
                         : 0;
 
                     ViewBag.OverallAverage = overallTeacherAverage;
+                    TempData["SuccessMessage"] = "Suskaičiuotas vidurkis.";
                     return View("Averages", teacherData);
 
                 case "Parent":
@@ -255,6 +263,7 @@ namespace Student_Grade_Management_System.Controllers
                         : 0;
 
                     ViewBag.OverallAverage = overallParentAverage;
+                    TempData["SuccessMessage"] = "Suskaičiuotas vidurkis.";
                     return View("Averages", parentData);
 
                 case "Admin":
@@ -275,10 +284,12 @@ namespace Student_Grade_Management_System.Controllers
                         : 0;
 
                     ViewBag.OverallAverage = overallAdminAverage;
+                    TempData["SuccessMessage"] = "Suskaičiuotas vidurkis.";
                     return View("Averages", adminData);
 
                 default:
-                    return Unauthorized();
+                    TempData["ErrorMessage"] = "Nėra pakankamai duomenų suskaičiuoti vidurkius.";
+                    return RedirectToAction(nameof(Index));
             }
         }
 
@@ -321,9 +332,11 @@ namespace Student_Grade_Management_System.Controllers
                 grade.Value = value;
                 grade.Date = date;
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Pažymys redaguotas.";
             }
             catch (Exception ex)
             {
+                TempData["ErrorMessage"] = "Nepevyko redaguoti pažymio.";
                 Console.WriteLine($"Error updating grade: {ex.Message}");
             }
 
@@ -485,6 +498,12 @@ namespace Student_Grade_Management_System.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var students = await _context.Students
+                    .Select(s => new { s.Username, FullName = s.Name + " " + s.Surname })
+                    .ToListAsync();
+                // Sukuriame SelectList su Username ir FullName, kad būtų galima pasirinkti vardą ir pavardę
+                ViewData["Students"] = new SelectList(students, "Username", "FullName");
+
             ViewBag.Role = UserRole;
 
             // Užklausos šablonas

@@ -7,25 +7,37 @@
 
 <!-- Filtravimo forma -->
 <form method="get" asp-action="FilteredIndex" asp-controller="Marks">
-    @if (ViewBag.Role != "Student")
-    {
-        <div class="form-group">
-            <label for="classFilter">Klasė:</label>
-            <input type="text" name="classFilter" id="classFilter" class="form-control" placeholder="Pvz.: 10 A" />
-        </div>
-    }
+    <div class="form-group">
+        <label for="classFilter">Klasė:</label>
+        <input type="text" name="classFilter" id="classFilter" class="form-control" placeholder="Pvz.: 10 A" />
+    </div>
     <div class="form-group">
         <label for="subjectFilter">Dalykas:</label>
         <input type="text" name="subjectFilter" id="subjectFilter" class="form-control" placeholder="Pvz.: Matematika" />
     </div>
+    @* @if (Context.Session.GetString("UserType") != "Student"){
+        <div class="me-3" style="width: 20%;">
+            <label>Pasirinkite mokinį:</label>
+            <select id="filterStudent" class="form-select" style="width: 100%;">
+                <option value="">Pasirinkite mokinį</option>
+                @if (ViewData["Students"] != null)
+                {
+                    var students = (SelectList)ViewData["Students"];
+                    foreach (var student in students)
+                    {
+                        <option value="@student.Text">@student.Text</option>
+                    }
+                }
+            </select>
+        </div>
+    } *@
     <button type="submit" class="btn btn-primary">Filtruoti</button>
 </form>
 
 <!-- Mygtukas pridėti pažymį -->
-@if (ViewBag.Role == "Teacher")
+@if (Context.Session.GetString("UserType") == "Teacher" || Context.Session.GetString("UserType") == "Admin")
 {
     <a asp-action="Create" asp-controller="Marks" class="btn btn-success mt-4">Pridėti Pažymį</a>
-}
 
 <!-- Mygtukas apskaičiuoti vidurkį -->
 <form method="get" asp-action="CalculateAverage" asp-controller="Marks" class="d-inline">
@@ -36,6 +48,7 @@
 <form method="get" asp-action="VisualizeGrades" asp-controller="Marks" class="d-inline">
     <button type="submit" class="btn btn-info mt-4">Vizualizuoti Pažymius</button>
 </form>
+}
 
 <!-- Lentelė vidurkiams, jeigu skaičiuojama -->
 @if (ViewBag.CalculatedAverages != null)
@@ -71,7 +84,7 @@ else
     <table class="table table-striped mt-4">
         <thead>
             <tr>
-                <th>Studento Vardas</th>
+                <th>Mokinio Vardas</th>
                 <th>Pažymys</th>
                 <th>Data</th>
                 <th>Dalyko Pavadinimas</th>
@@ -134,4 +147,49 @@ else
             }
         </tbody>
     </table>
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function confirmDelete(event, deleteUrl) {
+            event.preventDefault(); // Neleisti vykdyti įprasto mygtuko veiksmo
+            Swal.fire({
+                title: 'Ar tikrai norite ištrinti?',
+                text: "Šio veiksmo negalėsite atšaukti!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Taip, ištrinti',
+                cancelButtonText: 'Atšaukti'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl; // Vykdyti trynimą, jei patvirtinta
+                }
+            });
+        }
+        
+        function showMessage(message, type) {
+            Swal.fire({
+                title: type === 'success' ? 'Pavyko!' : 'Klaida!',
+                text: message,
+                icon: type,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var errorMessage = "@Html.Raw(TempData["ErrorMessage"])";
+            var successMessage = "@Html.Raw(TempData["SuccessMessage"])";
+            if (errorMessage) {
+                showMessage(errorMessage, 'error');
+            }
+            if (successMessage) {
+                showMessage(successMessage, 'success');
+            }
+        });
+    </script>
 }
